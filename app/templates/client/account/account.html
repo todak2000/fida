@@ -1,0 +1,91 @@
+{% extends "client/nav.html" %}
+
+{% load static %}
+
+{% block body%}
+<section class="secondary-background">
+    <!-- secondary nav starts -->
+  <div class="secondary-nav">
+    <i class="fas fa-chevron-left" style="color: #fff;" onclick="window.history.back();" ></i>
+    <p class="sec-nav-title">Account</p>
+    <i class="fas fa-times-circle  text-right" style="color: #005FD8;"  ></i>
+  </div>
+
+  <!-- seconday nav ends -->
+  <!-- bio section -->
+    <div class="bio-div">
+      <div class="bio-header mb-3">
+        <div class="bio-sub-header">
+          <i class="fas fa-user-circle fa-2x mr-3" style="color: #0069F0;"  ></i>
+          <p class="bio-title">Personal</p>
+        </div>
+        <img src="{% static 'img/edit.svg' %}" >
+      </div>
+      <div class="bio-body">
+        <div class="bio-sub-header">
+          <p class="bio-text">Full Name</p>
+          <p class="bio-text">John Doe</p>
+        </div>
+        <div class="bio-sub-header">
+          <p class="bio-text">Email</p>
+          <p class="bio-text">john@doe.com</p>
+        </div>
+        <div class="bio-sub-header">
+          <p class="bio-text">Phone</p>
+          <p class="bio-text">09088383783</p>
+        </div>
+        <div class="bio-sub-header">
+          <p class="bio-text">Address</p>
+          <p class="bio-text text-right" style="width: 70%;">1 Aguiyi Ironsi St, Maitama 900001, Abuja, Nigeria</p>
+        </div>
+        <div class="bio-sub-header">
+          <p class="bio-text">Role</p>
+          <p class="bio-text">Artisan</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- bank section -->
+    <div class="other-div">
+      <div class="bio-header mb-3">
+        <div class="bio-sub-header">
+          <img src="{% static 'img/account_balance.svg' %}" >
+          <p class="bio-title ml-3">Bank</p>
+        </div>
+        <img src="{% static 'img/edit.svg' %}" >
+      </div>
+      <div class="bio-body">
+        <div class="bio-sub-header">
+          <p class="bio-text">Account Name</p>
+          <p class="bio-text">John Doe</p>
+        </div>
+        <div class="bio-sub-header">
+          <p class="bio-text">Account Number</p>
+          <p class="bio-text">09088383783</p>
+        </div>
+        <div class="bio-sub-header">
+          <p class="bio-text">Bank</p>
+          <p class="bio-text">Artisan Bank</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- security section -->
+    <div class="other-div">
+      <div class="bio-header mb-3">
+        <div class="bio-sub-header">
+          <img src="{% static 'img/security.svg' %}" >
+          <p class="bio-title ml-3">Security</p>
+        </div>
+        <img src="{% static 'img/edit.svg' %}" >
+      </div>
+      <div class="bio-body">
+        <div class="bio-sub-header">
+          <p class="bio-text">Password</p>
+          <p class="bio-text">* * * * * *</p>
+        </div>
+      </div>
+    </div>
+</section>
+
+{% endblock %}

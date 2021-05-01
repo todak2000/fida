@@ -1,0 +1,30 @@
+.onboarding-background{
+    /* background-color: aqua; */
+    height:90vh;
+    width: 80%;
+    margin: 5vh auto;
+    text-align: center;
+}
+#message_one, #message{
+    display: none;
+}
+.onboarding_footer{
+    font-family: Poppins;
+    font-size: 0.9rem;
+}
+/* #form-part-two{
+    display: none;
+} */
+.onboarding_form_input{
+    background: rgba(0, 105, 240, 0.1);
+    border-radius: 30px;
+    margin-bottom: 10px;
+    border:1px solid transparent;
+    font-family: Poppins;
+}
+textarea:focus, input:focus{
+    outline: none;
+}
+/* .registertext-top{
+
+} */

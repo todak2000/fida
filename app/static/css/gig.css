@@ -1,0 +1,104 @@
+/* #myTab{
+    border:0;
+    background-color: #ff0;
+    height: 30px;
+    border-radius: 50px 50px 0 0;
+} */
+.nav-item{
+    width: 48%;
+    background-color: #267DED;
+    /* border-radius: 50px 50px 0 0; */
+    border:0;
+    height:50px;
+}
+#bid-tab, #bid-li{
+    /* border:0; */
+    border-radius: 30px 0 0 0;
+    text-align: center;
+    color:#fff;
+    height:50px;
+}
+#gig-tab, #gig-li{
+    /* border:0; */
+    border-radius: 0 30px 0 0;
+    text-align: center;
+    color:#fff;
+    height:50px;
+}
+.nav-tabs{
+    /* background-color: transparent!important; */
+    border:0;
+}
+.nav-link{
+    font-size: 1.1rem;
+    font-family: Poppins;
+    font-weight: "500";
+}
+.nav-tabs .nav-link.active{
+    color:#267DED!important;
+
+}
+#bid{
+    /* background-color: antiquewhite; */
+    height: 70vh;
+}
+#gig{
+    /* background-color: aqua; */
+    height: 70vh;
+}
+.bid-card{
+    display: flex;
+    justify-content: space-between;
+    color: #829CC580;
+    background-color: #0069F005;
+    border-radius: 10px;
+    padding:3%;
+}
+.gig-form-accept {
+    border-radius: 25px;
+    background-color: #10DCC4;
+    border: 1px solid #10DCC4;
+    color: #fff;
+}
+.gig-form-decline {
+    border-radius: 25px;
+    background-color: #FF6161;
+    border: 1px solid #FF6161;
+    color: #fff;
+}
+textarea:focus, input:focus{
+    outline: none;
+}
+.modal_button-div{
+    display: flex;
+    justify-content: space-between;
+}
+.gig-option-div{
+    display: flex;
+    justify-content: space-around;
+}
+.input-group-text{
+    background-color: transparent!important;
+    border:1px solid transparent!important;
+}
+.bidder-top{
+    display: flex;
+    justify-content: space-between;
+}
+.bidder-inner{
+    display: flex;
+    justify-content: space-between;
+}
+.bidder-div{
+   background-color: #267DED10;
+   padding:0.5rem;
+   border-radius: 10px;
+   
+}
+.bidder-accept{
+    color: #F7B222;
+    font-weight: 700;
+} 
+.fa-alter{
+    font-size:3rem;
+}

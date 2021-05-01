@@ -1,0 +1,77 @@
+{% extends "artisan/nav.html" %}
+
+{% load static %}
+
+{% block body%}
+<section class="secondary-background">
+    <!-- secondary nav starts -->
+<div class="secondary-nav">
+    <i class="fas fa-chevron-left" style="color: #fff;" onclick="window.history.back();" ></i>
+    <p class="sec-nav-title">Gig Details</p>
+    <i class="fas fa-times-circle  text-right" style="color: #005FD8;"  ></i>
+  </div>
+
+  <!-- seconday nav ends -->
+  <!-- top section -->
+    <div class="job-form-container">
+        <form class="onboarding_form mt-2" action="#" id="job_details_form" method="POST" autocomplete="off">
+            {% csrf_token %}
+            <label class="job-label">Title</label>
+            <input type="text" id="title"   class="job-input form-control mb-3" placeholder="I need a washman" readonly>
+            <label class="job-label">Brief Description</label>
+            <textarea id="description"   class="job-input form-control mb-3" placeholder="I need a washman" readonly></textarea>
+            <div class="job-flex">
+                <div style="width:45%">
+                    <label class="job-label">Duration</label>
+                    <input type="text" id="title"   class="job-input form-control mb-3" placeholder="1 week" readonly>
+                </div>
+                <div style="width:45%">
+                    <label class="job-label">Budget</label>
+                    <input type="text" id="max_budget"   class="job-input form-control mb-3" placeholder="3,000" readonly>
+                </div>
+            </div>
+            <div class="job-flex">
+                <div style="width:45%">
+                    <label class="job-label">Location</label>
+                    <input type="text" id="location"   class="job-input form-control mb-3" placeholder="Somolu" readonly>
+                </div>
+                <div style="width:45%">
+                    <label class="job-label">State</label>
+                    <input type="text" id="state"   class="job-input form-control mb-3" placeholder="Lagos" readonly>
+                </div>
+            </div>
+            <label class="job-label-blue">Service/Bidding Fee</label>
+            <input type="text" id="title"   class="job-input-blue form-control mb-5" placeholder="NGN 3,500" readonly>
+            <div class="gig-option-div py-5 mt-5">
+                <div class="text-center">
+                    <i class="fas fa-play-circle  fa-3x mt-3 mb-2" style="color: #0069F070;" data-toggle="modal" data-target="#startModal"></i>
+                    <p >Start Now</p>
+                </div>
+                <div class="text-center">
+                    <i class="fas fa-envelope  fa-3x mt-3 mb-2" style="color: #0069F070;" ></i>
+                    <p>Chat with Client</p>
+                </div>
+            </div>
+        </form>
+
+    </div>
+  </div>
+</section>
+
+<!-- Start Gig modal -->  
+  <!-- Modal -->
+  <div class="modal fade" id="startModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-body">
+          <h4 class="text-center">START GIG</h4>
+          <p>Kindly confirm you will/have begun the work with and you will diligent do the Job to the best of your abilities. If however, you are found wanting, FIDA is authorised to take neccessary action.</p>
+          <div class="modal_button-div">
+            <input type="button" value="Confirm" class="form-control gig-form-accept mt-3" id="job_details_submit" style="width: 35%;">
+            <input type="button" value="Cancel" class="form-control gig-form-decline mt-3" id="job_details_submit" style="width: 35%;">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

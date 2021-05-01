@@ -1,0 +1,64 @@
+{% extends "client/nav.html" %}
+
+{% load static %}
+
+{% block body%}
+<section class="secondary-background">
+    <!-- secondary nav starts -->
+<div class="secondary-nav">
+    <i class="fas fa-chevron-left" style="color: #fff;" onclick="window.history.back();" ></i>
+    <p class="sec-nav-title">Create Order from Ads</p>
+    <i class="fas fa-times-circle  text-right" style="color: #005FD8;"  ></i>
+  </div>
+
+  <!-- seconday nav ends -->
+  <!-- top section -->
+    <div class="job-form-container">
+        <form class="onboarding_form mt-2" action="#" id="job_details_form" method="POST" autocomplete="off">
+            {% csrf_token %}
+              <label class="job-label">Title</label>
+              <input type="text" id="title"   class="job-input form-control mb-1" placeholder="I can ....." readonly>
+              <label class="job-label">Brief Description</label>
+              <textarea id="description"   class="job-input form-control mb-1" placeholder="I need a washman" readonly></textarea>
+              <label class="job-label">Duration</label>
+              <select id="duration"   class="job-input form-control mb-1" readonly>
+                  <option value="choose">Choose</option>
+                  <option value="1 day">1 DAY</option>
+                  <option value="1 day">3 DAYS</option>
+              </select>
+              <div class="job-flex">
+                  <div style="width:45%">
+                      <label class="job-label">Min Budget</label>
+                      <input type="text" id="min-budget"   class="job-input form-control mb-1" placeholder="2000" readonly>
+                  </div>
+                  <div style="width:45%">
+                      <label class="job-label">Max Budget</label>
+                      <input type="text" id="max-budget"   class="job-input form-control mb-1" placeholder="3000" readonly>
+                  </div>
+              </div>
+              <div class="job-flex">
+                  <div style="width:45%">
+                      <label class="job-label">Location</label>
+                      <input type="text" id="location"   class="job-input form-control mb-1" placeholder="Somolu" readonly>
+                  </div>
+                  <div style="width:45%">
+                      <label class="job-label">State</label>
+                      <select id="state"   class="job-input form-control mb-1" readonly>
+                          <option value="choose">Choose</option>
+                          <option value="lagos">LAGOS</option>
+                          <option value="abuja">ABUJA</option>
+                      </select>
+                  </div>
+              </div>
+              <label class="job-label">Service fee</label>
+              <input type="text" id="fee"   class="job-input form-control mb-3" placeholder="2,500">
+              <label class="job-label-blue">Any additional Information</label>
+              <textarea id="pitch"   class="job-input-blue form-control mb-1" placeholder="I need a washman" readonly></textarea>
+              <input type="button" value="Submit Order" class="form-control job-form-button mt-3" id="job_details_submit">
+          </form>
+
+    </div>
+  </div>
+</section>
+
+{% endblock %}

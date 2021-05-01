@@ -1,0 +1,65 @@
+{% extends "client/nav.html" %}
+
+{% load static %}
+
+{% block body%}
+<section class="home-background">
+    <!-- hamburger starts -->
+<div style="width: 100%; display: flex; justify-content: space-between;">
+    <p class="text-left" style="color:#005FD8; font-size: 1.3rem; font-weight: 600; font-family: Poppins;">Messages</p>
+    <i class="fas fa-ellipsis-v  text-right" style="color: #005FD870;" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" ></i>
+  </div>
+<div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto" id="list-item-nav">
+      <li class="nav-item item-top">
+        <button type="button" class="close" data-toggle="collapse" data-target="#navbarSupportedContent">
+            <span aria-hidden="true">&times;</span>
+          </button>
+      </li>
+      <li class="nav-item item-second">
+        <a class="nav-link" href="#"><span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item item-others">
+        <a class="nav-link spacing " href="{% url 'client_account' %}">Account <i class="fas fa-user-circle fa-2x ml-3"></i></a>
+      </li>
+      
+      <li class="nav-item item-others">
+        <a class="nav-link" href="{% url 'login' %}">Sign Out <i class="fas fa-sign-out-alt fa-2x ml-3"></i></a>
+      </li>
+    </ul>
+  </div>
+  <!-- hamburger ends -->
+  <div class="all-chat-container">
+    <div class="chat-div mt-3">
+      <i class="fas fa-user-circle fa-alt" style="color: #0069F0;"  ></i>
+      <div style="width: 70%;">
+        <p class="mb-3">I want a washman</p>
+        <p class="text-right">23-12-2020</p>
+      </div>
+    </div>
+  </div>
+
+</section>
+<footer class="footer">
+    <a href="{% url 'client_home' %}">
+        <i class="fas fa-home fa-2x  "></i>
+        <!-- <p>Pickup</p> -->
+    </a>
+    <a href="">
+        <i class="fas fa-envelope fa-2x active-icon"></i>
+        <!-- <p>Wallet</p> -->
+    </a>
+    <a href="{% url 'new_order' %}">
+        <i class="fas fa-plus-circle fa-3x "></i>
+        <!-- <p>Home</p> -->
+    </a>
+    <a href="{% url 'client_wallet' %}">
+        <i class="fas fa-wallet fa-2x "></i>
+        <!-- <p>Profile</p> -->
+    </a>
+    <a href="{% url 'project' %}">
+        <i class="fab fa-gitter fa-2x "></i>
+        <!-- <p>Signout</p> -->
+    </a>
+</footer>
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends "artisan/nav.html" %}
+
+{% load static %}
+
+{% block body%}
+<section class="secondary-background">
+    <!-- secondary nav starts -->
+<div class="secondary-nav">
+    <i class="fas fa-chevron-left" style="color: #fff;" onclick="window.history.back();" ></i>
+    <p class="sec-nav-title">View Ads</p>
+    <i class="fas fa-times-circle  text-right" style="color: #005FD8;"  ></i>
+  </div>
+
+  <!-- seconday nav ends -->
+  <!-- top section -->
+    <div class="job-form-container">
+      <div class="bid-card mt-3">
+        <p>Web developer </p>
+        <i class="fas fa-eye" style="color: #ccc;" ></i>
+      </div>
+      <div class="bid-card mt-3">
+        <p>Cleaner</p>
+        <i class="fas fa-eye" style="color: #ccc;" ></i>
+      </div>
+      <div class="bid-card mt-3">
+        <p>Electrician</p>
+        <i class="fas fa-eye" style="color: #ccc;" ></i>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

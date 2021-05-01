@@ -1,0 +1,42 @@
+{% extends "onboarding/base.html" %}
+{% block body%}
+{% load static %}
+<section class="background">
+    <div id="landing-div">
+        <div id="demo" class="carousel slide" data-ride="carousel">
+            <ul class="carousel-indicators">
+              <li data-target="#demo" data-slide-to="0" class="active dot"></li>
+              <li data-target="#demo" data-slide-to="1" class="dot"></li>
+              <li data-target="#demo" data-slide-to="2" class="dot"></li>
+            </ul>
+            <div class="carousel-inner">
+              <div class="carousel-item active" style="margin-bottom:3.5rem;">
+                <img src="{% static 'img/splash01.svg' %}" alt="Los Angeles" width="100%" height="auto" style="padding:0% 10% 0% 10%;">
+                <p class="splashtext-top">Professionals On Demand</p>
+                <p class="splashtext-bottom">In need of services like plumbing, tailoring or carpentry and more. Fida got you covered</p>
+              </div>
+
+              <div class="carousel-item">
+                <img src="{% static 'img/splash02.svg' %}" alt="Chicago" width="1100" height="500">
+                <p class="splashtext-top">Get more done for less</p>
+                <p class="splashtext-bottom">Fees are tailored to suit your needs; you don’t have to worry about expensive rates.</p>
+              </div>
+              
+              <div class="carousel-item">
+                <img src="{% static 'img/splash03.svg' %}" alt="New York" width="1100" height="500">
+                <p class="splashtext-top">Services at your fingertips</p>
+                <p class="splashtext-bottom">Get satisfactory service, timely, and at an affordable price.</p>
+              </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="pl-3 pr-3 mt-1">
+        <a href="{% url 'register' %}" class="form-control button">Get Started</a>
+        <p style="margin-bottom:0.1rem; margin-top:0.5rem; text-align: center;">Already have an account? <a href="{% url 'login' %}"><span class="span-login">Login</span></a></p>  
+    </div>
+
+
+</section>
+{% endblock %}

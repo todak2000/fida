@@ -1,0 +1,110 @@
+{% extends "artisan/nav.html" %}
+
+{% load static %}
+
+{% block body%}
+<section class="home-background">
+    <!-- hamburger starts -->
+<div style="width: 100%; display: flex; justify-content: space-between;">
+    <p class="text-left" style="color:#005FD8; font-size: 1.3rem; font-weight: 600; font-family: Poppins;">Gigs</p>
+    <i class="fas fa-ellipsis-v  text-right" style="color: #005FD870;" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" ></i>
+  </div>
+<div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto" id="list-item-nav">
+      <li class="nav-item item-top">
+        <button type="button" class="close" data-toggle="collapse" data-target="#navbarSupportedContent">
+            <span aria-hidden="true">&times;</span>
+          </button>
+      </li>
+      <li class="nav-item item-second">
+        <a class="nav-link" href="#"><span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item item-others">
+        <a class="nav-link spacing " href="{% url 'account' %}">Account <i class="fas fa-user-circle fa-2x ml-3"></i></a>
+      </li>
+      
+      <li class="nav-item item-others">
+        <a class="nav-link" href="{% url 'login' %}">Sign Out <i class="fas fa-sign-out-alt fa-2x ml-3"></i></a>
+      </li>
+    </ul>
+  </div>
+  <!-- hamburger ends -->
+  <!-- tab section -->
+  <ul class="nav nav-tabs mb-3 mt-3" id="myTab" role="tablist">
+    <li class="nav-item" id="bid-li">
+      <a class="nav-link active" id="bid-tab" data-toggle="tab" href="#bid" role="tab"  aria-selected="true" >Bids</a>
+    </li>
+    <li class="nav-item" id="gig-li">
+      <a class="nav-link" id="gig-tab" data-toggle="tab" href="#gig" role="tab"  aria-selected="false" >Gigs</a>
+    </li>
+    <!-- <li class="nav-item">
+      <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Contact</a>
+    </li> -->
+  </ul>
+  <div class="tab-content" id="myTabContent">
+    <!-- bid tab -->
+    <div class="tab-pane fade show active" id="bid" role="tabpanel" >
+      <!-- pending -->
+      <div class="bid-card mt-3">
+        <p>Web developer needed</p>
+        <i class="fas fa-dot-circle  " style="color: #D0BC0A;" ></i>
+        <i class="fas fa-trash" style="color: #C91B30;" ></i>
+      </div>
+      <!-- selected -->
+      <div class="bid-card mt-3">
+        <p>Web developer needed</p>
+        <i class="fas fa-user-plus " style="color: #40DA86;" ></i>
+        <i class="fas fa-trash" style="color: #C91B30;" ></i>
+      </div>
+    </div>
+    <!-- gig tab -->
+    <div class="tab-pane fade" id="gig" role="tabpanel">
+      <!-- completed -->
+      <div class="bid-card mt-3">
+        <p>Web developer needed</p>
+        <i class="fas fa-check-circle  " style="color: #14E2CA;" ></i>
+      </div>
+      <!-- selected/ongoing -->
+      <div class="bid-card mt-3">
+        <p>Web developer needed</p>
+        <i class="fas fa-envelope " style="color: #0069F0;" ></i>
+        <i class="fas fa-dot-circle " style="color: #D0BC0A;" ></i>
+      </div>
+      <!-- disputed -->
+      <div class="bid-card mt-3">
+        <p>Web developer needed</p>
+        <i class="fas fa-question-circle  " style="color: #C4C4C4;" ></i>
+      </div>
+      <!-- cancelled -->
+      <div class="bid-card mt-3">
+        <p>Web developer needed</p>
+        <i class="fas fa-times-circle  " style="color: #C91B30;" ></i>
+      </div>
+    </div>
+  </div>
+  <!-- tab section end -->
+  
+</section>
+<footer class="footer">
+    <a href="{% url 'artisan_home' %}">
+        <i class="fas fa-home fa-2x  "></i>
+        <!-- <p>Pickup</p> -->
+    </a>
+    <a href="{% url 'chat' %}">
+        <i class="fas fa-envelope fa-2x "></i>
+        <!-- <p>Wallet</p> -->
+    </a>
+    <a href="{% url 'new_ads' %}">
+        <i class="fas fa-plus-circle fa-3x "></i>
+        <!-- <p>Home</p> -->
+    </a>
+    <a href="{% url 'wallet' %}">
+        <i class="fas fa-wallet fa-2x "></i>
+        <!-- <p>Profile</p> -->
+    </a>
+    <a href="">
+        <i class="fab fa-gitter fa-2x active-icon"></i>
+        <!-- <p>Signout</p> -->
+    </a>
+</footer>
+{% endblock %}

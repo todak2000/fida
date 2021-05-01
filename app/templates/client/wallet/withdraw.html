@@ -1,0 +1,39 @@
+{% extends "client/nav.html" %}
+
+{% load static %}
+
+{% block body%}
+<section class="secondary-background">
+    <!-- secondary nav starts -->
+<div class="secondary-nav">
+    <i class="fas fa-chevron-left" style="color: #fff;" onclick="window.history.back();" ></i>
+    <p class="sec-nav-title">Withdrawal</p>
+    <i class="fas fa-times-circle  text-right" style="color: #005FD8;"  ></i>
+  </div>
+
+  <!-- seconday nav ends -->
+  <!-- top section -->
+    <div class="job-form-container">
+        <form class="onboarding_form mt-2" action="#" id="job_details_form" method="POST" autocomplete="off">
+            {% csrf_token %}
+            <label class="job-label">Amount</label>
+            <input type="text" id="amount"   class="job-input form-control mb-5" placeholder="N3,455.56">
+            <p class="job-label mt-5 mb-5">Kindly note that payment would be made into the account details below</p>
+
+            <div class="withdraw-bank mb-5 py-2 pl-3 pr-3">
+              <img src="{% static 'img/bank.svg' %}" >
+              <div>
+                <h6 style="font-family: Poppins; color:#829CC5">Access Bank</h6>
+                <p style="font-family: Poppins; color:#829CC5">090877778</p>
+              </div>
+              <img src="{% static 'img/edit.svg' %}" >
+            </div>
+
+            <input type="button" value="Withdraw" class="form-control job-form-button" id="job_details_submit">
+        </form>
+
+    </div>
+  </div>
+</section>
+
+{% endblock %}

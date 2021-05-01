@@ -1,0 +1,40 @@
+{% extends "artisan/nav.html" %}
+
+{% load static %}
+
+{% block body%}
+<section class="secondary-background">
+    <!-- secondary nav starts -->
+<div class="secondary-nav">
+    <i class="fas fa-chevron-left" style="color: #fff;" onclick="window.history.back();" ></i>
+    <p class="sec-nav-title">Edit Bio</p>
+    <i class="fas fa-times-circle  text-right" style="color: #005FD8;"  ></i>
+  </div>
+
+  <!-- seconday nav ends -->
+  <!-- top section -->
+    <div class="job-form-container">
+        <form class="onboarding_form mt-2" action="#" id="job_details_form" method="POST" autocomplete="off">
+            {% csrf_token %}
+            <label class="job-label">First Name</label>
+            <input type="text" id="first-name"   class="job-input form-control mb-1" placeholder="John">
+            <label class="job-label">Last Name</label>
+            <input type="text" id="last-name"   class="job-input form-control mb-1" placeholder="Doe">
+            <label class="job-label">Email</label>
+            <input type="text" id="email"   class="job-input form-control mb-1" placeholder="john@doe.com">
+            <label class="job-label">Phone</label>
+            <input type="text" id="phone"   class="job-input form-control mb-1" placeholder="097667765">
+            <label class="job-label">Address</label>
+            <input type="text" id="address"   class="job-input form-control mb-1" placeholder="John">
+            <label class="job-label">L.G.A</label>
+            <input type="text" id="lga"   class="job-input form-control mb-1" placeholder="VI">
+            <label class="job-label">State</label>
+            <input type="text" id="state"   class="job-input form-control mb-1" placeholder="FCT">
+            <input type="button" value="Submit" class="form-control job-form-button" id="job_details_submit">
+        </form>
+
+    </div>
+  </div>
+</section>
+
+{% endblock %}

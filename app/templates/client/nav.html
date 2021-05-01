@@ -1,0 +1,45 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#000000" />
+    <meta
+      name="description"
+      content="Fida is a freelance platform that connects artisans with prospective clients"
+    />
+    {% load static %}
+    <!-- CSS FILES -->
+    <link rel="stylesheet" href="{% static 'fontawesome-free-5.14.0/css/all.css' %}">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">  
+    <link rel="stylesheet" href="{% static 'bootstrap-4.5.2/css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap-datetimepicker.css' %}">
+    <link rel="stylesheet" href="{% static 'css/gig.css' %}">  
+    <link rel="stylesheet" href="{% static 'css/client_home.css' %}"> 
+    <link rel="stylesheet" href="{% static 'css/wallet.css' %}">   
+    <link rel="stylesheet" href="{% static 'css/chat.css' %}">
+    <link rel="stylesheet" href="{% static 'css/account.css' %}">
+
+     <!-- GOOGLE FONTS -->
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;1,200&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap" rel="stylesheet">
+    <!-- JS FILES -->
+    
+    <script src="{% static 'js/jquery-3.1.1.js' %}"></script>
+    <script src="{% static 'js/moment.min.js' %}"></script>
+    <script src="{% static 'bootstrap-4.5.2/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/register.js' %}"></script>
+
+    
+    <title>Fida</title>
+</head>
+<body>   
+    {% block body%}
+    {% endblock %}
+    
+    
+</body>
+</html>

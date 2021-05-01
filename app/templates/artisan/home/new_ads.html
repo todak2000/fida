@@ -1,0 +1,99 @@
+{% extends "artisan/nav.html" %}
+
+{% load static %}
+
+{% block body%}
+<section class="home-background">
+    <!-- hamburger starts -->
+<div style="width: 100%; display: flex; justify-content: space-between;">
+    <p class="text-left" style="color:#005FD8; font-size: 1.3rem; font-weight: 600; font-family: Poppins;">New Ads</p>
+    <i class="fas fa-ellipsis-v  text-right" style="color: #005FD870;" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" ></i>
+  </div>
+<div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto" id="list-item-nav">
+      <li class="nav-item item-top">
+        <button type="button" class="close" data-toggle="collapse" data-target="#navbarSupportedContent">
+            <span aria-hidden="true">&times;</span>
+          </button>
+      </li>
+      <li class="nav-item item-second">
+        <a class="nav-link" href="#"><span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item item-others">
+        <a class="nav-link spacing " href="{% url 'account' %}">Account <i class="fas fa-user-circle fa-2x ml-3"></i></a>
+      </li>
+      
+      <li class="nav-item item-others">
+        <a class="nav-link" href="{% url 'login' %}">Sign Out <i class="fas fa-sign-out-alt fa-2x ml-3"></i></a>
+      </li>
+    </ul>
+  </div>
+  <!-- hamburger ends -->
+   
+  <div class="ads-form-container">
+    <form class="onboarding_form mt-2" action="#" id="job_details_form" method="POST" autocomplete="off">
+        {% csrf_token %}
+        <label class="job-label">Title</label>
+        <input type="text" id="title"   class="job-input form-control mb-3" placeholder="I can .....">
+        <label class="job-label">Brief Description</label>
+        <textarea id="description"   class="job-input form-control mb-3" placeholder="I need a washman"></textarea>
+        <label class="job-label">Duration</label>
+        <select id="duration"   class="job-input form-control mb-3">
+            <option value="choose">Choose</option>
+            <option value="1 day">1 DAY</option>
+            <option value="1 day">3 DAYS</option>
+        </select>
+        <div class="job-flex">
+            <div style="width:45%">
+                <label class="job-label">Min Budget</label>
+                <input type="text" id="min-budget"   class="job-input form-control mb-3" placeholder="2000">
+            </div>
+            <div style="width:45%">
+                <label class="job-label">Max Budget</label>
+                <input type="text" id="max-budget"   class="job-input form-control mb-3" placeholder="3000">
+            </div>
+        </div>
+        <div class="job-flex">
+            <div style="width:45%">
+                <label class="job-label">Location</label>
+                <input type="text" id="location"   class="job-input form-control mb-3" placeholder="Somolu">
+            </div>
+            <div style="width:45%">
+                <label class="job-label">State</label>
+                <select id="state"   class="job-input form-control mb-3">
+                    <option value="choose">Choose</option>
+                    <option value="lagos">LAGOS</option>
+                    <option value="abuja">ABUJA</option>
+                </select>
+            </div>
+        </div>
+        <label class="job-label-blue">Any additional Information</label>
+        <textarea id="pitch"   class="job-input-blue form-control mb-3" placeholder="I need a washman"></textarea>
+        <input type="button" value="Submit Ads" class="form-control job-form-button mt-3" id="job_details_submit">
+    </form>
+
+</div>
+</section>
+<footer class="footer">
+    <a href="{% url 'artisan_home' %}">
+        <i class="fas fa-home fa-2x  "></i>
+        <!-- <p>Pickup</p> -->
+    </a>
+    <a href="{% url 'chat' %}">
+        <i class="fas fa-envelope fa-2x "></i>
+        <!-- <p>Wallet</p> -->
+    </a>
+    <a href="">
+        <i class="fas fa-plus-circle fa-3x active-icon"></i>
+        <!-- <p>Home</p> -->
+    </a>
+    <a href="{% url 'wallet' %}">
+        <i class="fas fa-wallet fa-2x "></i>
+        <!-- <p>Profile</p> -->
+    </a>
+    <a href="{% url 'gig' %}">
+        <i class="fab fa-gitter fa-2x "></i>
+        <!-- <p>Signout</p> -->
+    </a>
+</footer>
+{% endblock %}

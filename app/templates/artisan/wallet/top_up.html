@@ -1,0 +1,29 @@
+{% extends "artisan/nav.html" %}
+
+{% load static %}
+
+{% block body%}
+<section class="secondary-background">
+    <!-- secondary nav starts -->
+<div class="secondary-nav">
+    <i class="fas fa-chevron-left" style="color: #fff;" onclick="window.history.back();" ></i>
+    <p class="sec-nav-title">Top-up Wallet</p>
+    <i class="fas fa-times-circle  text-right" style="color: #005FD8;"  ></i>
+  </div>
+
+  <!-- seconday nav ends -->
+  <!-- top section -->
+    <div class="job-form-container">
+        <form class="onboarding_form mt-2" action="#" id="job_details_form" method="POST" autocomplete="off">
+            {% csrf_token %}
+            <label class="job-label">Amount</label>
+            <input type="text" id="amount"   class="job-input form-control mb-5" placeholder="N3,455.56">
+            
+            <input type="button" value="Fund" class="form-control job-form-button" id="job_details_submit">
+        </form>
+
+    </div>
+  </div>
+</section>
+
+{% endblock %}

@@ -1,0 +1,35 @@
+{% extends "onboarding/base.html" %}
+
+{% load static %}
+
+{% block body%}
+<section class="onboarding-background">
+    <img src="{% static 'img/fida.svg' %}" class="img-fluid mt-5">
+    <p class="splashtext-bottom mt-2 mb-3">Welcome Back!</p>
+    <!-- login form -->
+    <div>
+        <form class="onboarding_form mt-2" action="#" id="sign_up_form" method="POST" autocomplete="off">
+            
+            {% csrf_token %}
+                <input type="email" id="email"   class="onboarding_form_input form-control mb-3" placeholder="Email">
+                <div class="form-group">
+                    <div style="display: flex; justify-content: left;">
+                        <input type="password" 
+                            class="onboarding_form_input form-control" 
+                            name="password" 
+                            id="password_login"
+                            placeholder="Password"
+                            required
+                        />
+                        <i class="fas fa-eye"  style="margin-left:-13%;margin-top: 4%; color: #ccc;" onclick="showPassword_login()"></i>
+                    </div>
+                </div>
+                <input type="button" value="Login" class="form-control button mt-5" id="signup_next">
+            
+
+            <p class="onboarding_footer mt-2 mb-1 text-center">Don't have an account? <span class="span-login"><a href="{% url 'register' %}">Register</span></a></p>
+            <p class="onboarding_footer mt-2 mb-1 text-center">Forgot Password? <span class="span-login"><a href="{% url 'forget_password' %}">Retrieve it here</span></a></p>
+        </form>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,33 @@
+.bio-header{
+    display: flex;
+    justify-content: space-between;
+}
+.bio-title{
+    color:#0069F0;
+    font-size:1.1rem;
+    font-weight: 700;
+    font-family: Poppins;
+}
+.bio-sub-header{
+    display: flex;
+    justify-content: space-between;  
+}
+textarea:focus, input:focus{
+    outline: none;
+}
+.bio-text{
+    font-size: 0.9rem;
+    color:#0069F060;
+}
+.other-div{
+    margin-top:0.5rem;
+}
+.button-ads{
+    background: #FFFFFF;
+    border: 1px solid #0069F0;
+    box-sizing: border-box;
+    border-radius: 30px;
+    color:#0069F0;
+    padding:0.2rem 0.7rem;
+    font-family: Poppins;
+}

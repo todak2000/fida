@@ -1,0 +1,62 @@
+{% extends "artisan/nav.html" %}
+
+{% load static %}
+
+{% block body%}
+<section class="secondary-background">
+    <!-- secondary nav starts -->
+<div class="secondary-nav">
+    <i class="fas fa-chevron-left" style="color: #fff;" onclick="window.history.back();" ></i>
+    <p class="sec-nav-title">Order Details</p>
+    <i class="fas fa-times-circle  text-right" style="color: #005FD8;"  ></i>
+  </div>
+
+  <!-- seconday nav ends -->
+  <!-- top section -->
+    <div class="job-form-container">
+      <label class="job-label">Title</label>
+      <input type="text" id="title"   class="job-input form-control mb-3" placeholder="I need a washman" readonly>
+      <!-- bidders -->
+      <div class="bidder-div">
+        <div class="bidder-top">
+          <div class="bidder-inner">
+            <i class="fas fa-user-circle fa-alter" style="color: #005FD850;"  ></i>
+            <div class="ml-2 mt-1">
+              <p style="color:#829CC580; font-weight:700; font-size:0.9rem;">John Doe</p>
+              <p style="color:#005FD8;">Lagos</p>
+            </div>
+          </div>
+          <div class="mt-1">
+            <p style="color:#005FD8; font-size:0.9rem;">NGN 3,450</p>
+            <p>Ratings: 3.4</p>
+          </div>
+        </div>
+        <div class="bidder-bottom mt-2">
+          <p style="color:#005FD880; font-weight:700; font-size:0.7rem;">Bid Pitch</p>
+          <p style="color:#829CC580;">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud</p>
+        </div>
+        <p class="bidder-accept text-right" data-toggle="modal" data-target="#acceptModal">Accept Bid</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- Accept Bidder Modal -->
+  <!-- Modal -->
+  <div class="modal fade" id="acceptModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-body">
+          <p class="text-center">Kindly confirm you wish to accept the Bid  of  
+           <span style="font-weight: bold;"> ADEAG LASE</span></p>
+           <p class="text-danger text-center">Be informed on confirmation,  your order wont recieve any more Bids and all other bids would be removed</p>
+          <div class="modal_button-div">
+            <input type="button" value="Confirm" class="form-control gig-form-accept mt-3" id="job_details_submit" style="width: 35%;">
+            <input type="button" value="Cancel" class="form-control gig-form-decline mt-3" id="job_details_submit" style="width: 35%;">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
