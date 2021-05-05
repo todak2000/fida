@@ -16,7 +16,7 @@ class User(models.Model):
     user_password = models.TextField(max_length=200,verbose_name="Password")
     user_address = models.TextField(max_length=200,verbose_name="Address")
     user_state = models.TextField(max_length=200,verbose_name="State")
-    ratings = models.TextField(max_length=200,verbose_name="Job Ratings")
+    ratings = models.TextField(max_length=200,verbose_name="Job Ratings", default=1.0)
     role = models.TextField(max_length=50,verbose_name="User role",default="client")
     walletBalance = models.FloatField(verbose_name="Balance",default=0.00)
     # account details
@@ -31,7 +31,7 @@ class User(models.Model):
     date_added = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
-        return f"{self.firstname} - {self.lastname} - {self.user_phone} - {self.email} - {self.user_state} - {self.role} - {self.walletBalance}"
+        return f"{self.user_id} - {self.firstname} - {self.lastname} - {self.user_phone} - {self.email} - {self.user_state} - {self.role} - {self.walletBalance}"
 
 class Ads(models.Model):
     class Meta:

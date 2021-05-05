@@ -6,7 +6,7 @@
 <section class="home-background">
     <!-- hamburger starts -->
 <div style="width: 100%; display: flex; justify-content: space-between;">
-    <p class="text-left">Welcome John!</p>
+    <p class="text-left">Welcome {{user_name}}!</p>
     <i class="fas fa-ellipsis-v  text-right" style="color: #005FD870;" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" ></i>
   </div>
 <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -24,15 +24,18 @@
       </li>
       
       <li class="nav-item item-others">
-        <a class="nav-link" href="{% url 'login' %}">Sign Out <i class="fas fa-sign-out-alt fa-2x ml-3"></i></a>
+        <a class="nav-link" href="{% url 'logout' %}">Sign Out <i class="fas fa-sign-out-alt fa-2x ml-3"></i></a>
       </li>
     </ul>
   </div>
   <!-- hamburger ends -->
   <!-- top section -->
   <div>
+    {% if profileComplete == False %}
+        <div class="alert alert-primary mt-3 complete-profile" id="server_message" role="alert">Hi {{user_name}}! Kindly Complete your Profile <a href="{% url 'client_account' %}">Here</a></div>
+    {% endif %}
     <!-- search -->
-    <div class="form-group mt-2">
+    <div class="form-group mt-3">
       <div style="display: flex; justify-content: left;">
           <input type="search" class="form-control search" name="search" id="search" placeholder="Search" />
           <i class="fas fa-search"  style="margin-left:-13%;margin-top: 4%; color: #ccc;"></i>

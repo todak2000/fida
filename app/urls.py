@@ -6,9 +6,12 @@ urlpatterns = [
     # ONBOARDING
     path('', views.index, name='index'),
     path("login", views.login_page, name="login"),
+    path("logout", views.logout_page, name="logout"),
     path("register", views.register_page, name="register"),
     path("verify", views.verify_page, name="verify"),
+    path("verify_password", views.verify_password_page, name="verify_password"),
     path("forget_password", views.forget_password_page, name="forget_password"),
+    path("reset_password", views.reset_password_page, name="reset_password"),
     # ARTISAN PAGES
     path("artisan_home", views.artisan_home_page, name="artisan_home"),
     path("wallet", views.wallet_page, name="wallet"),
@@ -44,7 +47,6 @@ urlpatterns = [
     path("pending_project", views.pending_project_page, name="pending_project"),
     path("ongoing_order", views.ongoing_order_page, name="ongoing_order"),
     path("ongoing_project", views.ongoing_project_page, name="ongoing_project"),
-    # path("awaiting_gig", views.awaiting_gig_page, name="awaiting_gig"),
     path("approved_project", views.approved_project_page, name="approved_project"),
     path("disputed_project", views.disputed_project_page, name="disputed_project"),
     path("client_top_up", views.client_top_up_page, name="client_top_up"),
@@ -55,6 +57,12 @@ urlpatterns = [
     path("client_edit_bio", views.client_edit_bio_page, name="client_edit_bio"),
     path("client_edit_account", views.client_edit_account_page, name="client_edit_account"),
     path("client_edit_password", views.client_edit_password_page, name="client_edit_password"),
-    # path("edit_ads", views.edit_ads_page, name="edit_ads"),
-    # path("view_ads", views.view_ads_page, name="view_ads"),
+
+    # ONBOARDING APIS
+    path("login_api", views.login_api, name="login_api"),
+    path("register_api", views.register_api, name="register_api"),
+    path('activate', views.activate, name='activate'),
+    path('resend_code', views.resend_code_api, name='resend_code'),
+    path('forgot_code', views.forgot_code_api, name='forgot_code'),
+    path('change_password', views.change_password, name='change_password'),
 ]

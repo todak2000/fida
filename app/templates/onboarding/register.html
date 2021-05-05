@@ -10,8 +10,11 @@
     <p class="splashtext-bottom mt-2 mb-3" id="complete">Complete the form</p>
     <!-- reg form -->
     <div>
+        <div class="text-primary py-3 server_message_success" id="server_message_success" role="alert"></div>
+        <div class="text-danger py-3 server_message_error" id="server_message_error" role="alert"></div>
+        <p id="message_one"  class="text-danger">Sorry! there are empty fields. Kindly fill the form</p> 
+
         <form class="onboarding_form mt-2" action="#" id="sign_up_form" method="POST" autocomplete="off">
-            
             {% csrf_token %}
             <div id="form-part-one">
                 <input type="text" id="firstname"  class="onboarding_form_input form-control" placeholder="First Name">
@@ -31,8 +34,8 @@
                     </div>
                 </div>
                 <input type="password" id="confirm_password"   class="onboarding_form_input form-control" placeholder="Confirm Password">
-                <p id="message" >password not same!</p>    
-                <p id="message_one" >Sorry! there are empty fields. Kindly fill the form</p>              
+                <p id="message" class="text-danger">password not same!</p>    
+                             
                 <input type="button" value="Next" class="form-control button mt-1" id="signup_next">
             </div>
             <div id="form-part-two">

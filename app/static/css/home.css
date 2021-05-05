@@ -13,12 +13,13 @@ body{
     margin:10vh auto;
 }
 .footer{
-    height: 60px!important;
+    height: 80px!important;
     background-color: #fff;
     width: 100%;
     position: fixed;
     bottom: 0;
     display: flex;
+    line-height: 90px;
     justify-content: space-evenly;
 }
 
@@ -192,6 +193,16 @@ textarea:focus, input:focus{
     /* height: 30px; */
     /* line-height: 10px; */
 }
-/* .nav-link{
-    color:#0069F0;
-} */
+.complete-profile{
+    position: fixed;
+    top:30vh;
+    margin-right: 10%;
+    text-align: center;
+    font-weight: 500;
+    padding-top:10vh;
+    height:40vh;
+    font-family: Poppins;
+    color: #fff;
+    background-color: #211e1ec7;
+
+}
