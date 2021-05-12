@@ -4,7 +4,7 @@ import json
 import requests
 import jwt
 
-from app.models import (User,Verification)
+from app.models import (User,Verification, Ads, Orders, Bids, Escrow, Project_Gig, Transaction, Chat)
 from CustomCode import (autentication,  password_functions,
                         string_generator, validator)
 
@@ -15,8 +15,7 @@ from project_fida import settings
 
 from django.contrib.sites.shortcuts import get_current_site
 from django.template.loader import render_to_string
-
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 
 from pysendpulse.pysendpulse import PySendPulse
 from decouple import config
@@ -67,7 +66,22 @@ def reset_password_page(request):
     return render(request,"onboarding/reset_password.html")
 
 def artisan_home_page(request):
-    return render(request,"artisan/home/home.html") 
+    user_id = request.session['user_id']
+    try:
+        user_data = User.objects.get(user_id=user_id)
+        return_data = {
+            "error": False,
+            "profileComplete": user_data.profile_complete,
+            "user_name": f"{user_data.firstname}"
+        }
+    except Exception as e:
+        return_data = {
+            "error": True,
+            "profileComplete": user_data.profile_complete,
+            "user_name": f"{user_data.firstname}",
+            "message": "Something went wrong!"
+        }
+    return render(request,"artisan/home/home.html", return_data) 
 
 def job_details_page(request):
     return render(request,"artisan/home/job_details.html") 
@@ -106,7 +120,22 @@ def withdraw_page(request):
     return render(request,"artisan/wallet/withdraw.html")
 
 def new_ads_page(request):
-    return render(request,"artisan/home/new_ads.html")
+    user_id = request.session['user_id']
+    try:
+        user_data = User.objects.get(user_id=user_id)
+        return_data = {
+            "error": False,
+            "profileComplete": user_data.profile_complete,
+            "user_name": f"{user_data.firstname}"
+        }
+    except Exception as e:
+        return_data = {
+            "error": True,
+            "profileComplete": user_data.profile_complete,
+            "user_name": f"{user_data.firstname}",
+            "message": "Something went wrong!"
+        }
+    return render(request,"artisan/home/new_ads.html", return_data)
 
 def chat_page(request):
     return render(request,"artisan/chat/chat.html")
@@ -115,26 +144,101 @@ def individual_chat_page(request):
     return render(request,"artisan/chat/individual_chat.html")
 
 def account_page(request):
-    return render(request,"artisan/account/account.html")
+    user_id = request.session['user_id']
+    try:
+        userData = User.objects.get(user_id=user_id)
+        return_data = {
+            "error": False,
+            "user": userData
+        }
+    except Exception as e:
+        return_data = {
+            "error": True,
+            "message": "Something went wrong!"
+        }
+    return render(request,"artisan/account/account.html", return_data)
 
 def edit_bio_page(request):
-    return render(request,"artisan/account/edit_bio.html")
+    user_id = request.session['user_id']
+    try:
+        userData = User.objects.get(user_id=user_id)
+        return_data = {
+            "error": False,
+            "user": userData
+        }
+    except Exception as e:
+        return_data = {
+            "error": True,
+            "message": "Something went wrong!"
+        }
+    return render(request,"artisan/account/edit_bio.html", return_data)
 
 def edit_account_page(request):
-    return render(request,"artisan/account/edit_account.html")
+    user_id = request.session['user_id']
+    try:
+        userData = User.objects.get(user_id=user_id)
+        return_data = {
+            "error": False,
+            "user": userData
+        }
+    except Exception as e:
+        return_data = {
+            "error": True,
+            "message": "Something went wrong!"
+        }
+    return render(request,"artisan/account/edit_account.html", return_data)
 
 def edit_password_page(request):
     return render(request,"artisan/account/edit_password.html")
 
 def view_ads_page(request):
-    return render(request,"artisan/account/view_ads.html")
+    user_id = request.session['user_id']
+    try:
+        userAds = Ads.objects.get(artisan_id=user_id)
+        return_data = {
+            "error": False,
+            "userAds": userAds
+        }
+    except Exception as e:
+        return_data = {
+            "error": True,
+            "message": "Something went wrong!"
+        }
+    return render(request,"artisan/account/view_ads.html" , return_data)
 
 def edit_ads_page(request):
-    return render(request,"artisan/account/edit_ads.html")
+    user_id = request.session['user_id']
+    try:
+        userData = User.objects.get(user_id=user_id)
+        return_data = {
+            "error": False,
+            "user": userData
+        }
+    except Exception as e:
+        return_data = {
+            "error": True,
+            "message": "Something went wrong!"
+        }
+    return render(request,"artisan/account/edit_ads.html" , return_data)
 
 # client pages api
 def client_home_page(request):
-    return render(request,"client/home/home.html") 
+    user_id = request.session['user_id']
+    try:
+        user_data = User.objects.get(user_id=user_id)
+        return_data = {
+            "error": False,
+            "profileComplete": user_data.profile_complete,
+            "user_name": f"{user_data.firstname}"
+        }
+    except Exception as e:
+        return_data = {
+            "error": True,
+            "profileComplete": user_data.profile_complete,
+            "user_name": f"{user_data.firstname}",
+            "message": "Something went wrong!"
+        }
+    return render(request,"client/home/home.html", return_data) 
 
 def ads_details_page(request):
     return render(request,"client/home/ads_details.html") 
@@ -143,7 +247,22 @@ def create_order_page(request):
     return render(request,"client/home/create_order.html")
 
 def new_order_page(request):
-    return render(request,"client/home/new_order.html")
+    user_id = request.session['user_id']
+    try:
+        user_data = User.objects.get(user_id=user_id)
+        return_data = {
+            "error": False,
+            "profileComplete": user_data.profile_complete,
+            "user_name": f"{user_data.firstname}"
+        }
+    except Exception as e:
+        return_data = {
+            "error": True,
+            "profileComplete": user_data.profile_complete,
+            "user_name": f"{user_data.firstname}",
+            "message": "Something went wrong!"
+        }
+    return render(request,"client/home/new_order.html", return_data)
 
 def project_page(request):
     return render(request,"client/project/project.html") 
@@ -185,16 +304,28 @@ def client_individual_chat_page(request):
     return render(request,"client/chat/individual_chat.html")
 
 def client_account_page(request):
-    return render(request,"client/account/account.html")
+    user_id = request.session['user_id']
+    try:
+        userData = User.objects.get(user_id=user_id)
+        return_data = {
+            "error": False,
+            "user": userData
+        }
+    except Exception as e:
+        return_data = {
+            "error": True,
+            "message": "Something went wrong!"
+        }
+    return render(request,"client/account/account.html", return_data)
 
-def client_edit_bio_page(request):
-    return render(request,"client/account/edit_bio.html")
+# def client_edit_bio_page(request):
+#     return render(request,"client/account/edit_bio.html")
 
-def client_edit_account_page(request):
-    return render(request,"client/account/edit_account.html")
+# def client_edit_account_page(request):
+#     return render(request,"client/account/edit_account.html")
 
-def client_edit_password_page(request):
-    return render(request,"client/account/edit_password.html")
+# def client_edit_password_page(request):
+#     return render(request,"client/account/edit_password.html")
 
 # *******************ONBOARDING APIS*********************************************
 # SIGN UP API
@@ -232,7 +363,7 @@ def register_api(request):
                 #Save user_data
                 new_userData = User(user_id=userRandomId,firstname=firstName,lastname=lastName,
                                 email=email,user_phone=phoneNumber,
-                                user_password=encryped_password,user_address=address, user_state=state, role=role)
+                                user_password=encryped_password,user_address=address, user_state=state, role=role, terms_conditions=True)
                 new_userData.save()
                 #Generate OTP
                 code = string_generator.numeric(4)
@@ -451,7 +582,7 @@ def change_password(request):
             }
     return Response(return_data)
 
-#SIGNIN API
+#SIGNIN API FOR BOTH ARTISAN AND CLIENT
 @api_view(["POST"])
 def login_api(request):
     try:
@@ -517,6 +648,330 @@ def login_api(request):
         }
     return render(request,"onboarding/login.html", return_data)
 
+# add/edit Account details FOR BOTH ARTISAN AND CLIENT
+@api_view(["PUT"])
+def edit_account_ajax(request):
+    user_id = request.session['user_id']
+    try:
+        accountName = request.data.get("edit_name",None)
+        accountNumber = request.data.get("edit_number",None)
+        bankName = request.data.get("edit_bank",None)
+        field = [accountName,accountNumber,bankName]
+        user_data = User.objects.get(user_id=user_id)
+        if not None in field and not "" in field:
+            user_data.account_number = accountNumber
+            user_data.account_name = accountName
+            user_data.bank_name = bankName
+            user_data.profile_complete = True
+            user_data.save()
+            return_data = {
+                "error": False,
+                "role": user_data.role,
+                "message": "Account saved Successfully!",
+            }
+        else:
+            return_data = {
+                "error": True,
+                "role": user_data.role,
+                "message": "One or more fields is Empty!"
+            }
+    except Exception as e:
+        return_data = {
+            "error": True,
+            "role": user_data.role,
+            "message": str(e)
+        }
+    return Response(return_data)
+
+# add/edit bIO details FOR BOTH ARTISAN AND CLIENT
+@api_view(["PUT"])
+def edit_bio_ajax(request):
+    user_id = request.session['user_id']
+    try:
+        # update_first_name = request.data.get("edit_first",None)
+        # update_last_name = request.data.get("edit_last",None)
+        # update_email = request.data.get("edit_email",None)
+        update_phone = request.data.get("edit_phone",None)
+        update_address = request.data.get("edit_address",None)
+        # update_council = request.data.get("edit_lga",None)
+        update_state = request.data.get("edit_state",None)
+        user_data = User.objects.get(user_id=user_id)
+        field = [update_phone,update_address,update_state]
+        if not None in field and not "" in field:
+            
+            # user_data.firstname = update_first_name
+            # user_data.lastname = update_last_name
+            user_data.user_phone = update_phone
+            # user_data.email = update_email
+            user_data.user_address = update_address
+            user_data.user_state = update_state
+            # user_data.user_council_area = update_council
+            user_data.save()
+            return_data = {
+                "error": False,
+                "role": user_data.role,
+                "message": "Bio-Data  Updated Successfully!",
+            }
+        else:
+            return_data = {
+                "error": True,
+                "role": user_data.role,
+                "message": "One or more fields is Empty!"
+            }
+    except Exception as e:
+        return_data = {
+            "error": True,
+            "role": user_data.role,
+            "message": str(e)
+        }
+    return Response(return_data)
+
+# update password
+@api_view(["PUT"])
+def edit_password_ajax(request):
+    
+    try:
+        user_id = request.session['user_id']
+        old_password = request.data.get("old_password",None)
+        new_password = request.data.get("new_password",None)
+        field = [old_password,new_password]
+        user_data = User.objects.get(user_id=user_id)
+        if not None in field and not "" in field:
+            is_valid_password = password_functions.check_password_match(old_password,user_data.user_password)
+            if is_valid_password == False:
+                return_data = {
+                    "error": True,
+                    "role": user_data.role,
+                    "message": "Old Password is Incorrect"
+                }
+            else:
+                #decrypt password
+                encryptpassword = password_functions.generate_password_hash(new_password)
+                user_data.user_password = encryptpassword
+                user_data.save()
+                return_data = {
+                    "error": False,
+                    "role": user_data.role,
+                    "message": "Password Changed Successfully! "
+                }
+    except Exception as e:
+        return_data = {
+                "error": True,
+                "role": user_data.role,
+                "message": str(e)
+        }
+    return Response(return_data)
+
+
+# CLIENT NEW ORDER API
+@api_view(["POST"])
+def new_order_api(request):
+    user_id = request.session['user_id']
+    try:
+        title = request.data.get('title',None)
+        description = request.data.get('description',None)
+        duration = request.data.get('duration',None)
+        state = request.data.get('state',None)
+        location = request.data.get('location',None)
+        min_budget = request.data.get('min_budget',None)
+        max_budget = request.data.get('max_budget',None)
+        field = [title, description, duration, state, location, min_budget, max_budget]
+        user_data = User.objects.get(user_id=user_id)
+        if not None in field and not "" in field:
+            newOrder = Orders(title=title,description=description,duration=duration,min_budget=min_budget,max_budget=max_budget,location=location,state=state,client_id=user_data)
+            newOrder.save()
+            return_data = {
+                "error": False,
+                "message": "Order Created Successfully!"
+            }
+           
+        else:
+            return_data = {
+                "error":True,
+                "message": "One or more fields is empty!"
+            }
+    except Exception as e:
+        return_data = {
+            "error": True,
+            # "message": str(e)
+            "message": "Something went wrong!"
+        }
+    return Response(return_data)
+
+# ARTISAN NEW ADS API
+@api_view(["POST"])
+def new_ads_api(request):
+    user_id = request.session['user_id']
+    try:
+        title = request.data.get('title',None)
+        description = request.data.get('description',None)
+        # duration = request.data.get('duration',None)
+        state = request.data.get('state',None)
+        location = request.data.get('location',None)
+        min_budget = request.data.get('min_budget',None)
+        pitch = request.data.get('pitch',None)
+        max_budget = request.data.get('max_budget',None)
+        field = [title, description, state, location, min_budget, max_budget]
+        user_data = User.objects.get(user_id=user_id)
+        if not None in field and not "" in field:
+            newAds = Ads(title=title,description=description,min_budget=min_budget,max_budget=max_budget,location=location,state=state,artisan_id=user_data,other_info=pitch)
+            newAds.save()
+            return_data = {
+                "error": False,
+                "message": "Ads Created Successfully!"
+            }
+           
+        else:
+            return_data = {
+                "error":True,
+                "message": "One or more fields is empty!"
+            }
+    except Exception as e:
+        return_data = {
+            "error": True,
+            "message": str(e)
+            # "message": "Something went wrong!"
+        }
+    return Response(return_data)
+
+# Ads List for Artisan Accoutn view
+@api_view(["GET"])
+def ads_list_ajax(request):
+    user_id = request.session['user_id']
+    try:
+        user_data = User.objects.get(user_id=user_id)
+        adsData = Ads.objects.filter(artisan_id=user_data) 
+        num = len(adsData)
+        adsList = []
+        for i in range(0,num):
+            ads_id = adsData[i].id
+            title = adsData[i].title 
+            no_of_views = adsData[i].no_of_views
+            to_json = {
+                "ads_id": ads_id,
+                "title": title,
+                "views": no_of_views,
+
+            }
+            adsList.append(to_json)
+        return JsonResponse({ 'adsList':adsList, 'error': False})
+    except Exception as e:
+        adsList = []
+        return JsonResponse({ 'adsList':adsList, 'error': True, 'message': str(e)})
+
+# Ads List for Client Home
+@api_view(["GET"])
+def client_home_ajax(request):
+    try:
+        adsData = Ads.objects.all().order_by('-date_added')[:20]
+        num = len(adsData)
+        adsList = []
+        for i in range(0,num):
+            ads_id = adsData[i].id
+            title = adsData[i].title 
+            state = adsData[i].state
+            min_budget = adsData[i].min_budget 
+            max_budget = adsData[i].max_budget
+            to_json = {
+                "ads_id": ads_id,
+                "title": title,
+                "state": state,
+                "min_budget": min_budget,
+                "max_budget": max_budget,
+            }
+            adsList.append(to_json)
+        return JsonResponse({ 'adsList':adsList, 'error': False})
+    except Exception as e:
+        adsList = []
+        return JsonResponse({ 'adsList':adsList, 'error': True, 'message': str(e)})
+
+# Ads List for Client Home
+@api_view(["GET"])
+def artisan_home_ajax(request):
+    try:
+        orderData = Orders.objects.all().order_by('-date_added')[:20]
+        num = len(orderData)
+        orderList = []
+        for i in range(0,num):
+            order_id = orderData[i].id
+            title = orderData[i].title 
+            state = orderData[i].state
+            min_budget = orderData[i].min_budget 
+            max_budget = orderData[i].max_budget
+            to_json = {
+                "order_id": order_id,
+                "title": title,
+                "state": state,
+                "min_budget": min_budget,
+                "max_budget": max_budget,
+            }
+            orderList.append(to_json)
+        return JsonResponse({ 'orderList':orderList, 'error': False})
+    except Exception as e:
+        orderList = []
+        return JsonResponse({ 'orderList':orderList, 'error': True, 'message': str(e)})
+
+# Orders Search by Artisan
+@api_view(["POST"])
+def order_search(request):
+    query_raw = request.POST["orders_search_query"]
+    query = query_raw.capitalize()
+    orderData = Orders.objects.filter(title__icontains=query) or  Orders.objects.filter(state__icontains=query) or Orders.objects.filter(description__icontains=query)
+    orderList = []
+    try:
+        if len(orderData) > 0:
+            num = len(orderData)
+            for i in range(0,num):
+                order_id = orderData[i].id
+                title = orderData[i].title 
+                state = orderData[i].state
+                min_budget = orderData[i].min_budget 
+                max_budget = orderData[i].max_budget
+                to_json = {
+                    "order_id": order_id,
+                    "title": title,
+                    "state": state,
+                    "min_budget": min_budget,
+                    "max_budget": max_budget,
+                }
+            orderList.append(to_json)
+            return JsonResponse({ 'orderList':orderList, 'error': False})
+        else:
+            return JsonResponse({ 'orderList':orderList, 'error': False, 'message':"Sorry! No results for your Search"})
+
+    except Exception as e:
+        return JsonResponse({ 'orderList':orderList, 'error': True, 'message': str(e)})
+
+# Ads Search by Client
+@api_view(["POST"])
+def ads_search(request):
+    query_raw = request.POST["ads_search_query"]
+    query = query_raw.capitalize()
+    adsData = Ads.objects.filter(title__icontains=query) or  Ads.objects.filter(state__icontains=query) or Ads.objects.filter(description__icontains=query)
+    adsList = []
+    try:
+        if len(adsData) > 0:
+            num = len(adsData)
+            for i in range(0,num):
+                ads_id = adsData[i].id
+                title = adsData[i].title 
+                state = adsData[i].state
+                min_budget = adsData[i].min_budget 
+                max_budget = adsData[i].max_budget
+                to_json = {
+                    "ads_id": ads_id,
+                    "title": title,
+                    "state": state,
+                    "min_budget": min_budget,
+                    "max_budget": max_budget,
+                }
+            adsList.append(to_json)
+            return JsonResponse({ 'adsList':adsList, 'error': False})
+        else:
+            return JsonResponse({ 'adsList':adsList, 'error': False, 'message':"Sorry! No results for your Search"})
+
+    except Exception as e:
+        return JsonResponse({ 'adsList':adsList, 'error': True, 'message': str(e)})
 # @api_view(["GET"])
 # def dashboard(request):
 #     try:

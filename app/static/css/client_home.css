@@ -83,13 +83,13 @@ body{
 }
 
 .job-card{
-    height: 140px;
-    width: 31%;
+    height: 130px;
+    width: 46%;
     background-color: #14A0C620;
     border-radius: 20px;
     text-align: center;
     margin:0.5% 0.5% 7% 0.5%;
-    padding:5.5% 0;
+    padding:20px 0 0 0;
 }
 p{
     margin:0;
@@ -109,8 +109,8 @@ p{
     overflow-y: scroll;
     flex-wrap: wrap;
     display: flex;
-    height:70vh;
-    /* justify-content: space-around; */
+    height:60vh;
+    justify-content: space-around;
 }
 /* Hide scrollbar for Chrome, Safari and Opera */
 .job-scroll::-webkit-scrollbar, .job-form-container::-webkit-scrollbar, .ads-form-container::-webkit-scrollbar {
@@ -126,11 +126,12 @@ textarea:focus, input:focus{
     outline: none;
 }
 .job-button{
-    border-radius: 25px;
+    border-radius: 0 0 25px 25px;
     background-color: #097685;
     border:1px solid #097685;
     color:#fff;
     height: 30px;
+    margin-top: 10px;
     line-height: 10px;
 }
 .job-amount{
@@ -195,13 +196,12 @@ textarea:focus, input:focus{
 }
 .complete-profile{
     position: fixed;
-    top:30vh;
+    top:10vh;
     margin-right: 10%;
     text-align: center;
     font-weight: 500;
-    padding-top:10vh;
-    height:40vh;
+    height:70vh;
     font-family: Poppins;
     color: #fff;
-    background-color: #211e1ec7;
+    background-color: #097685;
 }

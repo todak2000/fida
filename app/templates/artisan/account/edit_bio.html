@@ -14,23 +14,63 @@
   <!-- seconday nav ends -->
   <!-- top section -->
     <div class="job-form-container">
+      <div class='text-center alert ' id="bio_message_fail" style="display: none;"></div>
+      <div class='text-center alert' id="bio_message_success" style="display: none;"></div>
         <form class="onboarding_form mt-2" action="#" id="job_details_form" method="POST" autocomplete="off">
             {% csrf_token %}
             <label class="job-label">First Name</label>
-            <input type="text" id="first-name"   class="job-input form-control mb-1" placeholder="John">
+            <input type="text" id="first-name"   class="job-input form-control mb-1" value="{{user.firstname}}" readonly>
             <label class="job-label">Last Name</label>
-            <input type="text" id="last-name"   class="job-input form-control mb-1" placeholder="Doe">
+            <input type="text" id="last-name"   class="job-input form-control mb-1" value="{{user.lastname}}" readonly>
             <label class="job-label">Email</label>
-            <input type="text" id="email"   class="job-input form-control mb-1" placeholder="john@doe.com">
+            <input type="text" id="email"   class="job-input form-control mb-1" value="{{user.email}}" readonly>
             <label class="job-label">Phone</label>
-            <input type="text" id="phone"   class="job-input form-control mb-1" placeholder="097667765">
+            <input type="text" id="edit_phone"   class="job-input form-control mb-1" value="{{user.user_phone}}">
             <label class="job-label">Address</label>
-            <input type="text" id="address"   class="job-input form-control mb-1" placeholder="John">
-            <label class="job-label">L.G.A</label>
-            <input type="text" id="lga"   class="job-input form-control mb-1" placeholder="VI">
+            <input type="text" id="edit_address"   class="job-input form-control mb-1" value="{{user.user_address}}">
             <label class="job-label">State</label>
-            <input type="text" id="state"   class="job-input form-control mb-1" placeholder="FCT">
-            <input type="button" value="Submit" class="form-control job-form-button" id="job_details_submit">
+            <!-- <input type="text" id="edit_state"   class="job-input form-control mb-1" value="{{user.user_state}}"> -->
+            <select id="edit_state" class="job-input form-control mb-1">
+              <option value="{{user.user_state}}" selected>{{user.user_state}}</option>
+              <option value="Abia">Abia</option>
+              <option value="Adamawa">Adamawa</option>
+              <option value="Akwa Ibom">Akwa Ibom</option>
+              <option value="Anambra">Anambra</option>
+              <option value="Bauchi">Bauchi</option>
+              <option value="Bayelsa">Bayelsa</option>
+              <option value="Benue">Benue</option>
+              <option value="Borno">Borno</option>
+              <option value="Cross Rive">Cross River</option>
+              <option value="Delta">Delta</option>
+              <option value="Ebonyi">Ebonyi</option>
+              <option value="Edo">Edo</option>
+              <option value="Ekiti">Ekiti</option>
+              <option value="Enugu">Enugu</option>
+              <option value="FCT">Federal Capital Territory</option>
+              <option value="Gombe">Gombe</option>
+              <option value="Imo">Imo</option>
+              <option value="Jigawa">Jigawa</option>
+              <option value="Kaduna">Kaduna</option>
+              <option value="Kano">Kano</option>
+              <option value="Katsina">Katsina</option>
+              <option value="Kebbi">Kebbi</option>
+              <option value="Kogi">Kogi</option>
+              <option value="Kwara">Kwara</option>
+              <option value="Lagos">Lagos</option>
+              <option value="Nasarawa">Nasarawa</option>
+              <option value="Niger">Niger</option>
+              <option value="Ogun">Ogun</option>
+              <option value="Ondo">Ondo</option>
+              <option value="Osun">Osun</option>
+              <option value="Oyo">Oyo</option>
+              <option value="Plateau">Plateau</option>
+              <option value="Rivers">Rivers</option>
+              <option value="Sokoto">Sokoto</option>
+              <option value="Taraba">Taraba</option>
+              <option value="Yobe">Yobe</option>
+              <option value="Zamfara">Zamfara</option>
+          </select>
+            <input type="button" value="Submit" class="form-control job-form-button" id="bio_submit">
         </form>
 
     </div>

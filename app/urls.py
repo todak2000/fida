@@ -30,11 +30,19 @@ urlpatterns = [
     path("chat", views.chat_page, name="chat"),
     path("individual_chat", views.individual_chat_page, name="individual_chat"),
     path("account", views.account_page, name="account"),
+    
+    path("edit_ads", views.edit_ads_page, name="edit_ads"),
+    path("view_ads", views.view_ads_page, name="view_ads"),
+
+    # SHARED APIS
+    path("edit_bio_ajax", views.edit_bio_ajax, name="edit_bio_ajax"),
+    path("edit_account_ajax", views.edit_account_ajax, name="edit_account_ajax"),
+    path("edit_password_ajax", views.edit_password_ajax, name="edit_password_ajax"),
+    
+    # SHARED PAGES
     path("edit_bio", views.edit_bio_page, name="edit_bio"),
     path("edit_account", views.edit_account_page, name="edit_account"),
     path("edit_password", views.edit_password_page, name="edit_password"),
-    path("edit_ads", views.edit_ads_page, name="edit_ads"),
-    path("view_ads", views.view_ads_page, name="view_ads"),
     # CLIENT PAGES
     path("client_home", views.client_home_page, name="client_home"),
     path("client_wallet", views.client_wallet_page, name="client_wallet"),
@@ -54,9 +62,16 @@ urlpatterns = [
     path("client_chat", views.client_chat_page, name="client_chat"),
     path("client_individual_chat", views.client_individual_chat_page, name="client_individual_chat"),
     path("client_account", views.client_account_page, name="client_account"),
-    path("client_edit_bio", views.client_edit_bio_page, name="client_edit_bio"),
-    path("client_edit_account", views.client_edit_account_page, name="client_edit_account"),
-    path("client_edit_password", views.client_edit_password_page, name="client_edit_password"),
+
+    # CLIENT APIS
+    path("new_order_ajax", views.new_order_api, name="new_order_ajax"),
+    path("client_home_ajax", views.client_home_ajax, name="client_home_ajax"),
+    path("ads_search", views.ads_search, name="ads_search"),
+    # ARTISANS APIS
+    path("new_ads_ajax", views.new_ads_api, name="new_ads_ajax"),
+    path("ads_list_ajax", views.ads_list_ajax, name="ads_list_ajax"),
+    path("artisan_home_ajax", views.artisan_home_ajax, name="artisan_home_ajax"),
+    path("order_search", views.order_search, name="order_search"),
 
     # ONBOARDING APIS
     path("login_api", views.login_api, name="login_api"),

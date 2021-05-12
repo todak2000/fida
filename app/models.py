@@ -46,11 +46,12 @@ class Ads(models.Model):
     location = models.TextField(max_length=200,verbose_name="Location")
     state = models.TextField(max_length=200,verbose_name="State")
     other_info = models.TextField(max_length=200,verbose_name="Other Information")
+    no_of_views = models.IntegerField(verbose_name="No of Views", default=0)
     
     date_added = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
-        return f"{self.artisan_id} - {self.title} - {self.min_budget} - {self.max_budget} - {self.state}"
+        return f"{self.artisan_id} - {self.title} - {self.min_budget} - {self.max_budget} - {self.state}- {self.no_of_views}"
 
 class Orders(models.Model):
     class Meta:

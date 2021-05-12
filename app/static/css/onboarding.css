@@ -60,6 +60,7 @@ textarea:focus, input:focus{
       font-family: Poppins;
       font-size:0.85rem!important;
       border-radius:20px;
+      padding:0.5rem;
   }
 
   .code-item {

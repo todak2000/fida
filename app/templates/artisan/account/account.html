@@ -6,7 +6,7 @@
 <section class="secondary-background">
     <!-- secondary nav starts -->
   <div class="secondary-nav">
-    <i class="fas fa-chevron-left" style="color: #fff;" onclick="window.history.back();" ></i>
+    <a href="{% url 'artisan_home' %}"><i class="fas fa-chevron-left" style="color: #fff;"></i></a>
     <p class="sec-nav-title">Account</p>
     <i class="fas fa-times-circle  text-right" style="color: #005FD8;"  ></i>
   </div>
@@ -14,29 +14,30 @@
   <!-- seconday nav ends -->
   <!-- bio section -->
     <div class="bio-div">
+      <div class="text-danger mt-3 complete-profile"  role="alert">{{message}}</div>
       <div class="bio-header mb-3">
         <div class="bio-sub-header">
           <i class="fas fa-user-circle fa-2x mr-3" style="color: #0069F0;"  ></i>
           <p class="bio-title">Personal</p>
         </div>
-        <img src="{% static 'img/edit.svg' %}" >
+        <a href="{% url 'edit_bio' %}"><img src="{% static 'img/edit.svg' %}" ></a>
       </div>
       <div class="bio-body">
         <div class="bio-sub-header">
           <p class="bio-text">Full Name</p>
-          <p class="bio-text">John Doe</p>
+          <p class="bio-text">{{user.firstname}} {{user.lastname}}</p>
         </div>
         <div class="bio-sub-header">
           <p class="bio-text">Email</p>
-          <p class="bio-text">john@doe.com</p>
+          <p class="bio-text">{{user.email}}</p>
         </div>
         <div class="bio-sub-header">
           <p class="bio-text">Phone</p>
-          <p class="bio-text">09088383783</p>
+          <p class="bio-text">{{user.user_phone}}</p>
         </div>
         <div class="bio-sub-header">
           <p class="bio-text">Address</p>
-          <p class="bio-text text-right" style="width: 70%;">1 Aguiyi Ironsi St, Maitama 900001, Abuja, Nigeria</p>
+          <p class="bio-text text-right" style="width: 70%;">{{user.user_address}} {{user.user_state}}</p>
         </div>
         <div class="bio-sub-header">
           <p class="bio-text">Role</p>
@@ -52,20 +53,20 @@
           <img src="{% static 'img/account_balance.svg' %}" >
           <p class="bio-title ml-3">Bank</p>
         </div>
-        <img src="{% static 'img/edit.svg' %}" >
+        <a href="{% url 'edit_account' %}"><img src="{% static 'img/edit.svg' %}" ></a>
       </div>
       <div class="bio-body">
         <div class="bio-sub-header">
           <p class="bio-text">Account Name</p>
-          <p class="bio-text">John Doe</p>
+          <p class="bio-text">{{user.account_name}}</p>
         </div>
         <div class="bio-sub-header">
           <p class="bio-text">Account Number</p>
-          <p class="bio-text">09088383783</p>
+          <p class="bio-text">{{user.account_number}}</p>
         </div>
         <div class="bio-sub-header">
           <p class="bio-text">Bank</p>
-          <p class="bio-text">Artisan Bank</p>
+          <p class="bio-text">{{user.bank_name}}</p>
         </div>
       </div>
     </div>
@@ -77,7 +78,7 @@
           <img src="{% static 'img/security.svg' %}" >
           <p class="bio-title ml-3">Security</p>
         </div>
-        <img src="{% static 'img/edit.svg' %}" >
+        <a href="{% url 'edit_password' %}"><img src="{% static 'img/edit.svg' %}" ></a>
       </div>
       <div class="bio-body">
         <div class="bio-sub-header">
@@ -98,13 +99,13 @@
       <div class="bio-body">
         <div class="bio-sub-header">
           <p class="bio-text">View Ads</p>
-          <a class="button-ads">view ads</a>
+          <a class="button-ads" href="{% url 'view_ads' %}">view ads</a>
         </div>
       </div>
       <div class="bio-body">
         <div class="bio-sub-header">
           <p class="bio-text">Ratings</p>
-          <p class="bio-text">3.5</p>
+          <p class="bio-text">{{user.ratings}}</p>
         </div>
       </div>
     </div>

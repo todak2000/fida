@@ -34,23 +34,17 @@
     <form class="onboarding_form mt-2" action="#" id="job_details_form" method="POST" autocomplete="off">
         {% csrf_token %}
         <label class="job-label">Title</label>
-        <input type="text" id="title"   class="job-input form-control mb-3" placeholder="I can .....">
+        <input type="text" id="title"   class="job-input form-control mb-3" placeholder="Professional Plumber">
         <label class="job-label">Brief Description</label>
-        <textarea id="description"   class="job-input form-control mb-3" placeholder="I need a washman"></textarea>
-        <label class="job-label">Duration</label>
-        <select id="duration"   class="job-input form-control mb-3">
-            <option value="choose">Choose</option>
-            <option value="1 day">1 DAY</option>
-            <option value="1 day">3 DAYS</option>
-        </select>
+        <textarea id="description"   class="job-input form-control mb-3" placeholder="I can help with all kinds of plumbing work"></textarea>
         <div class="job-flex">
             <div style="width:45%">
                 <label class="job-label">Min Budget</label>
-                <input type="text" id="min-budget"   class="job-input form-control mb-3" placeholder="2000">
+                <input type="text" id="min_budget"   class="job-input form-control mb-3" placeholder="2000">
             </div>
             <div style="width:45%">
                 <label class="job-label">Max Budget</label>
-                <input type="text" id="max-budget"   class="job-input form-control mb-3" placeholder="3000">
+                <input type="text" id="max_budget"   class="job-input form-control mb-3" placeholder="3000">
             </div>
         </div>
         <div class="job-flex">
@@ -60,18 +54,57 @@
             </div>
             <div style="width:45%">
                 <label class="job-label">State</label>
-                <select id="state"   class="job-input form-control mb-3">
-                    <option value="choose">Choose</option>
-                    <option value="lagos">LAGOS</option>
-                    <option value="abuja">ABUJA</option>
+                <select id="state" class="job-input form-control mb-3">
+                    <option disabled selected>Choose</option>
+                    <option value="Abia">Abia</option>
+                    <option value="Adamawa">Adamawa</option>
+                    <option value="Akwa Ibom">Akwa Ibom</option>
+                    <option value="Anambra">Anambra</option>
+                    <option value="Bauchi">Bauchi</option>
+                    <option value="Bayelsa">Bayelsa</option>
+                    <option value="Benue">Benue</option>
+                    <option value="Borno">Borno</option>
+                    <option value="Cross Rive">Cross River</option>
+                    <option value="Delta">Delta</option>
+                    <option value="Ebonyi">Ebonyi</option>
+                    <option value="Edo">Edo</option>
+                    <option value="Ekiti">Ekiti</option>
+                    <option value="Enugu">Enugu</option>
+                    <option value="FCT">Federal Capital Territory</option>
+                    <option value="Gombe">Gombe</option>
+                    <option value="Imo">Imo</option>
+                    <option value="Jigawa">Jigawa</option>
+                    <option value="Kaduna">Kaduna</option>
+                    <option value="Kano">Kano</option>
+                    <option value="Katsina">Katsina</option>
+                    <option value="Kebbi">Kebbi</option>
+                    <option value="Kogi">Kogi</option>
+                    <option value="Kwara">Kwara</option>
+                    <option value="Lagos">Lagos</option>
+                    <option value="Nasarawa">Nasarawa</option>
+                    <option value="Niger">Niger</option>
+                    <option value="Ogun">Ogun</option>
+                    <option value="Ondo">Ondo</option>
+                    <option value="Osun">Osun</option>
+                    <option value="Oyo">Oyo</option>
+                    <option value="Plateau">Plateau</option>
+                    <option value="Rivers">Rivers</option>
+                    <option value="Sokoto">Sokoto</option>
+                    <option value="Taraba">Taraba</option>
+                    <option value="Yobe">Yobe</option>
+                    <option value="Zamfara">Zamfara</option>
                 </select>
             </div>
         </div>
         <label class="job-label-blue">Any additional Information</label>
         <textarea id="pitch"   class="job-input-blue form-control mb-3" placeholder="I need a washman"></textarea>
-        <input type="button" value="Submit Ads" class="form-control job-form-button mt-3" id="job_details_submit">
+        <input type="button" value="Submit Ads" class="form-control job-form-button mt-3" id="new_ads_submit">
     </form>
-
+    <div class="alert alert-primary mt-3 complete-profile" id="server_message" style="display: none;">
+        <img src="{% static 'img/dashboard_welcome.svg' %}" >
+        <p> <span style="font-size: 1rem; font-weight: 700;">Yay {{user_name}}!</span><br> Ads sumbitted successfully. You can view and edit your Ads at the Account Section </p>
+        <a href="{% url 'account' %}"><button class="btn btn btn-outline-primary form-control mt-3" style="background-color: #fff; border-radius: 50px;">Here</button></a>
+    </div>
 </div>
 </section>
 <footer class="footer">

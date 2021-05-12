@@ -32,116 +32,27 @@
   <!-- top section -->
   <div>
     {% if profileComplete == False %}
-        <div class="alert alert-primary mt-3 complete-profile" id="server_message" role="alert">Hi {{user_name}}! Kindly Complete your Profile <a href="{% url 'client_account' %}">Here</a></div>
+        <div class="alert alert-primary mt-3 complete-profile" id="server_message" role="alert">
+          <img src="{% static 'img/dashboard_welcome.svg' %}" >
+          <p> <span style="font-size: 1rem; font-weight: 700;">Welcome {{user_name}}!</span><br> We can't wait to get you started. Firstly, kindly Complete your Profile </p>
+          <a href="{% url 'client_account' %}"><button class="btn form-control mt-3" style="background-color: #fff; border-radius: 50px; border:1px solid #097685; color:#097685;">Here</button></a>
+        </div>
     {% endif %}
     <!-- search -->
     <div class="form-group mt-3">
-      <div style="display: flex; justify-content: left;">
+      <form>{% csrf_token %}
+        <div style="display: flex; justify-content: left;">
+          <input type="search" class="form-control search" name="search" id="search_ad" placeholder="Search by key Ads words or state" onkeydown="search_ads(this)"/>
+          <i class="fas fa-search"  style="margin-left:-13%;margin-top: 4%; color: #ccc;"></i>
+        </div>
+      </form>
+      <!-- <div style="display: flex; justify-content: left;">
           <input type="search" class="form-control search" name="search" id="search" placeholder="Search" />
           <i class="fas fa-search"  style="margin-left:-13%;margin-top: 4%; color: #ccc;"></i>
-      </div>
+      </div> -->
   </div>
     <h4>Latest Jobs</h4>
-    <div class="job-scroll">
-      <div class="job-card">
-        <div class="job-inner">
-          <p>Lagos</p>
-          <i class="fas fa-laptop fa-2x" style="color: #097685;"></i>
-          <p>Web developer Needed</p>
-          <p class="job-amount">N30,000</p>
-        </div>
-        <input type="button" value="Bid" class="form-control job-button" id="signup_next">
-      </div>
-      <div class="job-card">
-        <div class="job-inner">
-          <p>Lagos</p>
-          <i class="fas fa-laptop fa-2x" style="color: #097685;"></i>
-          <p>Web developer Needed</p>
-          <p class="job-amount">N30,000</p>
-        </div>
-        <input type="button" value="Bid" class="form-control job-button" id="signup_next">
-      </div>
-      <div class="job-card">
-        <div class="job-inner">
-          <p>Lagos</p>
-          <i class="fas fa-laptop fa-2x" style="color: #097685;"></i>
-          <p>Web developer Needed</p>
-          <p class="job-amount">N30,000</p>
-        </div>
-        <input type="button" value="Bid" class="form-control job-button" id="signup_next">
-      </div>
-      <div class="job-card">
-        <div class="job-inner">
-          <p>Lagos</p>
-          <i class="fas fa-laptop fa-2x" style="color: #097685;"></i>
-          <p>Web developer Needed</p>
-          <p class="job-amount">N30,000</p>
-        </div>
-        <input type="button" value="Bid" class="form-control job-button" id="signup_next">
-      </div>
-      <div class="job-card">
-        <div class="job-inner">
-          <p>Lagos</p>
-          <i class="fas fa-laptop fa-2x" style="color: #097685;"></i>
-          <p>Web developer Needed</p>
-          <p class="job-amount">N30,000</p>
-        </div>
-        <input type="button" value="Bid" class="form-control job-button" id="signup_next">
-      </div>
-      <div class="job-card">
-        <div class="job-inner">
-          <p>Lagos</p>
-          <i class="fas fa-laptop fa-2x" style="color: #097685;"></i>
-          <p>Web developer Needed</p>
-          <p class="job-amount">N30,000</p>
-        </div>
-        <input type="button" value="Bid" class="form-control job-button" id="signup_next">
-      </div>
-      <div class="job-card">
-        <div class="job-inner">
-          <p>Lagos</p>
-          <i class="fas fa-laptop fa-2x" style="color: #097685;"></i>
-          <p>Web developer Needed</p>
-          <p class="job-amount">N30,000</p>
-        </div>
-        <input type="button" value="Bid" class="form-control job-button" id="signup_next">
-      </div>
-      <div class="job-card">
-        <div class="job-inner">
-          <p>Lagos</p>
-          <i class="fas fa-laptop fa-2x" style="color: #097685;"></i>
-          <p>Web developer Needed</p>
-          <p class="job-amount">N30,000</p>
-        </div>
-        <input type="button" value="Bid" class="form-control job-button" id="signup_next">
-      </div>
-      <div class="job-card">
-        <div class="job-inner">
-          <p>Lagos</p>
-          <i class="fas fa-laptop fa-2x" style="color: #097685;"></i>
-          <p>Web developer Needed</p>
-          <p class="job-amount">N30,000</p>
-        </div>
-        <input type="button" value="Bid" class="form-control job-button" id="signup_next">
-      </div>
-      <div class="job-card">
-        <div class="job-inner">
-          <p>Lagos</p>
-          <i class="fas fa-laptop fa-2x" style="color: #097685;"></i>
-          <p>Web developer Needed</p>
-          <p class="job-amount">N30,000</p>
-        </div>
-        <input type="button" value="Bid" class="form-control job-button" id="signup_next">
-      </div>
-      <div class="job-card">
-        <div class="job-inner">
-          <p>Lagos</p>
-          <i class="fas fa-laptop fa-2x" style="color: #097685;"></i>
-          <p>Web developer Needed</p>
-          <p class="job-amount">N30,000</p>
-        </div>
-        <input type="button" value="Bid" class="form-control job-button" id="signup_next">
-      </div>
+    <div class="job-scroll" id="client_screen">
     </div>
   </div>
 </section>
