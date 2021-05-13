@@ -74,4 +74,62 @@
         <!-- <p>Signout</p> -->
     </a>
 </footer>
+<!-- Job Details modal -->  
+  <!-- Modal -->
+  <div class="modal fade" id="jobDetailsModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document" style="margin:0;">
+      <div class="modal-content">
+        <div class="modal-body">
+          <section class="secondary-background">
+            <!-- secondary nav starts -->
+        <div class="secondary-nav">
+            <i class="fas fa-times-circle" style="color: #fff;" class="close" data-dismiss="modal" aria-label="Close" ></i>
+            <p class="sec-nav-title">Job Details</p>
+            <i class="fas fa-times-circle  text-right" style="color: #005FD8;"  ></i>
+          </div>
+        
+          <!-- seconday nav ends -->
+          <!-- top section -->
+            <div class="job-form-container">
+                <form class="onboarding_form mt-2" action="#" id="job_details_form" method="POST" autocomplete="off">
+                    {% csrf_token %}
+                    <label class="job-label">Title</label>
+                    <input type="text" id="job_title"   class="job-input form-control mb-3" readonly>
+                    <label class="job-label">Brief Description</label>
+                    <textarea id="job_description"   class="job-input form-control mb-3"  readonly></textarea>
+                    <div class="job-flex">
+                        <div style="width:45%">
+                            <label class="job-label">Duration</label>
+                            <input type="text" id="job_duration"    class="job-input form-control mb-1" readonly>
+                        </div>
+                        <div style="width:45%">
+                            <label class="job-label">Budget</label>
+                            <input type="text" id="job_max_budget"   class="job-input form-control mb-3" readonly>
+                        </div>
+                    </div>
+                    <div class="job-flex">
+                        <div style="width:45%">
+                            <label class="job-label">Location</label>
+                            <input type="text" id="job_location"   class="job-input form-control mb-3" readonly>
+                        </div>
+                        <div style="width:45%">
+                            <label class="job-label">State</label>
+                            <input type="text" id="job_state"   class="job-input form-control mb-1" readonly>
+                        </div>
+                    </div>
+                    <input id="job_id" hidden/>
+                    <label class="job-label-blue">Service/Bidding Fee</label>
+                    <input type="text" id="bidding_fee"   class="job-input-blue form-control mb-3" placeholder="I need a washman">
+                    <label class="job-label-blue">Your Pitch to convince the Client</label>
+                    <textarea id="job_pitch"   class="job-input-blue form-control mb-3" placeholder="I need a washman"></textarea>
+                    <input type="button" value="Submit Bid" class="form-control job-form-button mt-3" id="job_details_submit">
+                </form>
+        
+            </div>
+          </div>
+        </section>
+        </div>
+      </div>
+    </div>
+  </div>
 {% endblock %}

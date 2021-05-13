@@ -46,10 +46,6 @@
           <i class="fas fa-search"  style="margin-left:-13%;margin-top: 4%; color: #ccc;"></i>
         </div>
       </form>
-      <!-- <div style="display: flex; justify-content: left;">
-          <input type="search" class="form-control search" name="search" id="search" placeholder="Search" />
-          <i class="fas fa-search"  style="margin-left:-13%;margin-top: 4%; color: #ccc;"></i>
-      </div> -->
   </div>
     <h4>Latest Jobs</h4>
     <div class="job-scroll" id="client_screen">
@@ -78,4 +74,65 @@
         <!-- <p>Signout</p> -->
     </a>
 </footer>
+
+<!-- create Order modal -->  
+  <!-- Modal -->
+  <div class="modal fade" id="createOrderModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document" style="margin:0;">
+      <div class="modal-content">
+        <div class="modal-body">
+          <section class="secondary-background">
+            <!-- secondary nav starts -->
+        <div class="secondary-nav">
+            <i class="fas fa-times-circle" style="color: #fff;" class="close" data-dismiss="modal" aria-label="Close" ></i>
+            <p class="sec-nav-title">Create Order from Ads</p>
+            <i class="fas fa-times-circle  text-right" style="color: #005FD8;"  ></i>
+          </div>
+        
+          <!-- seconday nav ends -->
+          <!-- top section -->
+            <div class="job-form-container">
+              <form class="onboarding_form mt-2" action="#" id="job_details_form" method="POST" autocomplete="off">
+                {% csrf_token %}
+                  <label class="job-label">Title</label>
+                  <input type="text" id="ads_title"   class="job-input form-control mb-1" readonly>
+                  <label class="job-label">Brief Description</label>
+                  <textarea id="ads_description"   class="job-input form-control mb-1"  readonly></textarea>
+                  <!-- <label class="job-label">Duration</label>
+                  <input type="text" id="ads_duration" class="job-input form-control mb-1" readonly> -->
+                  <div class="job-flex">
+                      <div style="width:45%">
+                          <label class="job-label">Min Budget</label>
+                          <input type="text" id="ads_min_budget"   class="job-input form-control mb-1"  readonly>
+                      </div>
+                      <div style="width:45%">
+                          <label class="job-label">Max Budget</label>
+                          <input type="text" id="ads_max_budget"   class="job-input form-control mb-1"  readonly>
+                      </div>
+                  </div>
+                  <div class="job-flex">
+                      <div style="width:45%">
+                          <label class="job-label">Location</label>
+                          <input type="text" id="ads_location"   class="job-input form-control mb-1"  readonly>
+                      </div>
+                      <div style="width:45%">
+                          <label class="job-label">State</label>
+                          <input type="text" id="ads_state"   class="job-input form-control mb-1" readonly>
+                      </div>
+                  </div>
+                  <input id="ads_id" hidden/>
+                  <label class="job-label">Service fee</label>
+                  <input type="text" id="ads_fee"   class="job-input form-control mb-3" placeholder="2,500">
+                  <label class="job-label-blue">Any additional Information</label>
+                  <textarea id="ads_pitch"   class="job-input-blue form-control mb-1" placeholder="I need a washman" readonly></textarea>
+                  <input type="button" value="Submit Order" class="form-control job-form-button mt-3" id="job_details_submit">
+              </form>
+        
+            </div>
+          </div>
+        </section>
+        </div>
+      </div>
+    </div>
+  </div>
 {% endblock %}
