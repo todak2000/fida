@@ -633,7 +633,7 @@ $.ajax({
                         '<i class="fas fa-laptop fa-2x" style="color: #097685;"></i>'+
                         '<p>'+element.title+'</p>'+
                         '<p class="job-amount">&#8358;'+element.min_budget+' - &#8358;'+element.max_budget+'</p></div>'+
-                    '<input type="button" value="Create Order" class="form-control job-button" id="'+element.ads_id+'"></div>'
+                    '<input type="button" value="Create Order" class="form-control job-button" id="'+element.ads_id+'" onClick="ads_view(this.id)"></div>'
                 );
             });
         }
@@ -666,7 +666,7 @@ $.ajax({
                         '<i class="fas fa-laptop fa-2x" style="color: #267DED;"></i>'+
                         '<p>'+element.title+'</p>'+
                         '<p class="job-amount">&#8358;'+element.min_budget+' - &#8358;'+element.max_budget+'</p></div>'+
-                    '<input type="button" value="Bid" class="form-control job-button" id="id="'+element.order_id+'"></div>'
+                    '<input type="button" value="Bid" class="form-control job-button" id="'+element.order_id+'" onClick="job_view(this.id)"></div>'
                 );
             });
         }
@@ -708,7 +708,7 @@ function search_orders(e) {
                             '<i class="fas fa-laptop fa-2x" style="color: #267DED;"></i>'+
                             '<p>'+element.title+'</p>'+
                             '<p class="job-amount">&#8358;'+element.min_budget+' - &#8358;'+element.max_budget+'</p></div>'+
-                        '<input type="button" value="Bid" class="form-control job-button" id="id="'+element.order_id+'"></div>'
+                        '<input type="button" value="Bid" class="form-control job-button" id="id="'+element.order_id+'" onClick="job_view(this.id)"></div>'
                     );
                 });
             }
@@ -751,7 +751,7 @@ function search_ads(e) {
                             '<i class="fas fa-laptop fa-2x" style="color: #267DED;"></i>'+
                             '<p>'+element.title+'</p>'+
                             '<p class="job-amount">&#8358;'+element.min_budget+' - &#8358;'+element.max_budget+'</p></div>'+
-                        '<input type="button" value="Create Order" class="form-control job-button" id="id="'+element.order_id+'"></div>'
+                        '<input type="button" value="Create Order" class="form-control job-button" id="id="'+element.order_id+'" onClick="ads_view(this.id)"></div>'
                     );
                 });
             }
@@ -760,6 +760,91 @@ function search_ads(e) {
             }
             if(adsList.length <= 0){
                 $('#client_screen').append('<div class="text-center" style="color: #448AC9; margin-top:50px;">'+response.message+'</div>');
+            }
+        },
+        error:function(e){
+            console.log(e);
+        },
+    });
+}
+
+// BID click and Job details view
+function job_view(id) {
+    let $crf_token = $('[name="csrfmiddlewaretoken"]').attr('value');
+    $.ajax({
+        url:'/job_view',
+        type:'POST',
+        headers:{
+            "X-CSRFToken": $crf_token,
+        },
+        data:{
+            id: id,
+        },
+        success:function(response){
+            
+            let jobView = response.jobView;
+            if(jobView){
+                console.log(response);
+                document.getElementById('job_title').value = jobView.title;
+                document.getElementById('job_description').value = jobView.description;
+                document.getElementById('job_duration').value = jobView.duration;
+                document.getElementById('job_max_budget').value = "NGN"+jobView.max_budget;
+                document.getElementById('job_location').value = jobView.location;
+                document.getElementById('job_state').value = jobView.state;
+
+                document.getElementById('job_id').value = jobView.job_id;
+                $('#jobDetailsModal').modal('show');
+            }
+            if(response.error == true){
+                console.log(response)
+                // $('#client_screen').append('<div class="text-center" style="color: #448AC9; margin-top:50px;">An error occured. Try again!</div>');
+            }
+            if(jobView.length <= 0){
+                console.log(response)
+                // $('#client_screen').append('<div class="text-center" style="color: #448AC9; margin-top:50px;">'+response.message+'</div>');
+            }
+        },
+        error:function(e){
+            console.log(e);
+        },
+    });
+}
+
+// BID click and Job details view
+function ads_view(id) {
+    let $crf_token = $('[name="csrfmiddlewaretoken"]').attr('value');
+    $.ajax({
+        url:'/ads_view',
+        type:'POST',
+        headers:{
+            "X-CSRFToken": $crf_token,
+        },
+        data:{
+            id: id,
+        },
+        success:function(response){
+            
+            let adsView = response.adsView;
+            if(adsView){
+                console.log(response);
+                document.getElementById('ads_title').value = adsView.title;
+                document.getElementById('ads_description').value = adsView.description;
+                document.getElementById('ads_duration').value = adsView.duration;
+                document.getElementById('ads_max_budget').value = "NGN"+adsView.max_budget;
+                document.getElementById('ads_min_budget').value = "NGN"+adsView.min_budget;
+                document.getElementById('ads_location').value = adsView.location;
+                document.getElementById('ads_state').value = adsView.state;
+
+                document.getElementById('ads_id').value = adsView.ads_id;
+                $('#createOrderModal').modal('show');
+            }
+            if(response.error == true){
+                console.log(response)
+                // $('#client_screen').append('<div class="text-center" style="color: #448AC9; margin-top:50px;">An error occured. Try again!</div>');
+            }
+            if(jobView.length <= 0){
+                console.log(response)
+                // $('#client_screen').append('<div class="text-center" style="color: #448AC9; margin-top:50px;">'+response.message+'</div>');
             }
         },
         error:function(e){

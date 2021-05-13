@@ -17,7 +17,7 @@
         <form class="onboarding_form mt-2" action="#" id="job_details_form" method="POST" autocomplete="off">
             {% csrf_token %}
             <label class="job-label">Title</label>
-            <input type="text" id="title"   class="job-input form-control mb-3" placeholder="I need a washman" readonly>
+            <input type="text" id="job_title"   class="job-input form-control mb-3" value="{{title}}" readonly>
             <label class="job-label">Brief Description</label>
             <textarea id="description"   class="job-input form-control mb-3" placeholder="I need a washman" readonly></textarea>
             <div class="job-flex">

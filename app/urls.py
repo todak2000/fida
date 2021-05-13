@@ -30,6 +30,8 @@ urlpatterns = [
     path("chat", views.chat_page, name="chat"),
     path("individual_chat", views.individual_chat_page, name="individual_chat"),
     path("account", views.account_page, name="account"),
+    path("job_view", views.job_view, name="job_view"),
+    
     
     path("edit_ads", views.edit_ads_page, name="edit_ads"),
     path("view_ads", views.view_ads_page, name="view_ads"),
@@ -67,6 +69,8 @@ urlpatterns = [
     path("new_order_ajax", views.new_order_api, name="new_order_ajax"),
     path("client_home_ajax", views.client_home_ajax, name="client_home_ajax"),
     path("ads_search", views.ads_search, name="ads_search"),
+    path("ads_view", views.ads_view, name="ads_view"),
+    
     # ARTISANS APIS
     path("new_ads_ajax", views.new_ads_api, name="new_ads_ajax"),
     path("ads_list_ajax", views.ads_list_ajax, name="ads_list_ajax"),

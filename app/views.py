@@ -972,6 +972,68 @@ def ads_search(request):
 
     except Exception as e:
         return JsonResponse({ 'adsList':adsList, 'error': True, 'message': str(e)})
+
+# JOb Veiw (Artisan) by Client
+@api_view(["POST"])
+def job_view(request):
+    job_id = request.POST["id"]
+    jobOrder = Orders.objects.get(id=job_id)
+    try:
+        if jobOrder:
+            job_id = jobOrder.id
+            title = jobOrder.title 
+            description = jobOrder.description
+            duration = jobOrder.duration
+            location = jobOrder.location
+            state = jobOrder.state
+            max_budget = jobOrder.max_budget
+            to_json = {
+                "job_id": job_id,
+                "title": title,
+                "state": state,
+                "description": description,
+                "location": location,
+                "duration": duration,
+                "max_budget": max_budget,
+            }
+            return JsonResponse({ 'jobView':to_json, 'error': False})
+        else:
+            return JsonResponse({  'error': False, 'message':"Sorry, Job Order no longer available!"})
+
+    except Exception as e:
+        return JsonResponse({ 'error': True, 'message': str(e)})
+
+# Ads Search by Client
+@api_view(["POST"])
+def ads_view(request):
+    ads_id = request.POST["id"]
+    adsOrder = Ads.objects.get(id=ads_id)
+    try:
+        if adsOrder:
+            ads_id = adsOrder.id
+            title = adsOrder.title 
+            description = adsOrder.description
+            duration = adsOrder.duration
+            location = adsOrder.location
+            state = adsOrder.state
+            max_budget = adsOrder.max_budget
+            min_budget = adsOrder.min_budget
+            to_json = {
+                "ads_id": ads_id,
+                "title": title,
+                "state": state,
+                "description": description,
+                "location": location,
+                "duration": duration,
+                "max_budget": max_budget,
+                "min_budget": min_budget,
+            }
+            return JsonResponse({ 'adsView':to_json, 'error': False})
+        else:
+            return JsonResponse({  'error': False, 'message':"Sorry, Job Order no longer available!"})
+
+    except Exception as e:
+        return JsonResponse({ 'error': True, 'message': str(e)})
 # @api_view(["GET"])
 # def dashboard(request):
 #     try:
