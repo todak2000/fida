@@ -42,7 +42,7 @@
     <div class="form-group mt-3">
       <form>{% csrf_token %}
         <div style="display: flex; justify-content: left;">
-          <input type="search" class="form-control search" name="search" id="search_ad" placeholder="Search by key Ads words or state" onkeydown="search_ads(this)"/>
+          <input type="search" class="form-control search" name="search" id="search_ad" placeholder="Search" onkeydown="search_ads(this)"/>
           <i class="fas fa-search"  style="margin-left:-13%;margin-top: 4%; color: #ccc;"></i>
         </div>
       </form>
@@ -92,14 +92,13 @@
           <!-- seconday nav ends -->
           <!-- top section -->
             <div class="job-form-container">
+              
               <form class="onboarding_form mt-2" action="#" id="job_details_form" method="POST" autocomplete="off">
                 {% csrf_token %}
                   <label class="job-label">Title</label>
                   <input type="text" id="ads_title"   class="job-input form-control mb-1" readonly>
                   <label class="job-label">Brief Description</label>
                   <textarea id="ads_description"   class="job-input form-control mb-1"  readonly></textarea>
-                  <!-- <label class="job-label">Duration</label>
-                  <input type="text" id="ads_duration" class="job-input form-control mb-1" readonly> -->
                   <div class="job-flex">
                       <div style="width:45%">
                           <label class="job-label">Min Budget</label>
@@ -124,8 +123,9 @@
                   <label class="job-label">Service fee</label>
                   <input type="text" id="ads_fee"   class="job-input form-control mb-3" placeholder="2,500">
                   <label class="job-label-blue">Any additional Information</label>
-                  <textarea id="ads_pitch"   class="job-input-blue form-control mb-1" placeholder="I need a washman" readonly></textarea>
-                  <input type="button" value="Submit Order" class="form-control job-form-button mt-3" id="job_details_submit">
+                  <textarea id="ads_pitch"   class="job-input-blue form-control mb-1" placeholder="I need a washman" ></textarea>
+                  <div class='text-center alert ' id="bio_message" style="display: none;"></div>
+                  <input type="button" value="Submit Order" class="form-control job-form-button mt-3" id="client_orders_submit">
               </form>
         
             </div>

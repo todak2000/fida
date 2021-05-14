@@ -708,7 +708,7 @@ function search_orders(e) {
                             '<i class="fas fa-laptop fa-2x" style="color: #267DED;"></i>'+
                             '<p>'+element.title+'</p>'+
                             '<p class="job-amount">&#8358;'+element.min_budget+' - &#8358;'+element.max_budget+'</p></div>'+
-                        '<input type="button" value="Bid" class="form-control job-button" id="id="'+element.order_id+'" onClick="job_view(this.id)"></div>'
+                        '<input type="button" value="Bid" class="form-control job-button" id="'+element.order_id+'" onClick="job_view(this.id)"></div>'
                     );
                 });
             }
@@ -751,7 +751,7 @@ function search_ads(e) {
                             '<i class="fas fa-laptop fa-2x" style="color: #267DED;"></i>'+
                             '<p>'+element.title+'</p>'+
                             '<p class="job-amount">&#8358;'+element.min_budget+' - &#8358;'+element.max_budget+'</p></div>'+
-                        '<input type="button" value="Create Order" class="form-control job-button" id="id="'+element.order_id+'" onClick="ads_view(this.id)"></div>'
+                        '<input type="button" value="Create Order" class="form-control job-button" id="'+element.ads_id+'" onClick="ads_view(this.id)"></div>'
                     );
                 });
             }
@@ -787,8 +787,8 @@ function job_view(id) {
                 console.log(response);
                 document.getElementById('job_title').value = jobView.title;
                 document.getElementById('job_description').value = jobView.description;
-                document.getElementById('job_duration').value = jobView.duration;
-                document.getElementById('job_max_budget').value = "NGN"+jobView.max_budget;
+                // document.getElementById('job_duration').value = jobView.duration;
+                document.getElementById('job_max_budget').value = jobView.max_budget;
                 document.getElementById('job_location').value = jobView.location;
                 document.getElementById('job_state').value = jobView.state;
 
@@ -829,7 +829,6 @@ function ads_view(id) {
                 console.log(response);
                 document.getElementById('ads_title').value = adsView.title;
                 document.getElementById('ads_description').value = adsView.description;
-                document.getElementById('ads_duration').value = adsView.duration;
                 document.getElementById('ads_max_budget').value = "NGN"+adsView.max_budget;
                 document.getElementById('ads_min_budget').value = "NGN"+adsView.min_budget;
                 document.getElementById('ads_location').value = adsView.location;
@@ -840,11 +839,9 @@ function ads_view(id) {
             }
             if(response.error == true){
                 console.log(response)
-                // $('#client_screen').append('<div class="text-center" style="color: #448AC9; margin-top:50px;">An error occured. Try again!</div>');
             }
-            if(jobView.length <= 0){
+            if(adsView.length <= 0){
                 console.log(response)
-                // $('#client_screen').append('<div class="text-center" style="color: #448AC9; margin-top:50px;">'+response.message+'</div>');
             }
         },
         error:function(e){
@@ -852,3 +849,217 @@ function ads_view(id) {
         },
     });
 }
+
+// Submit Order for a specific Artisan Ads by Client
+$(function(){
+    $('#client_orders_submit').on('click', function (e) {
+        e.preventDefault();
+        
+        let ads_title = document.getElementById("ads_title").value;
+        let ads_description = document.getElementById("ads_description").value;
+        let ads_min_budget = document.getElementById("ads_min_budget").value;
+        let ads_max_budget = document.getElementById("ads_max_budget").value;
+        let ads_location = document.getElementById("ads_location").value;
+        let ads_state = document.getElementById("ads_state").value;
+        let ads_pitch = document.getElementById("ads_pitch").value;
+        let ads_fee = document.getElementById("ads_fee").value;
+        let ads_id = document.getElementById("ads_id").value;
+        let $crf_token = $('[name="csrfmiddlewaretoken"]').attr('value');
+        $.ajax({
+            url:'/submit_order_specific_artisans',
+            type:'POST',
+            headers:{"X-CSRFToken": $crf_token},
+            data:{
+                ads_title: ads_title,
+                ads_description: ads_description,
+                ads_state: ads_state,
+                ads_location: ads_location,
+                ads_min_budget: ads_min_budget,
+                ads_pitch: ads_pitch,
+                ads_max_budget: ads_max_budget,
+                ads_fee: ads_fee,
+                ads_id: ads_id,
+            },
+            success:function(response){
+                console.log(response);
+                if(response.error == false){
+                    document.getElementById("bio_message").classList.add("alert-primary");
+                    document.getElementById("bio_message").innerHTML= response.message; 
+                    document.getElementById("bio_message").style.display = "block";
+                    setTimeout(function(){ 
+                        document.getElementById('bio_message').innerHTML = "";
+                        window.location.href = '/client_home';
+                    }, 2000);
+                }
+                else{
+                    document.getElementById("bio_message").classList.add("alert-danger");
+                    document.getElementById('bio_message').innerHTML = response.message;
+                    document.getElementById("bio_message").style.display = "block";
+                    
+                }
+                
+            },
+            error:function(e){
+                console.log(e);
+            },
+        });
+        
+    });
+});
+
+$.ajax({
+    url:'/client_project_ajax',
+    type:'GET',
+    success:function(response){
+        console.log(response);
+        let clientOrdersList = response.clientOrdersList;
+        if(clientOrdersList.length > 0){
+            clientOrdersList.forEach((element) => {
+                if (element.orderStatus == "pending") {
+                    $('#order-div').append(
+                        '<div class="bid-card mt-3">'+
+                            '<p style="width: 70%;">'+element.title+'</p>'+
+                            '<i class="fas fa-dot-circle  " style="color: #D0BC0A;" ></i>'+
+                            '</div>'
+                    );
+                }
+                if (element.orderStatus == "bidding") {
+                    $('#order-div').append(
+                        '<div class="bid-card mt-3">'+
+                        '<p style="width: 70%;">'+element.title+'</p>'+
+                          '<div class="text-center">'+
+                            '<i class="fas fa-user-plus " style="color: #40DA86;" ></i>'+
+                          '<p style="font-size: 0.5rem; color:#0069F0;">'+element.noOfBidders+' bidders</p>'+
+                          '</div>'+
+                      '</div>'
+                    );
+                }
+                if (element.orderStatus == "declined") {
+                    $('#order-div').append(
+                        '<div class="bid-card mt-3">'+
+                        '<p style="width: 70%;">'+element.title+'</p>'+
+                        '<i class="fas fa-times-circle  " style="color: #C91B30;" ></i>'+
+                      '</div>'
+                    );
+                }
+                
+            });
+        }
+        if(response.error == true){
+            $('#order-div').append('<div class="text-center" style="color: #448AC9; margin-top:50px;">An error occured. Try again!</div>');
+        }
+        if(clientOrdersList.length <= 0){
+            $('#order-div').append('<div class="text-center" style="color: #448AC9; margin-top:50px;">Sorry there are no Orders yet!</div>');
+        }
+    },
+    error:function(e){
+        console.log(e);
+    },
+});
+
+
+$(function(){
+    $('#bidder_submit').on('click', function (e) {
+        e.preventDefault();
+        
+        // let ads_title = document.getElementById("ads_title").value;
+        // let ads_description = document.getElementById("ads_description").value;
+        // let ads_min_budget = document.getElementById("ads_min_budget").value;
+        // let ads_max_budget = document.getElementById("ads_max_budget").value;
+        // let ads_location = document.getElementById("ads_location").value;
+        // let ads_state = document.getElementById("ads_state").value;
+        let job_pitch = document.getElementById("job_pitch").value;
+        let job_fee = document.getElementById("bidding_fee").value;
+        let job_id = document.getElementById("job_id").value;
+        let $crf_token = $('[name="csrfmiddlewaretoken"]').attr('value');
+        $.ajax({
+            url:'/submit_bid',
+            type:'POST',
+            headers:{"X-CSRFToken": $crf_token},
+            data:{
+                // ads_title: ads_title,
+                // ads_description: ads_description,
+                // ads_state: ads_state,
+                // ads_location: ads_location,
+                // ads_min_budget: ads_min_budget,
+                job_pitch: job_pitch,
+                // ads_max_budget: ads_max_budget,
+                job_fee: job_fee,
+                job_id: job_id,
+            },
+            success:function(response){
+                console.log(response);
+                if(response.error == false){
+                    document.getElementById("bio_message").classList.add("alert-primary");
+                    document.getElementById("bio_message").innerHTML= response.message; 
+                    document.getElementById("bio_message").style.display = "block";
+                    setTimeout(function(){ 
+                        document.getElementById('bio_message').innerHTML = "";
+                        window.location.href = '/artisan_home';
+                    }, 2000);
+                }
+                else{
+                    document.getElementById("bio_message").classList.add("alert-danger");
+                    document.getElementById('bio_message').innerHTML = response.message;
+                    document.getElementById("bio_message").style.display = "block";
+                    
+                }
+                
+            },
+            error:function(e){
+                console.log(e);
+            },
+        });
+        
+    });
+});
+
+$.ajax({
+    url:'/artisan_gig_ajax',
+    type:'GET',
+    success:function(response){
+        console.log(response);
+        let artisanBidsList = response.artisanBidsList;
+        if(artisanBidsList.length > 0){
+            artisanBidsList.forEach((element) => {
+                if (element.orderStatus == "pending" && element.winner_id == element.user_id) {  // awaiting artisan's acceptance
+                    $('#bidder-div').append(
+                        '<div class="bid-card mt-3">'+
+                            '<p style="width: 70%;">'+element.title+'</p>'+
+                            '<i class="fas fa-dot-circle  " style="color: #D0BC0A;" ></i>'+
+                            '</div>'
+                    );
+                }
+                if (element.orderStatus == "bidding") {  // oder still accepting bids
+                    $('#bidder-div').append(
+                        '<div class="bid-card mt-3">'+
+                        '<p style="width: 70%;">'+element.title+'</p>'+
+                          '<div class="text-center">'+
+                            '<i class="fas fa-user-plus " style="color: #40DA86;" ></i>'+
+                          '<p style="font-size: 0.5rem; color:#0069F0;">'+element.noOfBidders+' bidders</p>'+
+                          '</div>'+
+                      '</div>'
+                    );
+                }
+                // if (element.orderStatus == "declined") {  // artisan decline order
+                //     $('#bidder-div').append(
+                //         '<div class="bid-card mt-3">'+
+                //         '<p style="width: 70%;">'+element.title+'</p>'+
+                //         '<i class="fas fa-times-circle  " style="color: #C91B30;" ></i>'+
+                //       '</div>'
+                //     );
+                // }
+                
+            });
+        }
+        if(response.error == true){
+            $('#bid-div').append('<div class="text-center" style="color: #448AC9; margin-top:50px;">An error occured. Try again!</div>');
+        }
+        if(artisanBidsList.length <= 0){
+            $('#bid-div').append('<div class="text-center" style="color: #448AC9; margin-top:50px;">Sorry there are no Orders yet!</div>');
+        }
+    },
+    error:function(e){
+        console.log(e);
+    },
+});

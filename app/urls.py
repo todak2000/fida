@@ -70,12 +70,16 @@ urlpatterns = [
     path("client_home_ajax", views.client_home_ajax, name="client_home_ajax"),
     path("ads_search", views.ads_search, name="ads_search"),
     path("ads_view", views.ads_view, name="ads_view"),
+    path("client_project_ajax", views.client_project_ajax, name="client_project_ajax"),
+    path("submit_order_specific_artisans", views.submit_order_specific_artisan, name="submit_order_specific_artisan"),
     
     # ARTISANS APIS
     path("new_ads_ajax", views.new_ads_api, name="new_ads_ajax"),
     path("ads_list_ajax", views.ads_list_ajax, name="ads_list_ajax"),
     path("artisan_home_ajax", views.artisan_home_ajax, name="artisan_home_ajax"),
     path("order_search", views.order_search, name="order_search"),
+    path("submit_bid", views.submit_bid, name="submit_bid"),
+    path("artisan_gig_ajax", views.artisan_gig_ajax, name="artisan_gig_ajax"),
 
     # ONBOARDING APIS
     path("login_api", views.login_api, name="login_api"),

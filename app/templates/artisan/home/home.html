@@ -98,11 +98,11 @@
                     <label class="job-label">Brief Description</label>
                     <textarea id="job_description"   class="job-input form-control mb-3"  readonly></textarea>
                     <div class="job-flex">
-                        <div style="width:45%">
+                        <!-- <div style="width:45%">
                             <label class="job-label">Duration</label>
                             <input type="text" id="job_duration"    class="job-input form-control mb-1" readonly>
-                        </div>
-                        <div style="width:45%">
+                        </div> -->
+                        <div style="width:100%">
                             <label class="job-label">Budget</label>
                             <input type="text" id="job_max_budget"   class="job-input form-control mb-3" readonly>
                         </div>
@@ -122,7 +122,8 @@
                     <input type="text" id="bidding_fee"   class="job-input-blue form-control mb-3" placeholder="I need a washman">
                     <label class="job-label-blue">Your Pitch to convince the Client</label>
                     <textarea id="job_pitch"   class="job-input-blue form-control mb-3" placeholder="I need a washman"></textarea>
-                    <input type="button" value="Submit Bid" class="form-control job-form-button mt-3" id="job_details_submit">
+                    <div class='text-center alert ' id="bio_message" style="display: none;"></div>
+                    <input type="button" value="Submit Bid" class="form-control job-form-button mt-3" id="bidder_submit">
                 </form>
         
             </div>

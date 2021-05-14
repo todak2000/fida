@@ -67,7 +67,10 @@ class Orders(models.Model):
     state = models.TextField(max_length=200,verbose_name="State")
     service_fee = models.TextField(max_length=200,verbose_name="Service fee")
     pitch = models.TextField(max_length=200,verbose_name="Pitch")
-    
+    noOfBidders = models.IntegerField(max_length=15,  default=0, verbose_name="No of Bidders")
+    orderStatus = models.TextField(max_length=15,  default='pending', verbose_name="Order Status")
+    winner_id = models.CharField(max_length=500,verbose_name="Bid Winner", null=True)
+    winner_accept = models.BooleanField(default=False, verbose_name="Did Winner Accept Bid")
     date_added = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
@@ -85,18 +88,18 @@ class Verification(models.Model):
     def __str__(self):
         return f"{self.user_id} - {self.code} - {self.isVerified}"
 
-class Bids(models.Model):
+class Bids(models.Model): 
     class Meta:
         db_table = "Bids_table"
     # Bids
     order_id = models.ForeignKey(Orders, on_delete=models.CASCADE)
-    bidders = models.TextField(max_length=20,verbose_name="bidders", null=True)
-    winner_id = models.CharField(max_length=500,verbose_name="Bid Winner", null=True)
-    winner_accept = models.BooleanField(default=False, verbose_name="Did Winner Accept Bid")
+    bidder = models.TextField(max_length=20,verbose_name="bidders", null=True)
+    service_fee = models.TextField(max_length=200,verbose_name="Service fee", default="10")
+    pitch = models.TextField(max_length=200,verbose_name="Pitch", default="hi")
     date_added = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
-        return f"{self.order_id} - {self.bidders} - {self.winner_id} - {self.winner_accept}"
+        return f"{self.order_id} - {self.bidder} - {self.service_fee} - {self.pitch}"
 
 class Escrow(models.Model):
     class Meta:

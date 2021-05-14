@@ -778,7 +778,7 @@ def new_order_api(request):
         field = [title, description, duration, state, location, min_budget, max_budget]
         user_data = User.objects.get(user_id=user_id)
         if not None in field and not "" in field:
-            newOrder = Orders(title=title,description=description,duration=duration,min_budget=min_budget,max_budget=max_budget,location=location,state=state,client_id=user_data)
+            newOrder = Orders(title=title,description=description,duration=duration,min_budget=min_budget,max_budget=max_budget,location=location,state=state,client_id=user_data, orderStatus="bidding")
             newOrder.save()
             return_data = {
                 "error": False,
@@ -1034,6 +1034,120 @@ def ads_view(request):
 
     except Exception as e:
         return JsonResponse({ 'error': True, 'message': str(e)})
+
+# Submit Order for a specific Artisan Ads by Client
+@api_view(["POST"])
+def submit_order_specific_artisan(request):
+    user_id = request.session['user_id']
+    ads_id = request.POST["ads_id"]
+    ads_fee = request.POST["ads_fee"]
+    ads_pitch = request.POST["ads_pitch"]
+
+    ads_title = request.POST["ads_title"]
+    ads_description = request.POST["ads_description"]
+    ads_min_budget = request.POST["ads_min_budget"]
+    ads_max_budget= request.POST["ads_max_budget"]
+    ads_location = request.POST["ads_location"]
+    ads_state = request.POST["ads_state"]
+    user = User.objects.get(user_id=user_id)
+    try:
+        field = [ads_fee]
+        if not None in field and not "" in field:
+            ads = Ads.objects.get(id=ads_id)
+            newOrder = Orders(client_id=user, title=ads_title, description=ads_description, min_budget=ads_min_budget, max_budget=ads_max_budget, location=ads_location, state=ads_state, service_fee=ads_fee, pitch=ads_pitch, noOfBidders = 1,winner_id=ads.artisan_id.user_id, orderStatus="pending" )
+            newOrder.save()
+            
+            onlyBid = Bids(order_id=newOrder, bidder="No bid process", service_fee=ads_fee, pitch=ads_pitch)
+            onlyBid.save()
+            if newOrder and onlyBid:
+                return JsonResponse({ 'message':'Order successfully sent. Kindly await Artisan response', 'error': False})
+            else:
+                return JsonResponse({  'error': True, 'message':"Sorry, an error occured"})
+        else:
+            return JsonResponse({'error': True, "message": "Kindly add the service fee.Thanks!"})
+            
+    except Exception as e:
+        return JsonResponse({ 'error': True, 'message': str(e)})
+
+# Project ajax page get orders/projects
+@api_view(["GET"])
+def client_project_ajax(request):
+    user_id = request.session['user_id']
+    client = User.objects.get(user_id=user_id)
+    try:
+        clientOrders = Orders.objects.filter(client_id=client).order_by('-date_added')[:20]
+        num = len(clientOrders)
+        clientOrdersList = []
+        for i in range(0,num):
+            order_id = clientOrders[i].id
+            title = clientOrders[i].title 
+            noOfBidders = clientOrders[i].noOfBidders
+            orderStatus  = clientOrders[i].orderStatus 
+            to_json = {
+                "order_id": order_id,
+                "title": title,
+                "noOfBidders": noOfBidders,
+                "orderStatus": orderStatus,
+
+            }
+            clientOrdersList.append(to_json)
+        return JsonResponse({ 'clientOrdersList':clientOrdersList, 'error': False})
+    except Exception as e:
+        clientOrdersList = []
+        return JsonResponse({ 'clientOrdersList':clientOrdersList, 'error': True, 'message': str(e)})
+
+# SUbmit bid for an Order by Artisan
+@api_view(["POST"])
+def submit_bid(request):
+    user_id = request.session['user_id']
+    job_id = request.POST["job_id"]
+    job_fee = request.POST["job_fee"]
+    job_pitch = request.POST["job_pitch"]
+    # user = User.objects.get(user_id=user_id)
+    try:
+        field = [job_fee]
+        if not None in field and not "" in field:
+            order = Orders.objects.get(id=job_id)
+            newBid = Bids(order_id=order, bidder=user_id, service_fee=job_fee, pitch=job_pitch)
+            newBid.save()
+            if newBid:
+                return JsonResponse({ 'message':'Bid was successfully', 'error': False})
+            else:
+                return JsonResponse({  'error': True, 'message':"Sorry, an error occured"})
+        else:
+            return JsonResponse({'error': True, "message": "Kindly add the service fee.Thanks!"})
+            
+    except Exception as e:
+        return JsonResponse({ 'error': True, 'message': str(e)})
+
+# Bids section ajax page get bids/gigs
+@api_view(["GET"])
+def artisan_gig_ajax(request):
+    user_id = request.session['user_id']
+    try:
+        arisanBids = Bids.objects.filter(bidder=user_id).order_by('-date_added')[:20] | Bids.objects.filter(order_id__winner_id=user_id).order_by('-date_added')
+        num = len(arisanBids)
+        arisanBidsList = []
+        for i in range(0,num):
+            bid_id = arisanBids[i].id
+            title = arisanBids[i].order_id.title 
+            noOfBidders = arisanBids[i].order_id.noOfBidders
+            orderStatus  = arisanBids[i].order_id.orderStatus 
+            winner_id = arisanBids[i].order_id.winner_id
+            to_json = {
+                "bid_id": bid_id,
+                "title": title,
+                "noOfBidders": noOfBidders,
+                "orderStatus": orderStatus,
+                "winner_id": winner_id,
+                "user_id": user_id,
+            }
+            arisanBidsList.append(to_json)
+        return JsonResponse({ 'artisanBidsList':arisanBidsList, 'error': False})
+    except Exception as e:
+        arisanBidsList = []
+        return JsonResponse({ 'artisanBidsList':arisanBidsList, 'error': True, 'message': str(e)})
+
 # @api_view(["GET"])
 # def dashboard(request):
 #     try:
