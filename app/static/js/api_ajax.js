@@ -2,7 +2,9 @@
 $(function(){
     $('#signup_submit').on('click', function (e) {
         e.preventDefault();
-        
+        const button = document.getElementById("signup_submit");
+        button.innerText = "Signing up...";
+        button.disabled = true;
         let firstname = document.getElementById("firstname").value;
         let lastname = document.getElementById("lastname").value;
         let email = document.getElementById("email").value;
@@ -75,6 +77,9 @@ $(function(){
 $(function(){
     $('#verify_submit').on('click', function (e) {
         e.preventDefault();
+        const button = document.getElementById("verify_submit");
+        button.innerText = "Verifying...";
+        button.disabled = true;
         // let code = document.getElementById("code").value;
         let codeOne = document.getElementById("codeOne").value;
         let codeTwo = document.getElementById("codeTwo").value;
@@ -129,6 +134,9 @@ $(function(){
 $(function(){
     $('#resend_submit').on('click', function (e) {
         e.preventDefault();
+        const button = document.getElementById("resend_submit");
+        button.innerText = "Resending...";
+        button.disabled = true;
         let email = document.getElementById("email").value;
         let $crf_token = $('[name="csrfmiddlewaretoken"]').attr('value');
         document.getElementById("spinner").style.display = "block";
@@ -172,6 +180,9 @@ $(function(){
 $(function(){
     $('#forgot_submit').on('click', function (e) {
         e.preventDefault();
+        const button = document.getElementById("forgot_submit");
+        button.innerText = "Sending Code...";
+        button.disabled = true;
         let email = document.getElementById("email").value;
         let $crf_token = $('[name="csrfmiddlewaretoken"]').attr('value');
         document.getElementById("spinner").style.display = "block";
@@ -217,6 +228,9 @@ $(function(){
 $(function(){
     $('#verify_password_submit').on('click', function (e) {
         e.preventDefault();
+        const button = document.getElementById("signup_submit");
+        button.innerText = "Verifying code...";
+        button.disabled = true;
         // let code = document.getElementById("code").value;
         let codeOne = document.getElementById("codeOne").value;
         let codeTwo = document.getElementById("codeTwo").value;
@@ -246,10 +260,6 @@ $(function(){
                     
                 }
                 else{
-                    // document.getElementById('server_message_success').classList.add("alert-primary");
-                    // document.getElementById('server_message_success').innerHTML = response.message;
-                    // document.getElementById("server_message_success").style.display = "block";
-                    // document.getElementById("email").value= response.email;
                     document.getElementById("verify_form").reset()
                     setTimeout(function(){ 
                         document.getElementById("server_message_success").style.display = "none"; 
@@ -271,6 +281,9 @@ $(function(){
 $(function(){
     $('#change_password_submit').on('click', function (e) {
         e.preventDefault();
+        const button = document.getElementById("change_password_submit");
+        button.innerText = "Changing Password...";
+        button.disabled = true;
         let password = document.getElementById("password").value;
         let confirm_password = document.getElementById("confirm_password").value;
         let $crf_token = $('[name="csrfmiddlewaretoken"]').attr('value');
@@ -318,10 +331,9 @@ $(function(){
 $(function(){
     $('#bio_submit').on('click', function (e) {
         e.preventDefault();
-        
-        // let edit_first = document.getElementById("edit_first").value;
-        // let edit_last = document.getElementById("edit_last").value;
-        // let edit_email = document.getElementById("edit_email").value;
+        const button = document.getElementById("bio_submit");
+        button.innerText = "Updating...";
+        button.disabled = true;
         let edit_address = document.getElementById("edit_address").value;
         let edit_state = document.getElementById("edit_state").value;
         let edit_phone = document.getElementById("edit_phone").value;
@@ -331,10 +343,7 @@ $(function(){
             type:'PUT',
             headers:{"X-CSRFToken": $crf_token},
             data:{
-                // edit_first: edit_first,
-                // edit_last: edit_last,
                 edit_phone: edit_phone,
-                // edit_email: edit_email,
                 edit_address: edit_address,
                 edit_state: edit_state
             },
@@ -377,7 +386,9 @@ $(function(){
 $(function(){
     $('#edit_account_submit').on('click', function (e) {
         e.preventDefault();
-        
+        const button = document.getElementById("edit_account_submit");
+        button.innerText = "Updating...";
+        button.disabled = true;
         let edit_name = document.getElementById("edit_name").value;
         let edit_bank = document.getElementById("edit_bank").value;
         let edit_number = document.getElementById("edit_number").value;
@@ -428,7 +439,9 @@ $(function(){
 $(function(){
     $('#password_submit').on('click', function (e) {
         e.preventDefault();
-        
+        const button = document.getElementById("password_submit");
+        button.innerText = "Updating..";
+        button.disabled = true;
         let old_password = document.getElementById("old_password").value;
         let new_password = document.getElementById("new_password").value;
         let confirm_new_password = document.getElementById("confirm_new_password").value;
@@ -489,10 +502,12 @@ $(function(){
 $(function(){
     $('#job_order_submit').on('click', function (e) {
         e.preventDefault();
-        
+        const button = document.getElementById("job_order_submit");
+        button.innerText = "Submitting...";
+        button.disabled = true;
         let title = document.getElementById("title").value;
         let description = document.getElementById("description").value;
-        let duration = document.getElementById("duration").value;
+        // let duration = document.getElementById("duration").value;
         let min_budget = document.getElementById("min_budget").value;
         let max_budget = document.getElementById("max_budget").value;
         let location = document.getElementById("location").value;
@@ -505,7 +520,7 @@ $(function(){
             data:{
                 title: title,
                 description: description,
-                duration: duration,
+                // duration: duration,
                 state: state,
                 location: location,
                 min_budget: min_budget,
@@ -538,7 +553,9 @@ $(function(){
 $(function(){
     $('#new_ads_submit').on('click', function (e) {
         e.preventDefault();
-        
+        const button = document.getElementById("new_ads_submit");
+        button.innerHTML = "Submitting...";
+        button.disabled = true;
         let title = document.getElementById("title").value;
         let description = document.getElementById("description").value;
         let min_budget = document.getElementById("min_budget").value;
@@ -570,6 +587,8 @@ $(function(){
                     document.getElementById('bio_message_fail').innerHTML = response.message;
                     document.getElementById("bio_message_fail").style.display = "block";
                     console.log(response)
+                    button.innerHTML = "Submit";
+                    button.disabled = false;
                     setTimeout(function(){ 
                         document.getElementById("bio_message_fail").style.display = "none"; 
                     }, 5000);
@@ -618,73 +637,81 @@ $.ajax({
 
 //GET ADS CLIENT HOMEREUEST API
 
-$.ajax({
-    url:'/client_home_ajax',
-    type:'GET',
-    success:function(response){
-        // console.log(response);
-        let adsList = response.adsList;
-        if(adsList.length > 0){
-            adsList.forEach((element) => {
-                $('#client_screen').append(
-                    '<div class="job-card">'+
-                    '<div class="job-inner">'+
-                        '<p>'+element.state+'</p>'+
-                        '<i class="fas fa-laptop fa-2x" style="color: #097685;"></i>'+
-                        '<p>'+element.title+'</p>'+
-                        '<p class="job-amount">&#8358;'+element.min_budget+' - &#8358;'+element.max_budget+'</p></div>'+
-                    '<input type="button" value="Create Order" class="form-control job-button" id="'+element.ads_id+'" onClick="ads_view(this.id)"></div>'
-                );
-            });
-        }
-        if(response.error == true){
-            $('#client_screen').append('<div class="text-center" style="color: #448AC9; margin-top:50px;">An error occured. Try again!</div>');
-        }
-        if(adsList.length <= 0){
-            $('#client_screen').append('<div class="text-center" style="color: #448AC9; margin-top:50px;">Sorry there are no Ads yet!</div>');
-        }
-    },
-    error:function(e){
-        console.log(e);
-    },
-});
+// var getNewAdsForClients = window.setInterval(function(){
+    $.ajax({
+        url:'/client_home_ajax',
+        type:'GET',
+        success:function(response){
+            // console.log(response);
+            document.getElementById('client_screen').innerHTML = ""
+            let adsList = response.adsList;
+            if(adsList.length > 0){
+                adsList.forEach((element) => {
+                    $('#client_screen').append(
+                        '<div class="job-card">'+
+                        '<div class="job-inner">'+
+                            '<p>'+element.state+'</p>'+
+                            '<i class="fas fa-laptop fa-2x" style="color: #097685;"></i>'+
+                            '<p>'+element.title+'</p>'+
+                            '<p class="job-amount">&#8358;'+element.min_budget+' - &#8358;'+element.max_budget+'</p></div>'+
+                        '<input type="button" value="Create Order" class="form-control job-button" id="'+element.ads_id+'" onClick="ads_view(this.id)"></div>'
+                    );
+                });
+            }
+            if(response.error == true){
+                $('#client_screen').append('<div class="text-center" style="color: #448AC9; margin-top:50px;">An error occured. Try again!</div>');
+            }
+            if(adsList.length <= 0){
+                $('#client_screen').append('<div class="text-center" style="color: #448AC9; margin-top:50px;">Sorry there are no Ads yet!</div>');
+            }
+        },
+        error:function(e){
+            // console.log(e);
+        },
+    });
+// }, 500);
 
 //GET ORDERS ARTISAN HOME REUEST API
+// var getNewOrdersForArtisans = window.setInterval(function(){
+    $.ajax({
+        url:'/artisan_home_ajax',
+        type:'GET',
+        success:function(response){
+            // console.log(response);
+            document.getElementById('artisan_screen').innerHTML = ""
+            let orderList = response.orderList;
+            if(orderList.length > 0){
+                orderList.forEach((element) => {
+                    $('#artisan_screen').append(
+                        '<div class="job-card">'+
+                        '<div class="job-inner">'+
+                            '<p>'+element.state+'</p>'+
+                            '<i class="fas fa-laptop fa-2x" style="color: #267DED;"></i>'+
+                            '<p>'+element.title+'</p>'+
+                            '<p class="job-amount">&#8358;'+element.min_budget+' - &#8358;'+element.max_budget+'</p></div>'+
+                        '<input type="button" value="Bid" class="form-control job-button" id="'+element.order_id+'" onClick="job_view(this.id)"></div>'
+                    );
+                });
+            }
+            if(response.error == true){
+                $('#artisan_screen').append('<div class="text-center" style="color: #448AC9; margin-top:50px;">An error occured. Try again!</div>');
+            }
+            if(orderList.length <= 0){
+                $('#artisan_screen').append('<div class="text-center" style="color: #448AC9; margin-top:50px;">Sorry there are no Orders yet!</div>');
+            }
+        },
+        error:function(e){
+            // console.log(e);
+        },
+    });
+    
+// }, 500);
 
-$.ajax({
-    url:'/artisan_home_ajax',
-    type:'GET',
-    success:function(response){
-        // console.log(response);
-        let orderList = response.orderList;
-        if(orderList.length > 0){
-            orderList.forEach((element) => {
-                $('#artisan_screen').append(
-                    '<div class="job-card">'+
-                    '<div class="job-inner">'+
-                        '<p>'+element.state+'</p>'+
-                        '<i class="fas fa-laptop fa-2x" style="color: #267DED;"></i>'+
-                        '<p>'+element.title+'</p>'+
-                        '<p class="job-amount">&#8358;'+element.min_budget+' - &#8358;'+element.max_budget+'</p></div>'+
-                    '<input type="button" value="Bid" class="form-control job-button" id="'+element.order_id+'" onClick="job_view(this.id)"></div>'
-                );
-            });
-        }
-        if(response.error == true){
-            $('#artisan_screen').append('<div class="text-center" style="color: #448AC9; margin-top:50px;">An error occured. Try again!</div>');
-        }
-        if(orderList.length <= 0){
-            $('#artisan_screen').append('<div class="text-center" style="color: #448AC9; margin-top:50px;">Sorry there are no Orders yet!</div>');
-        }
-    },
-    error:function(e){
-        console.log(e);
-    },
-});
 
 // ARTISAN ORDER SEARCH API
 function search_orders(e) {
     // console.log(e.value);
+    clearInterval(getNewOrdersForArtisans) 
     document.getElementById('artisan_screen').innerHTML = "";
     let $crf_token = $('[name="csrfmiddlewaretoken"]').attr('value');
     $.ajax({
@@ -728,6 +755,7 @@ function search_orders(e) {
 // CLIENT ADS SEARCH API
 function search_ads(e) {
     // console.log(e.value);
+    clearInterval(getNewAdsForClients) 
     document.getElementById('client_screen').innerHTML = "";
     let $crf_token = $('[name="csrfmiddlewaretoken"]').attr('value');
     $.ajax({
@@ -783,7 +811,7 @@ function job_view(id) {
         success:function(response){
             
             let jobView = response.jobView;
-            if(jobView){
+            if(response.error == false){
                 console.log(response);
                 document.getElementById('job_title').value = jobView.title;
                 document.getElementById('job_description').value = jobView.description;
@@ -797,12 +825,16 @@ function job_view(id) {
             }
             if(response.error == true){
                 console.log(response)
-                // $('#client_screen').append('<div class="text-center" style="color: #448AC9; margin-top:50px;">An error occured. Try again!</div>');
+                document.getElementById(id).value = "Bidded";
+                document.getElementById(id).disabled = true;
+                document.getElementById(id).style.background = "#EFF2FD";
+                document.getElementById(id).style.color = "black";
+                document.getElementById(id).style.border = "1px solid #267DED00";
             }
             if(jobView.length <= 0){
                 console.log(response)
-                // $('#client_screen').append('<div class="text-center" style="color: #448AC9; margin-top:50px;">'+response.message+'</div>');
             }
+
         },
         error:function(e){
             console.log(e);
@@ -854,7 +886,9 @@ function ads_view(id) {
 $(function(){
     $('#client_orders_submit').on('click', function (e) {
         e.preventDefault();
-        
+        const button = document.getElementById("client_orders_submit");
+        button.innerText = "Submitting...";
+        button.disabled = true;
         let ads_title = document.getElementById("ads_title").value;
         let ads_description = document.getElementById("ads_description").value;
         let ads_min_budget = document.getElementById("ads_min_budget").value;
@@ -866,7 +900,7 @@ $(function(){
         let ads_id = document.getElementById("ads_id").value;
         let $crf_token = $('[name="csrfmiddlewaretoken"]').attr('value');
         $.ajax({
-            url:'/submit_order_specific_artisans',
+            url:'/submit_order_specific_artisan',
             type:'POST',
             headers:{"X-CSRFToken": $crf_token},
             data:{
@@ -889,13 +923,17 @@ $(function(){
                     setTimeout(function(){ 
                         document.getElementById('bio_message').innerHTML = "";
                         window.location.href = '/client_home';
-                    }, 2000);
+                    }, 4000);
                 }
                 else{
                     document.getElementById("bio_message").classList.add("alert-danger");
                     document.getElementById('bio_message').innerHTML = response.message;
                     document.getElementById("bio_message").style.display = "block";
-                    
+                    setTimeout(function(){ 
+                        document.getElementById('bio_message').innerHTML = "";
+                        document.getElementById("bio_message").classList.remove("alert-danger");
+                        document.getElementById("bio_message").style.display = "none";
+                    }, 4000);
                 }
                 
             },
@@ -912,20 +950,23 @@ $.ajax({
     type:'GET',
     success:function(response){
         console.log(response);
+
         let clientOrdersList = response.clientOrdersList;
         if(clientOrdersList.length > 0){
             clientOrdersList.forEach((element) => {
                 if (element.orderStatus == "pending") {
                     $('#order-div').append(
-                        '<div class="bid-card mt-3">'+
+                        '<div class="bid-card mt-3" onClick="awaiting_artisan(this.id)">'+
                             '<p style="width: 70%;">'+element.title+'</p>'+
                             '<i class="fas fa-dot-circle  " style="color: #D0BC0A;" ></i>'+
                             '</div>'
                     );
                 }
+                if (element.orderStatus == "accepted") {
+                }
                 if (element.orderStatus == "bidding") {
                     $('#order-div').append(
-                        '<div class="bid-card mt-3">'+
+                        '<div class="bid-card mt-3" id="'+element.order_id+'" onClick="bid_list(this.id)">'+
                         '<p style="width: 70%;">'+element.title+'</p>'+
                           '<div class="text-center">'+
                             '<i class="fas fa-user-plus " style="color: #40DA86;" ></i>'+
@@ -957,17 +998,14 @@ $.ajax({
     },
 });
 
+  
 
 $(function(){
     $('#bidder_submit').on('click', function (e) {
         e.preventDefault();
-        
-        // let ads_title = document.getElementById("ads_title").value;
-        // let ads_description = document.getElementById("ads_description").value;
-        // let ads_min_budget = document.getElementById("ads_min_budget").value;
-        // let ads_max_budget = document.getElementById("ads_max_budget").value;
-        // let ads_location = document.getElementById("ads_location").value;
-        // let ads_state = document.getElementById("ads_state").value;
+        const button = document.getElementById("bidder_submit");
+        button.innerText = "Submitting...";
+        button.disabled = true;
         let job_pitch = document.getElementById("job_pitch").value;
         let job_fee = document.getElementById("bidding_fee").value;
         let job_id = document.getElementById("job_id").value;
@@ -977,13 +1015,7 @@ $(function(){
             type:'POST',
             headers:{"X-CSRFToken": $crf_token},
             data:{
-                // ads_title: ads_title,
-                // ads_description: ads_description,
-                // ads_state: ads_state,
-                // ads_location: ads_location,
-                // ads_min_budget: ads_min_budget,
                 job_pitch: job_pitch,
-                // ads_max_budget: ads_max_budget,
                 job_fee: job_fee,
                 job_id: job_id,
             },
@@ -1022,44 +1054,1021 @@ $.ajax({
         let artisanBidsList = response.artisanBidsList;
         if(artisanBidsList.length > 0){
             artisanBidsList.forEach((element) => {
-                if (element.orderStatus == "pending" && element.winner_id == element.user_id) {  // awaiting artisan's acceptance
+                // if (element.orderStatus == "pending" && element.winner_id == "") {  // awaiting artisan's acceptance
+                //     $('#bidder-div').append(
+                //         '<div class="bid-card mt-3" id="'+element.bid_id+'" onClick="pending_order(this.id)">'+ 
+                //             '<p style="width: 70%;">'+element.title+'</p>'+
+                //             '<i class="fas fa-dot-circle  " style="color: #D0BC0A;" ></i>'+
+                //     );
+                //             '</div>'
+                // }
+                if (element.orderStatus == "pending" && element.fromAds == true) {  // awaiting artisan's acceptance
                     $('#bidder-div').append(
-                        '<div class="bid-card mt-3">'+
+                        '<div class="bid-card mt-3" id="'+element.bid_id+'" onClick="pending_order(this.id)">'+ 
                             '<p style="width: 70%;">'+element.title+'</p>'+
                             '<i class="fas fa-dot-circle  " style="color: #D0BC0A;" ></i>'+
                             '</div>'
                     );
                 }
-                if (element.orderStatus == "bidding") {  // oder still accepting bids
+                if (element.orderStatus == "bidding" && element.winner_id =="") {  // oder still accepting bids
                     $('#bidder-div').append(
-                        '<div class="bid-card mt-3">'+
+                        '<div class="bid-card mt-3" id="'+element.bid_id+'" onClick="bidding_ongoing(this.id)">'+ 
                         '<p style="width: 70%;">'+element.title+'</p>'+
                           '<div class="text-center">'+
                             '<i class="fas fa-user-plus " style="color: #40DA86;" ></i>'+
-                          '<p style="font-size: 0.5rem; color:#0069F0;">'+element.noOfBidders+' bidders</p>'+
+                          '<p style="font-size: 0.5rem; color:#0069F0;"> You and '+parseInt(element.noOfBidders - 1)+' bidder(s)</p>'+
                           '</div>'+
                       '</div>'
                     );
                 }
-                // if (element.orderStatus == "declined") {  // artisan decline order
-                //     $('#bidder-div').append(
-                //         '<div class="bid-card mt-3">'+
-                //         '<p style="width: 70%;">'+element.title+'</p>'+
-                //         '<i class="fas fa-times-circle  " style="color: #C91B30;" ></i>'+
-                //       '</div>'
-                //     );
-                // }
+                else {
+                    // $('#bidder-div').append('<div class="text-center" style="color: #448AC9; margin-top:50px;">Sorry there are new Orders yet. However check the Gig section </div>');
+                }
                 
             });
         }
         if(response.error == true){
-            $('#bid-div').append('<div class="text-center" style="color: #448AC9; margin-top:50px;">An error occured. Try again!</div>');
+            $('#bidder-div').append('<div class="text-center" style="color: #448AC9; margin-top:50px;">An error occured. Try again!</div>');
         }
         if(artisanBidsList.length <= 0){
-            $('#bid-div').append('<div class="text-center" style="color: #448AC9; margin-top:50px;">Sorry there are no Orders yet!</div>');
+            $('#bidder-div').append('<div class="text-center" style="color: #448AC9; margin-top:50px;">Sorry there are no Orders yet!</div>');
         }
     },
     error:function(e){
         console.log(e);
     },
 });
+
+// Artisan bid page - pending order details to accept or delcine order
+function pending_order(id) {
+    let $crf_token = $('[name="csrfmiddlewaretoken"]').attr('value');
+    $.ajax({
+        url:'/pending_order_modal',
+        type:'POST',
+        headers:{
+            "X-CSRFToken": $crf_token,
+        },
+        data:{
+            id: id,
+        },
+        success:function(response){
+            console.log(response)
+            // console.log('hi')
+            let bidView = response.bidView;
+            if(bidView){
+                console.log(response);
+                document.getElementById('bid_title').value = bidView.title;
+                document.getElementById('bid_description').value = bidView.description;
+                document.getElementById('bid_budget').value = bidView.budget;
+                // document.getElementById('bid_duration').value = bidView.duration
+                document.getElementById('bid_location').value = bidView.location;
+                document.getElementById('bid_state').value = bidView.state;
+                document.getElementById('bid_fee').value = "NGN "+bidView.service_fee;
+                document.getElementById('bid_id2').value = bidView.order_id;
+                $('#pendingOrder').modal('show');
+            }
+            if(response.error == true){
+                console.log(response)
+            }
+            if(bidView.length <= 0){
+                console.log(response)
+            }
+        },
+        error:function(e){
+            console.log(e);
+        },
+    });
+}
+
+function bidding_ongoing(id) {
+    console.log(id);
+    document.getElementById('bid_bid').value = id;
+    $('#bidderModal').modal('show');
+}
+// Client orderpage - pending order awaiting artisan
+function awaiting_artisan(id) {
+    console.log(id);
+    document.getElementById('order_order').value = id;
+    $('#waitModal').modal('show');
+}
+// Client Order Bidders list
+function bid_list(id) {
+    let $crf_token = $('[name="csrfmiddlewaretoken"]').attr('value');
+    $.ajax({
+        url:'/bid_list',
+        type:'post',
+        headers:{
+            "X-CSRFToken": $crf_token,
+        },
+        data:{
+            id: id,
+        },
+        success:function(response){
+            let bidList = response.bidList;
+            console.log(response);
+            document.getElementById('bidder_title2').value = response.title;
+            if(bidList.length > 0){
+                bidList.forEach((element) => {
+                    if (!element.decline_offer){
+                        $('#bidders_form').append(
+                            '<form><div class="bidder-div mb-2">'+
+                                '<div class="bidder-top">'+
+                                '<div class="bidder-inner">'+
+                                    '<i class="fas fa-user-circle fa-alter" style="color: #005FD850;"  ></i>'+
+                                    '<div class="ml-2 mt-1">'+
+                                    '<p style="color:#829CC580; font-weight:700; font-size:0.9rem;" id="bidder_bidder_name'+element.bidder_id+'">'+element.bidder+'</p> <input id="bidder_bid_id'+element.bidder_id+'" value="'+element.bidder_id+'" hidden/>'+
+                                    '<p style="color:#005FD8;">'+element.state+'</p>'+
+                                    '</div>'+
+                                '</div>'+
+                                '<div class="mt-1">'+
+                                    '<p style="color:#005FD8; font-size:0.9rem;">&#8358;' +element.service_fee+'</p>'+
+                                    '<p>Ratings: '+element.ratings+'</p>'+
+                                '</div>'+
+                                '</div>'+
+                                '<div class="bidder-bottom mt-2"> <input id="bid_id'+element.bid_id+'" value="'+element.bid_id+'" hidden/>'+
+                                '<p style="color:#005FD880; font-weight:700; font-size:0.7rem;">Bid Pitch</p>'+
+                                '<p style="color:#829CC580;">'+element.pitch+'</p>'+
+                                '</div>'+
+                                '<p class="'+element.bidder_id+'" id="'+element.bid_id+'" onClick="client_accept_bidder_confirmation(this.id, this.className)" style="text-align:right; color:#F7B222;">Accept Bid</p>'+
+                                // '<button type="button" class="bidder-accept text-right" >Accept Bid</button>'+
+                            '</div></form>'
+                            
+                        );
+                    }
+                    else{
+                        $('#bidders_form').append(
+                            '<div class="bidder-div mb-2">'+
+                                '<div class="bidder-top">'+
+                                '<div class="bidder-inner">'+
+                                    '<i class="fas fa-user-circle fa-alter" style="color: #005FD850;"  ></i>'+
+                                    '<div class="ml-2 mt-1">'+
+                                    '<p style="color:#829CC580; font-weight:700; font-size:0.9rem;" id="bidder_bidder_name'+element.bidder_id+'">'+element.bidder+'</p> <input id="bidder_bid_id'+element.bidder_id+'" value="'+element.bidder_id+'" hidden/>'+
+                                    '<p style="color:#005FD8;">'+element.state+'</p>'+
+                                    '</div>'+
+                                '</div>'+
+                                '<div class="mt-1">'+
+                                    '<p style="color:#005FD8; font-size:0.9rem;">&#8358;' +element.service_fee+'</p>'+
+                                    '<p>Ratings: '+element.ratings+'</p>'+
+                                '</div>'+
+                                '</div>'+
+                                '<div class="bidder-bottom mt-2"> <input id="bid_id'+element.bidder_id+'" value="'+element.bid_id+'" hidden/>'+
+                                '<p style="color:#005FD880; font-weight:700; font-size:0.7rem;">Bid Pitch</p>'+
+                                '<p style="color:#829CC580;">'+element.pitch+'</p>'+
+                                '</div>'+
+                                '<p class="bidder-accept text-right" style="color:red;" type="button" id="'+element.bidder_id+'" >Declined</p>'+
+                            '</div>'
+                            
+                        );
+                    }
+                    
+                });
+            }
+            if(bidList.length = 0){
+                $('#bidders_forms').append('<div class="text-center" style="color: #448AC9; margin-top:50px;">Sorry there are no Bids yet for your Offer!</div>');
+            }
+            if(response.error == true){
+                $('#bidders_form').append('<div class="text-center" style="color: #448AC9; margin-top:50px;">An error occured. Try again!</div>');
+            }
+            
+            $('#biddersList').modal('show');
+        },
+        error:function(e){
+            console.log(e);
+        },
+    });
+}
+function back2project() {
+    window.location.href = '/project';
+}
+
+// artisan accept offer API
+$(function(){
+    $('#job_accept_submit_initial').on('click', function (e) {
+        e.preventDefault();
+        let bid_id2 = document.getElementById("bid_id2").value;
+        document.getElementById("accept_order_id").value= bid_id2;
+        $('#acceptModal').modal('show');
+        
+    });
+});
+
+// $(function(){
+//     $('.bidder-accept').on('click', function (e) {
+//         e.preventDefault();
+//         console.log('hi')
+        
+//     });
+// });
+
+
+function client_accept_bidder_confirmation(bidd_id, bidder_id) {
+    let bid_id = document.getElementById("bid_id"+bidd_id).value;
+    let bidder = document.getElementById("bidder_bidder_name"+bidder_id).innerHTML;
+    let $crf_token = $('[name="csrfmiddlewaretoken"]').attr('value');
+    $.ajax({
+        url:'/client_accept_bidder_confirmation',
+        type:'POST',
+        headers:{"X-CSRFToken": $crf_token},
+        data:{
+            bid_id: bid_id,
+            bidder_id: bidder_id,
+            bidder: bidder, 
+        },
+        success:function(response){
+            console.log(response);
+            if(response.error == false){
+                document.getElementById('client_accept_order_id').value = response.bidder.bid_id;
+                document.getElementById('client_bidder_id').value = response.bidder.bidder_id;
+                document.getElementById('client_bidder_name').innerHTML = response.bidder.bidder;
+                $('#acceptClientModal').modal('show');
+                
+            }
+            else{
+                console.log(response.message)
+                
+            }
+        },
+        error:function(e){
+            console.log(e);
+        },
+    });
+    
+}
+
+// artisan decline offer API
+$(function(){
+    $('#job_decline_submit_initial').on('click', function (e) {
+        e.preventDefault();
+        let bid_id2 = document.getElementById("bid_id2").value;
+        document.getElementById("decline_order_id").value= bid_id2;
+        $('#declineModal').modal('show');
+        
+    });
+});
+
+$(function(){
+    $('#accept_order_submit').on('click', function (e) {
+        e.preventDefault();
+        const button = document.getElementById("accept_order_submit");
+        button.innerText = "Confirming...";
+        button.disabled = true;
+        let job_order_id = document.getElementById("accept_order_id").value;
+        let $crf_token = $('[name="csrfmiddlewaretoken"]').attr('value');
+        $.ajax({
+            url:'/artisan_accept_bid_api',
+            type:'POST',
+            headers:{"X-CSRFToken": $crf_token},
+            data:{
+                job_id: job_order_id,
+            },
+            success:function(response){
+                console.log(response);
+                if(response.error == false){
+                    document.getElementById("cover").style.display = "none";
+                    document.getElementById("accept_message").classList.add("text-primary");
+                    document.getElementById("accept_message").innerHTML= response.message; 
+                    document.getElementById("accept_message").style.display = "block";
+                    
+                }
+                else{
+                    document.getElementById("cover").style.display = "none";
+                    document.getElementById("accept_message").classList.add("text-danger");
+                    document.getElementById('accept_message').innerHTML = response.message;
+                    document.getElementById("accept_message").style.display = "block";
+                    
+                }
+                setTimeout(function(){ 
+                    document.getElementById('accept_message').innerHTML = "";
+                    window.location.href = '/gig';
+                    document.getElementById("accept_message").style.display = "none";
+                }, 3000);
+            },
+            error:function(e){
+                console.log(e);
+            },
+        });
+        
+    });
+});
+$(function(){
+    $('#order_decline_submit').on('click', function (e) {
+        e.preventDefault();
+        const button = document.getElementById("order_decline_submit");
+        button.innerText = "Confirming...";
+        button.disabled = true;
+        let job_order_id = document.getElementById("decline_order_id").value;
+        let $crf_token = $('[name="csrfmiddlewaretoken"]').attr('value');
+        $.ajax({
+            url:'/artisan_decline_bid_api',
+            type:'POST',
+            headers:{"X-CSRFToken": $crf_token},
+            data:{
+                job_id: job_order_id,
+            },
+            success:function(response){
+                console.log(response);
+                if(response.error == false){
+                    document.getElementById("decline_message").classList.add("alert-primary");
+                    document.getElementById("decline_message").innerHTML= response.message; 
+                    document.getElementById("decline_message").style.display = "block";
+                    
+                }
+                else{
+                    document.getElementById("decline_message").classList.add("alert-danger");
+                    document.getElementById('decline_message').innerHTML = response.message;
+                    document.getElementById("decline_message").style.display = "block";
+                    
+                }
+                setTimeout(function(){ 
+                    document.getElementById('decline_message').innerHTML = "";
+                    window.location.href = '/gig';
+                    document.getElementById("decline_message").style.display = "none";
+                }, 5000);
+            },
+            error:function(e){
+                console.log(e);
+            },
+        });
+        
+    });
+});
+
+$(function(){
+    $('#confirm_acceptance_submit').on('click', function (e) {
+        e.preventDefault();
+        const button = document.getElementById("confirm_acceptance_submit");
+        button.innerText = "Confirming...";
+        button.disabled = true;
+        let client_bidder_name = document.getElementById("client_bidder_name").innerHTML;
+        let client_accept_order_id = document.getElementById("client_accept_order_id").value;
+        let client_bidder_id = document.getElementById("client_bidder_id").value;
+        let $crf_token = $('[name="csrfmiddlewaretoken"]').attr('value');
+        $.ajax({
+            url:'/client_accept_bid_api',
+            type:'POST',
+            headers:{"X-CSRFToken": $crf_token},
+            data:{
+                bidder_name: client_bidder_name,
+                order_id: client_accept_order_id,
+                bidder_id: client_bidder_id,
+            },
+            success:function(response){
+                console.log(response);
+                if(response.error == false){
+                    document.getElementById("cover").style.display = "none";
+                    document.getElementById("accept_message").classList.add("text-primary");
+                    document.getElementById("accept_message").innerHTML= response.message; 
+                    document.getElementById("accept_message").style.display = "block";
+                    
+                }
+                else{
+                    document.getElementById("cover").style.display = "none";
+                    document.getElementById("accept_message").classList.add("text-danger");
+                    document.getElementById('accept_message').innerHTML = response.message;
+                    document.getElementById("accept_message").style.display = "block";
+                    
+                }
+                setTimeout(function(){ 
+                    document.getElementById('accept_message').innerHTML = "";
+                    window.location.href = '/project';
+                    document.getElementById("accept_message").style.display = "none";
+                }, 2000);
+            },
+            error:function(e){
+                console.log(e);
+            },
+        });
+        
+    });
+});
+
+$.ajax({
+    url:'/artisan_gig_main_ajax',
+    type:'GET',
+    success:function(response){
+        console.log(response);
+        let artisanGigsList = response.artisanGigsList;
+        if(artisanGigsList.length > 0){
+            artisanGigsList.forEach((element) => {
+                if (element.projectStatus == "ongoing" && element.isCompleted == false) {  // ongoing project after artisan accept offer
+                    $('#gigger-div').append(
+                        '<div class="bid-card mt-3" id="'+element.project_id+'" onClick="ongoing_gig(this.id)">'+
+                            '<p>'+element.title+'</p>'+
+                            '<i class="fas fa-envelope " style="color: #0069F0;" ></i>'+
+                            '<i class="fas fa-dot-circle " style="color: #D0BC0A;" ></i>'+
+                        '</div>'
+                    );
+                }
+                if (element.projectStatus == "completed") {  // order completed
+                    $('#gigger-div').append(
+                        '<div class="bid-card mt-3" id="'+element.project_id+'">'+
+                            '<p>'+element.title+'</p>'+
+                            '<i class="fas fa-check-circle  " style="color: #14E2CA;" ></i>'+
+                        '</div>'
+                    );
+                }
+
+                if (element.projectStatus == "disputed") {  // order disputed
+                    $('#gigger-div').append(
+                        '<div class="bid-card mt-3" id="'+element.project_id+'">'+
+                            '<p>'+element.title+'</p>'+
+                            '<i class="fas fa-question-circle  " style="color: #C4C4C4;" ></i>'+
+                        '</div>'
+                    );
+                }
+                if (element.projectStatus == "cancelled") {  // order cancelled
+                    $('#gigger-div').append(
+                        '<div class="bid-card mt-3" id="'+element.project_id+'">'+
+                            '<p>'+element.title+'</p>'+
+                            '<i class="fas fa-times-circle  " style="color: #C91B30;" ></i>'+
+                        '</div>'
+                    );
+                }
+                if (element.projectStatus == "ongoing" && element.isCompleted == true) {  // order completed by artisan awaiting client confirmation
+                    $('#gigger-div').append(
+                        '<div class="bid-card mt-3" id="'+element.project_id+'" data-toggle="modal" data-target="#artisanWaitModal">'+
+                            '<p>'+element.title+'</p>'+
+                            '<i class="fas fa-dot-circle " style="color: #14E2CA;" ></i>'+
+                        '</div>'
+                    );
+                }
+                
+            });
+        }
+        if(response.error == true){
+            $('#gigger-div').append('<div class="text-center" style="color: #448AC9; margin-top:50px;">An error occured. Try again!</div>');
+        }
+        if(artisanGigsList.length <= 0){
+            $('#gigger-div').append('<div class="text-center" style="color: #448AC9; margin-top:50px;">Sorry there are no Projects yet!</div>');
+        }
+    },
+    error:function(e){
+        console.log(e);
+    },
+});
+
+$.ajax({
+    url:'/client_project_main_ajax',
+    type:'GET',
+    success:function(response){
+        console.log(response);
+        let clientProjectsList = response.clientProjectsList;
+        if(clientProjectsList.length > 0){
+            clientProjectsList.forEach((element) => {
+                if (element.projectStatus == "ongoing" ) {  // ongoing project after artisan accept offer
+                    $('#project-div').append(
+                        '<div class="bid-card mt-3" id="'+element.project_id+'" onClick="ongoing_project(this.id)">'+
+                            '<p>'+element.title+'</p>'+
+                            '<i class="fas fa-envelope " style="color: #0069F0;" ></i>'+
+                            '<i class="fas fa-dot-circle " style="color: #D0BC0A;" ></i>'+
+                        '</div>'
+                    );
+                }
+                if (element.projectStatus == "completed") {  // order completed
+                    $('#project-div').append(
+                        '<div class="bid-card mt-3" id="'+element.project_id+'">'+
+                            '<p>'+element.title+'</p>'+
+                            '<i class="fas fa-check-circle  " style="color: #14E2CA;" ></i>'+
+                        '</div>'
+                    );
+                }
+
+                if (element.projectStatus == "disputed") {  // order completed
+                    $('#project-div').append(
+                        '<div class="bid-card mt-3" id="'+element.project_id+'">'+
+                            '<p>'+element.title+'</p>'+
+                            '<i class="fas fa-question-circle  " style="color: #C4C4C4;" ></i>'+
+                        '</div>'
+                    );
+                }
+                if (element.projectStatus == "cancelled") {  // order completed
+                    $('#project-div').append(
+                        '<div class="bid-card mt-3" id="'+element.project_id+'">'+
+                            '<p>'+element.title+'</p>'+
+                            '<i class="fas fa-times-circle  " style="color: #C91B30;" ></i>'+
+                        '</div>'
+                    );
+                }
+                
+            });
+        }
+        if(response.error == true){
+            $('#project-div').append('<div class="text-center" style="color: #448AC9; margin-top:50px;">An error occured. Try again!</div>');
+        }
+        if(clientProjectsList.length <= 0){
+            $('#project-div').append('<div class="text-center" style="color: #448AC9; margin-top:50px;">Sorry there are no Projects yet!</div>');
+        }
+    },
+    error:function(e){
+        console.log(e);
+    },
+});
+
+// Client click to end project or check project status
+function ongoing_project(id) {
+    let $crf_token = $('[name="csrfmiddlewaretoken"]').attr('value');
+    $.ajax({
+        url:'/ongoing_project_modal',
+        type:'POST',
+        headers:{
+            "X-CSRFToken": $crf_token,
+        },
+        data:{
+            id: id,
+        },
+        success:function(response){
+            console.log(response)
+            // console.log('hi')
+            let projectItem= response.projectItem;
+            if(projectItem){
+                console.log(response);
+                document.getElementById('project_title').value = projectItem.title;
+                document.getElementById('project_description').value = projectItem.description;
+                // document.getElementById('bid_budget').value = bidView.budget;
+                document.getElementById('project_order_id2').value = projectItem.order_id
+                document.getElementById('project_location').value = projectItem.location;
+                document.getElementById('project_state').value = projectItem.state;
+                document.getElementById('project_fee').value = "NGN"+projectItem.service_fee;
+                document.getElementById('project_id2').value = projectItem.project_id;
+                $('#ongoingProject').modal('show');
+            }
+            if(response.error == true){
+                console.log(response)
+            }
+            if(projectItem.length <= 0){
+                console.log(response)
+            }
+        },
+        error:function(e){
+            console.log(e);
+        },
+    });
+}
+
+// Client click to end project or check project status
+function ongoing_gig(id) {
+    let $crf_token = $('[name="csrfmiddlewaretoken"]').attr('value');
+    $.ajax({
+        url:'/ongoing_project_modal',
+        type:'POST',
+        headers:{
+            "X-CSRFToken": $crf_token,
+        },
+        data:{
+            id: id,
+        },
+        success:function(response){
+            console.log(response)
+            // console.log('hi')
+            let projectItem= response.projectItem;
+            if(projectItem){
+                console.log(response);
+                document.getElementById('gigs_title').value = projectItem.title;
+                document.getElementById('gigs_description').value = projectItem.description;
+                // document.getElementById('bid_budget').value = bidView.budget;
+                document.getElementById('gigs_order_id2').value = projectItem.order_id
+                document.getElementById('gigs_location').value = projectItem.location;
+                document.getElementById('gigs_state').value = projectItem.state;
+                document.getElementById('gigs_fee').value = "NGN"+projectItem.service_fee;
+                document.getElementById('gigs_id2').value = projectItem.project_id;
+                $('#ongoingGig').modal('show');
+            }
+            if(response.error == true){
+                console.log(response)
+            }
+            if(projectItem.length <= 0){
+                console.log(response)
+            }
+        },
+        error:function(e){
+            console.log(e);
+        },
+    });
+}
+
+// artisan complete job initial  API
+$(function(){
+    $('#job_complete_submit_initial').on('click', function (e) {
+        e.preventDefault();
+        
+        let gigs_id = document.getElementById("gigs_id2").value;
+        let gigs_order_id = document.getElementById("gigs_order_id2").value;
+        document.getElementById("gig_gigs_id").value= gigs_id;
+        document.getElementById("gig_order_id").value= gigs_order_id;
+        $('#endGigModal').modal('show');
+        
+    });
+});
+
+// client confirm complete job initial  API
+$(function(){
+    $('#project_submit_initial').on('click', function (e) {
+        e.preventDefault();
+        
+        let projects_id = document.getElementById("project_id2").value;
+        let project_order_id = document.getElementById("project_order_id2").value;
+        document.getElementById("project_projects_id").value= projects_id ;
+        document.getElementById("project_order_id").value= project_order_id;
+        $('#endProjectModal').modal('show');
+        
+    });
+});
+
+function onlyOneCheckbox(checkbox) {
+    var checkboxes = document.getElementsByName('check')
+    checkboxes.forEach((item) => {
+        if (item !== checkbox) item.checked = false
+    })
+}
+$(function(){
+     
+// star rating
+$('#star_one').on('click', function (e) {
+    e.preventDefault();
+    console.log("star_one");
+    document.getElementById("star_one").style.color = "orange";
+    document.getElementById("rating").value =1;
+
+    // make them unclicable 
+    document.getElementById("star_one").style.pointerEvents = "none";
+    document.getElementById("star_two").style.pointerEvents = "none";
+    document.getElementById("star_three").style.pointerEvents = "none";
+    document.getElementById("star_four").style.pointerEvents = "none";
+    document.getElementById("star_five").style.pointerEvents = "none";
+});
+$('#star_two').on('click', function (e) {
+    e.preventDefault();
+    console.log("star_two");
+    document.getElementById("star_one").style.color = "orange";
+    document.getElementById("star_two").style.color = "orange";
+    document.getElementById("rating").value =2;
+
+    // make them unclicable 
+    document.getElementById("star_one").style.pointerEvents = "none";
+    document.getElementById("star_two").style.pointerEvents = "none";
+    document.getElementById("star_three").style.pointerEvents = "none";
+    document.getElementById("star_four").style.pointerEvents = "none";
+    document.getElementById("star_five").style.pointerEvents = "none";
+});
+$('#star_three').on('click', function (e) {
+    e.preventDefault();
+    console.log("star_three");
+    document.getElementById("star_one").style.color = "orange";
+    document.getElementById("star_two").style.color = "orange";
+    document.getElementById("star_three").style.color = "orange";
+    document.getElementById("rating").value =3;
+
+    // make them unclicable 
+    document.getElementById("star_one").style.pointerEvents = "none";
+    document.getElementById("star_two").style.pointerEvents = "none";
+    document.getElementById("star_three").style.pointerEvents = "none";
+    document.getElementById("star_four").style.pointerEvents = "none";
+    document.getElementById("star_five").style.pointerEvents = "none";
+});
+$('#star_four').on('click', function (e) {
+    e.preventDefault();
+    console.log("star_four");
+    document.getElementById("star_one").style.color = "orange";
+    document.getElementById("star_two").style.color = "orange";
+    document.getElementById("star_three").style.color = "orange";
+    document.getElementById("star_four").style.color = "orange";
+    document.getElementById("rating").value =4;
+
+    // make them unclicable 
+    document.getElementById("star_one").style.pointerEvents = "none";
+    document.getElementById("star_two").style.pointerEvents = "none";
+    document.getElementById("star_three").style.pointerEvents = "none";
+    document.getElementById("star_four").style.pointerEvents = "none";
+    document.getElementById("star_five").style.pointerEvents = "none";
+});
+$('#star_five').on('click', function (e) {
+    e.preventDefault();
+    console.log("star_five");
+    document.getElementById("star_one").style.color = "orange";
+    document.getElementById("star_two").style.color = "orange";
+    document.getElementById("star_three").style.color = "orange";
+    document.getElementById("star_four").style.color = "orange";
+    document.getElementById("star_five").style.color = "orange";
+    document.getElementById("rating").value =5;
+
+    // make them unclicable 
+    document.getElementById("star_one").style.pointerEvents = "none";
+    document.getElementById("star_two").style.pointerEvents = "none";
+    document.getElementById("star_three").style.pointerEvents = "none";
+    document.getElementById("star_four").style.pointerEvents = "none";
+    document.getElementById("star_five").style.pointerEvents = "none";
+});
+});
+$(function(){
+    $('#end_project_submitting').on('click', function (e) {
+        e.preventDefault();
+        const button = document.getElementById("end_project_submitting");
+        button.innerText = "ending Project...";
+        button.disabled = true;
+        // $('#endProjectModal').modal('hide');
+        let project_id = document.getElementById("project_projects_id").value;
+        let order_id = document.getElementById("project_order_id").value;
+        let project_rating  = document.getElementById("rating").value;
+        let $crf_token = $('[name="csrfmiddlewaretoken"]').attr('value');
+        checked = $("input[type=checkbox]:checked").length;
+        
+        let project_status = $("input[type=checkbox]:checked").attr('value');
+        console.log(project_rating);
+        console.log(project_status);
+        if(!checked) {
+            let checkbox_error = document.getElementById("checkbox_error")
+            checkbox_error.innerHTML = "You must check at least one checkbox."
+            button.innerText = "Confirm";
+            button.disabled = false; 
+        }
+        else if (project_rating == ""){
+            let rating_error = document.getElementById("rating_error")
+            rating_error.innerHTML = "Sorry! you are yet to rate the Artisan!"
+            checkbox_error.innerHTML = ""
+            button.innerText = "Confirm";
+            button.disabled = false; 
+        }
+
+        else{
+            $.ajax({
+                url:'/end_project_api',
+                type:'POST',
+                headers:{"X-CSRFToken": $crf_token},
+                data:{
+                    project_id: project_id,
+                    order_id: order_id,
+                    project_status: project_status,
+                    project_rating: project_rating 
+                },
+                success:function(response){
+                    console.log(response);
+                    if(response.error == false && response.satisfied == true){
+                        document.getElementById("initial").style.display = "none";
+                        document.getElementById("final").style.display = "block";
+                        
+                    }
+                    if(response.error == false && response.satisfied == false){
+                        document.getElementById("final_error").style.display = "block";
+                        document.getElementById("initial").style.display = "none";
+                        document.getElementById('final_error_message').innerHTML = response.message;
+                        
+                    }
+                    setTimeout(function(){ 
+                        window.location.href = '/project';
+                    }, 5000);
+                },
+                error:function(e){
+                    console.log(e);
+                },
+            });
+        }
+        
+        
+    });
+});
+
+$(function(){
+    $('#end_gig_submitting').on('click', function (e) {
+        e.preventDefault();
+        const button = document.getElementById("end_gig_submitting");
+        button.innerText = "ending Gig...";
+        button.disabled = true;
+        // $('#endProjectModal').modal('hide');
+        let gig_id = document.getElementById("gig_gigs_id").value;
+        let order_id = document.getElementById("gig_order_id").value;
+        // let project_rating  = document.getElementById("rating").value;
+        let $crf_token = $('[name="csrfmiddlewaretoken"]').attr('value');
+        checked = $("input[type=checkbox]:checked").length;
+        
+        let is_completed = $("input[type=checkbox]:checked").attr('value');
+        console.log(is_completed);
+        if(!checked) {
+            let checkbox_error = document.getElementById("checkbox_error2")
+            checkbox_error.innerHTML = "You must check at least one checkbox."
+        }
+        else{
+            $.ajax({
+                url:'/end_gig_api',
+                type:'POST',
+                headers:{"X-CSRFToken": $crf_token},
+                data:{
+                    gig_id: gig_id,
+                    order_id: order_id,
+                    is_completed: is_completed,
+                },
+                success:function(response){
+                    console.log(response);
+                    if(response.error == false && response.satisfied == true){
+                        document.getElementById("initial_gig").style.display = "none";
+                        document.getElementById("final_gig").style.display = "block";
+                        
+                    }
+                    if(response.error == false && response.satisfied == false){
+                        document.getElementById("final_error_gig").style.display = "block";
+                        document.getElementById("initial_gig").style.display = "none";
+                        document.getElementById('final_error_message_gig').innerHTML = response.message;
+                        
+                    }
+                    setTimeout(function(){ 
+                        window.location.href = '/gig';
+                    }, 3000);
+                },
+                error:function(e){
+                    console.log(e);
+                },
+            });
+        }
+        
+        
+    });
+});
+
+
+
+
+
+$(function(){
+    $('#send_chat_message_submit').on('click', function (e) {
+        e.preventDefault();
+        let project_id = document.getElementById("project_id").value;
+        let message = document.getElementById("message").value;
+        let sender = document.getElementById("sender").value;
+        let reciever = document.getElementById("reciever").value;
+        let $crf_token = $('[name="csrfmiddlewaretoken"]').attr('value');
+
+        if (message == ""){}
+        else{
+            $.ajax({
+                url:'/artisan_send_message',
+                type:'POST',
+                headers:{"X-CSRFToken": $crf_token},
+                data:{
+                    project_id: project_id,
+                    message: message,
+                    sender: sender,
+                    reciever:reciever,
+                },
+                success:function(response){
+                    console.log(response);
+                    document.getElementById("message").value = "";
+                    let chat_div = document.getElementById("chat_container").innerHTML = "";
+                    
+                    let chatHistoryList = response.chatHistoryList;
+                    if(chatHistoryList.length > 0){
+                        chatHistoryList.forEach((element) => {
+                            if (element.from_id == element.artisan ) {  // ongoing project after artisan accept offer
+                                $('#chat_container').append(
+                                    '<div class="mt-3">'+
+                                    '<p class="text-left">You</p>'+
+                                    '<div  class="you-chat">'+
+                                        '<p>'+element.message+'</p>'+
+                                        '<p class="text-right">'+element.date_added+'</p>'+
+                                    '</div>'+
+                                    '</div>'
+                                );
+                            }
+                            else {  // order completed
+                                $('#chat_container').append(
+                                    '<div class="mt-3">'+
+                                    '<p class="text-right">Client</p>'+
+                                    '<div  class="client-chat">'+
+                                        '<p>'+element.message+'</p>'+
+                                        '<p class="text-right">'+element.date_added+'</p>'+
+                                    '</div>'+
+                                    '</div>'
+                                );
+                            }
+    
+                            
+                        });
+                    }
+                    if(response.error == true){
+                        $('#chat_container').append('<div class="text-center" style="color: #448AC9; margin-top:50px;">An error occured. Try again!</div>');
+                    }
+                    if(chatHistoryList.length <= 0){
+                        $('#chat_container').append('<div class="text-center" style="color: #448AC9; margin-top:50px;">Sorry there are no chats yet!</div>');
+                    }
+                    // chat_div.scrollTop = "100vh";
+                    let Height = document.getElementById("chat_container").scrollHeight;
+                    document.getElementById("chat_container").scrollTop = Height;
+                    console.log(Height)
+                },
+                error:function(e){
+                    console.log(e);
+                },
+            });
+            
+        }
+        
+    });
+});
+
+$(function(){
+    $('#client_send_chat_message_submit').on('click', function (e) {
+        e.preventDefault();
+        let project_id = document.getElementById("client_project_id").value;
+        let message = document.getElementById("client_message").value;
+        let sender = document.getElementById("client_sender").value;
+        let reciever = document.getElementById("client_reciever").value;
+        let $crf_token = $('[name="csrfmiddlewaretoken"]').attr('value');
+
+        $.ajax({
+            url:'/client_send_message',
+            type:'POST',
+            headers:{"X-CSRFToken": $crf_token},
+            data:{
+                project_id: project_id,
+                message: message,
+                sender: sender,
+                reciever:reciever,
+            },
+            success:function(response){
+                document.getElementById("client_message").value = "";
+                console.log(response);
+                document.getElementById("client_chat_container").innerHTML = "";
+                
+                let chatHistoryList = response.chatHistoryList;
+                if(chatHistoryList.length > 0){
+                    chatHistoryList.forEach((element) => {
+                        if (element.from_id == element.client ) {  // ongoing project after artisan accept offer
+                            $('#client_chat_container').append(
+                                '<div class="mt-3">'+
+                                '<p class="text-left">You</p>'+
+                                '<div  class="you-chat">'+
+                                    '<p>'+element.message+'</p>'+
+                                    '<p class="text-right">'+element.date_added+'</p>'+
+                                '</div>'+
+                                '</div>'
+                            );
+                        }
+                        else {  // order completed
+                            $('#client_chat_container').append(
+                                '<div class="mt-3">'+
+                                '<p class="text-right">Client</p>'+
+                                '<div  class="client-chat">'+
+                                    '<p>'+element.message+'</p>'+
+                                    '<p class="text-right">'+element.date_added+'</p>'+
+                                '</div>'+
+                                '</div>'
+                            );
+                        }
+
+                        
+                    });
+                }
+                if(response.error == true){
+                    $('#client_chat_container').append('<div class="text-center" style="color: #448AC9; margin-top:50px;">An error occured. Try again!</div>');
+                }
+                if(chatHistoryList.length <= 0){
+                    $('#client_chat_container').append('<div class="text-center" style="color: #448AC9; margin-top:50px;">Sorry there are no chats yet!</div>');
+                }
+                // chat_div.scrollTop = "100vh";
+                let Height = document.getElementById("client_chat_container").scrollHeight;
+                document.getElementById("client_chat_container").scrollTop = Height;
+                console.log(Height)
+            },
+            error:function(e){
+                console.log(e);
+            },
+        });
+        
+        
+    });
+});
+
+// var getNewArtisanChat = window.setInterval(function(){
+//     project_id = document.getElementById("project_id").value
+//     $.ajax({
+//         url:'/get_artisan_chat',
+//         type:'GET',
+//         data:{
+//             project_id: project_id,
+//         },
+//         success:function(response){
+//             console.log(response);
+//         },
+//         error:function(e){
+//             console.log(e);
+//         },
+//     });
+//   }, 5000);
+// var getNewNotifications = window.setInterval(function(){
+//     $.ajax({
+//         url:'/get_notification',
+//         type:'GET',
+//         success:function(response){
+//             // console.log(response);
+            
+//             let notify = response.notify;
+//             if(notify == true){
+//                 document.getElementById("notif").style.display = "inline-block";     
+//             }
+//             if(notify == false){
+//                 document.getElementById("notif").style.display = "none"; 
+//             }
+//         },
+//         error:function(e){
+//             // console.log(e);
+//         },
+//     });
+//   }, 5000);

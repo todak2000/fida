@@ -16,7 +16,7 @@ class User(models.Model):
     user_password = models.TextField(max_length=200,verbose_name="Password")
     user_address = models.TextField(max_length=200,verbose_name="Address")
     user_state = models.TextField(max_length=200,verbose_name="State")
-    ratings = models.TextField(max_length=200,verbose_name="Job Ratings", default=1.0)
+    ratings = models.IntegerField(max_length=200,verbose_name="Job Ratings", default=1.0)
     role = models.TextField(max_length=50,verbose_name="User role",default="client")
     walletBalance = models.FloatField(verbose_name="Balance",default=0.00)
     # account details
@@ -28,6 +28,8 @@ class User(models.Model):
     profile_complete = models.BooleanField(default=False)
     terms_conditions = models.BooleanField(default=False)
     
+    #notification toggle
+    notification = models.BooleanField(default=False, verbose_name="Notification toggle")
     date_added = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
@@ -71,6 +73,7 @@ class Orders(models.Model):
     orderStatus = models.TextField(max_length=15,  default='pending', verbose_name="Order Status")
     winner_id = models.CharField(max_length=500,verbose_name="Bid Winner", null=True)
     winner_accept = models.BooleanField(default=False, verbose_name="Did Winner Accept Bid")
+    from_ads = models.BooleanField(default=False, verbose_name="Order created from ads")
     date_added = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
@@ -97,6 +100,7 @@ class Bids(models.Model):
     service_fee = models.TextField(max_length=200,verbose_name="Service fee", default="10")
     pitch = models.TextField(max_length=200,verbose_name="Pitch", default="hi")
     date_added = models.DateTimeField(default=timezone.now)
+    declinedOffer = models.BooleanField(default=False)
 
     def __str__(self):
         return f"{self.order_id} - {self.bidder} - {self.service_fee} - {self.pitch}"
@@ -109,9 +113,10 @@ class Escrow(models.Model):
     artisan_id = models.TextField(max_length=20,verbose_name="Artisan ID",null=True)
     fees_agreed= models.CharField(max_length=500,verbose_name="Fees Agreed", null=True)
     project_id= models.TextField(max_length=500,verbose_name="Project ID", null=True)
-    commission = models.BooleanField(default=False, verbose_name="FIda's Commission")
+    order_id= models.TextField(max_length=500,verbose_name="Order ID", null=True)
+    commission = models.CharField(default=0,max_length=500, verbose_name="FIda's Commission",null=True)
     dispute = models.BooleanField(default=False, verbose_name="Did Client raise dispute")
-    isPaid = models.BooleanField(default=False, verbose_name="Was payment made")
+    isPaid = models.BooleanField(default=False, verbose_name="Was payment made to Artisan")
     date_added = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
@@ -121,17 +126,18 @@ class Project_Gig(models.Model):
     class Meta:
         db_table = "Gig/Project Table"
     # Gigs/Projects
-    bid_id = models.TextField(max_length=20,verbose_name="Bid ID",null=True)
+    order_id = models.TextField(max_length=20,verbose_name="Order ID",null=True)
     client_id = models.TextField(max_length=20,verbose_name="Client ID",null=True)
     artisan_id = models.TextField(max_length=20,verbose_name="Artisan ID",null=True)
     project_title= models.TextField(max_length=500,verbose_name="Project Title", null=True)
     canChat = models.BooleanField(default=False, verbose_name="Chat permission")
+    projectStatus = models.TextField(max_length=15,  default='pending', verbose_name="Order Status")
     endProject = models.BooleanField(default=False, verbose_name="Was Projected ended")
-    isCompleted = models.BooleanField(default=False, verbose_name="was Project completed")
+    isCompleted = models.BooleanField(default=False, verbose_name="was Project completed") # sto be filled by artisan check options
     date_added = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
-        return f"{self.bid_id} - {self.client_id} - {self.artisan_id} - {self.project_title} - {self.canChat} {self.endProject} - {self.isCompleted}"
+        return f"{self.order_id} - {self.client_id} - {self.artisan_id} - {self.project_title} - {self.canChat} {self.endProject} - {self.isCompleted}- {self.projectStatus}"
 
 class Transaction(models.Model):
     class Meta:
@@ -157,6 +163,8 @@ class Chat(models.Model):
     to_id = models.TextField(max_length=20,verbose_name="Recieving Party",null=True)
     message= models.TextField(max_length=500,verbose_name="Message", null=True)
     projectCompleted = models.BooleanField(default=False, verbose_name="is Project completed")
+    artisanRead = models.BooleanField(default=False, verbose_name="artisan has Read message")
+    clientRead = models.BooleanField(default=False, verbose_name="client has Read message")
     project_id = models.TextField(max_length=20,verbose_name="Project ID",null=True)
     date_added = models.DateTimeField(default=timezone.now)
 

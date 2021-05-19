@@ -1,7 +1,7 @@
 {% extends "artisan/nav.html" %}
 
 {% load static %}
-
+{% load humanize %}
 {% block body%}
 <section class="home-background">
     <!-- hamburger starts -->
@@ -31,7 +31,7 @@
   <!-- hamburger ends -->
     <div class="wallet-top">
       <div class="balance">
-        <h1>N12,002.67</h1>
+        <h1>&#8358;{{walletBalance|floatformat:2|intcomma}}</h1>
       </div>
       <div class="option-div">
         <input type="button" value="Confirm" class="form-control withdraw mt-3" id="job_details_submit" style="width: 35%;">
@@ -40,26 +40,36 @@
     </div>
     <div class="wallet-bottom mt-3">
       <h5 style="font-family: Poppins;">Transactions</h5>
+      {% if transaction %}
+    {% for t in transaction %}
+      {% if t.transaction_type == "Credit" %}
       <div class="trans-div">
         <div class="trans-1">
-          <p>Payment</p>
-          <p>12/03/2020</p>
+          <p>{{t.transaction_message}}</p>
+          <p>{{t.date_added}}</p>
         </div>
         <div class="trans-2">
-          <p>N1,290.67</p>
-          <p>Credit</p>
+          <p>{{t.amount|floatformat:2|intcomma}}</p>
+          <p style="color:green">{{t.transaction_type}}</p>
         </div>
       </div>
+      {% else %}
       <div class="trans-div">
         <div class="trans-1">
-          <p>Withdraw</p>
-          <p>10/03/2020</p>
+          <p>{{t.transaction_message}}</p>
+          <p>{{t.date_added}}</p>
         </div>
         <div class="trans-2">
-          <p>N6,290.67</p>
-          <p>Debit</p>
+          <p>{{t.amount|floatformat:2|intcomma}}</p>
+          <p style="color:red">{{t.transaction_type}}</p>
         </div>
       </div>
+      {% endif %}
+    {% endfor %}
+    {% else %}
+    <div class='text-center text-primary' style="margin-top:50px;">There is no Transaction yet</div>
+    {% endif %}
+
     </div>
 </section>
 <footer class="footer">
@@ -81,6 +91,7 @@
     </a>
     <a href="{% url 'gig' %}">
         <i class="fab fa-gitter fa-2x "></i>
+        <!-- <span class="badge badge-danger" style="margin-left:-5px; display: none; border-radius: 50%; color:red;height: 10px;width: 10px;" id="notif">.</span> -->
         <!-- <p>Signout</p> -->
     </a>
 </footer>

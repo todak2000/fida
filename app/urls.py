@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, re_path
 
 from . import views
 
@@ -28,9 +28,10 @@ urlpatterns = [
     path("withdraw", views.withdraw_page, name="withdraw"),
     path("new_ads", views.new_ads_page, name="new_ads"),
     path("chat", views.chat_page, name="chat"),
-    path("individual_chat", views.individual_chat_page, name="individual_chat"),
+    path("individual_chat/<int:id>", views.individual_chat_page, name="individual_chat"),
     path("account", views.account_page, name="account"),
     path("job_view", views.job_view, name="job_view"),
+    # path("open_chat_page", views.open_chat_page, name="artisan_decline_bid_api"),
     
     
     path("edit_ads", views.edit_ads_page, name="edit_ads"),
@@ -40,6 +41,7 @@ urlpatterns = [
     path("edit_bio_ajax", views.edit_bio_ajax, name="edit_bio_ajax"),
     path("edit_account_ajax", views.edit_account_ajax, name="edit_account_ajax"),
     path("edit_password_ajax", views.edit_password_ajax, name="edit_password_ajax"),
+    path("get_notification", views.get_notification, name="get_notification"),
     
     # SHARED PAGES
     path("edit_bio", views.edit_bio_page, name="edit_bio"),
@@ -62,7 +64,8 @@ urlpatterns = [
     path("client_top_up", views.client_top_up_page, name="client_top_up"),
     path("client_withdraw", views.client_withdraw_page, name="client_withdraw"),
     path("client_chat", views.client_chat_page, name="client_chat"),
-    path("client_individual_chat", views.client_individual_chat_page, name="client_individual_chat"),
+    # path("client_individual_chat", views.client_individual_chat_page, name="client_individual_chat"),
+    path("client_individual_chat/<int:id>", views.client_individual_chat_page, name="client_individual_chat"),
     path("client_account", views.client_account_page, name="client_account"),
 
     # CLIENT APIS
@@ -70,8 +73,15 @@ urlpatterns = [
     path("client_home_ajax", views.client_home_ajax, name="client_home_ajax"),
     path("ads_search", views.ads_search, name="ads_search"),
     path("ads_view", views.ads_view, name="ads_view"),
+    path("bid_list", views.bid_list, name="bid_list"),
+    path("client_send_message", views.client_send_message, name="client_send_message"),
+    path("end_project_api", views.end_project_api, name="end_project_api"),
+    path("ongoing_project_modal", views.ongoing_project_modal, name="ongoing_projects_modal"),
+    path("client_accept_bidder_confirmation", views.client_accept_bidder_confirmation, name="client_accept_bidder_confirmation"),
     path("client_project_ajax", views.client_project_ajax, name="client_project_ajax"),
-    path("submit_order_specific_artisans", views.submit_order_specific_artisan, name="submit_order_specific_artisan"),
+    path("client_project_main_ajax", views.client_project_main_ajax, name="client_project_main_ajax"),
+    path("submit_order_specific_artisan", views.submit_order_specific_artisan, name="submit_order_specific_artisan"),
+    path("client_accept_bid_api", views.client_accept_bid_api, name="client_accept_bid_api"),
     
     # ARTISANS APIS
     path("new_ads_ajax", views.new_ads_api, name="new_ads_ajax"),
@@ -79,7 +89,14 @@ urlpatterns = [
     path("artisan_home_ajax", views.artisan_home_ajax, name="artisan_home_ajax"),
     path("order_search", views.order_search, name="order_search"),
     path("submit_bid", views.submit_bid, name="submit_bid"),
+    path("artisan_send_message", views.artisan_send_message, name="artisan_send_message"),
+    path("end_gig_api", views.end_gig_api, name="end_gig_api"),
+    path("get_artisan_chat", views.get_artisan_chat, name="get_artisan_chat"),
     path("artisan_gig_ajax", views.artisan_gig_ajax, name="artisan_gig_ajax"),
+    path("artisan_gig_main_ajax", views.artisan_gig_main_ajax, name="artisan_gig_main_ajax"),
+    path("pending_order_modal", views.pending_order_modal, name="pending_order_modal"),
+    path("artisan_accept_bid_api", views.artisan_accept_bid_api, name="artisan_accept_bid_api"),
+    path("artisan_decline_bid_api", views.artisan_decline_bid_api, name="artisan_decline_bid_api"),
 
     # ONBOARDING APIS
     path("login_api", views.login_api, name="login_api"),

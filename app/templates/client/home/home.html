@@ -71,6 +71,7 @@
     </a>
     <a href="{% url 'project' %}">
         <i class="fab fa-gitter fa-2x "></i>
+        <!-- <span class="badge badge-danger" style="margin-left:-5px; display: none; border-radius: 50%; color:red;height: 10px;width: 10px;" id="notif">.</span> -->
         <!-- <p>Signout</p> -->
     </a>
 </footer>
@@ -92,7 +93,7 @@
           <!-- seconday nav ends -->
           <!-- top section -->
             <div class="job-form-container">
-              
+              <div class='text-center alert ' id="bio_message" style="display: none;width: 90%;position: absolute;top: 40vh;right: 5%;">HI</div>
               <form class="onboarding_form mt-2" action="#" id="job_details_form" method="POST" autocomplete="off">
                 {% csrf_token %}
                   <label class="job-label">Title</label>
@@ -124,7 +125,7 @@
                   <input type="text" id="ads_fee"   class="job-input form-control mb-3" placeholder="2,500">
                   <label class="job-label-blue">Any additional Information</label>
                   <textarea id="ads_pitch"   class="job-input-blue form-control mb-1" placeholder="I need a washman" ></textarea>
-                  <div class='text-center alert ' id="bio_message" style="display: none;"></div>
+                  
                   <input type="button" value="Submit Order" class="form-control job-form-button mt-3" id="client_orders_submit">
               </form>
         

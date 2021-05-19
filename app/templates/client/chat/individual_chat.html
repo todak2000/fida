@@ -7,45 +7,56 @@
     <!-- secondary nav starts -->
 <div class="secondary-nav">
     <i class="fas fa-chevron-left" style="color: #fff;" onclick="window.history.back();" ></i>
-    <p class="sec-nav-title">I need a washman</p>
+    <p class="sec-nav-title">{{project_details.project_title}}</p>
     <i class="fas fa-times-circle  text-right" style="color: #005FD8;"  ></i>
   </div>
 
   <!-- seconday nav ends -->
   <!-- top section -->
-  <div class="all-chat-container">
-    <!-- you -->
+  <div class="all-chat-container" id="client_chat_container">
+    {% for c in chat_details %}
+    {% if c.from_id == you %}
     <div class="mt-3">
       <p class="text-left">You</p>
       <div  class="you-chat">
-        <p>I want a washman</p>
-        <p class="text-right">11:30am</p>
+        <p>{{c.message}}</p>
+        <p class="text-right">{{c.date_added}}</p>
       </div>
     </div>
-    <!-- client -->
+    {% else %}
+      <!-- client -->
     <div class="mt-3">
       <p class="text-right">Artisan</p>
       <div  class="client-chat">
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing </p>
-        <p class="text-right">11:30am</p>
+        <p>{{c.message}}</p>
+        <p class="text-right">{{c.date_added}}</p>
       </div>
     </div>
-
-
+    {% endif %}
+    {% endfor %}
     
   </div>
-  <div class="bottom-chat-div">
+  <form>{% csrf_token %}
+  <div class="bottom-chat-div" style="width:80%;">
     <!-- send message div -->
+    <input id="client_sender" value="{{project_details.client_id}}" hidden/>
+    <input id="client_reciever" value="{{project_details.artisan_id}}" hidden/>
+    <input id="client_project_id" value="{{project_details.id}}" hidden/>
     <div class="form-group message-input">
       <div style="display: flex; justify-content: left;">
-          <textarea class="message-input-textarea" placeholder="type a message"></textarea>
-          <i class="fas fa-file-upload fa-2x ml-2"  style="margin-top: 6%; color: #0069F060;" id="upload-icon"></i>
-          <input type="file" id="uploadme" />
+          <textarea class="message-input-textarea" placeholder="Type a message" id="client_message"></textarea>
+          <!-- <i class="fas fa-file-upload fa-2x ml-2"  style="margin-top: 6%; color: #0069F060;" id="upload-icon"></i>
+          <input type="file" id="uploadme" /> -->
       </div>
     </div>
-    <i class="fas fa-paper-plane fa-2x"  style="margin-left:-13%;margin-top: 6%; color: #0069F060;" id="upload-icon"></i>
+    <i class="fas fa-paper-plane fa-2x"  style="margin-left:-13%;margin-top: 6%; color: #0069F060;" id="client_send_chat_message_submit"></i>
   </div>
-</div>
+</div></form>
 </section>
-
+<script>
+  $(document).ready(function() {
+    let Height=document.getElementById("client_chat_container").scrollHeight;
+    document.getElementById("client_chat_container").scrollTop = Height;
+});
+</script>
 {% endblock %}

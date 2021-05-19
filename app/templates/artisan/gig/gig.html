@@ -32,57 +32,17 @@
   <!-- tab section -->
   <ul class="nav nav-tabs mb-3 mt-3" id="myTab" role="tablist">
     <li class="nav-item" id="bid-li">
-      <a class="nav-link active" id="bid-tab" data-toggle="tab" href="#bid" role="tab"  aria-selected="true" >Bids</a>
+      <a class="nav-link active" id="bid-tab" data-toggle="tab" href="#bidder-div" role="tab"  aria-selected="true" >Bids</a>
     </li>
     <li class="nav-item" id="gig-li">
-      <a class="nav-link" id="gig-tab" data-toggle="tab" href="#gig" role="tab"  aria-selected="false" >Gigs</a>
+      <a class="nav-link" id="gig-tab" data-toggle="tab" href="#gigger-div" role="tab"  aria-selected="false" >Gigs</a>
     </li>
-    <!-- <li class="nav-item">
-      <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Contact</a>
-    </li> -->
   </ul>
   <div class="tab-content" id="myTabContent">
     <!-- bid tab -->
-    <div class="tab-pane fade show active" id="bidder-div" role="tabpanel" >
-      
-    </div>
-      <!-- pending -->
-      <!-- <div class="bid-card mt-3">
-        <p>Web developer needed</p>
-        <i class="fas fa-dot-circle  " style="color: #D0BC0A;" ></i>
-        <i class="fas fa-trash" style="color: #C91B30;" ></i>
-      </div> -->
-      <!-- selected -->
-      <!-- <div class="bid-card mt-3">
-        <p>Web developer needed</p>
-        <i class="fas fa-user-plus " style="color: #40DA86;" ></i>
-        <i class="fas fa-trash" style="color: #C91B30;" ></i>
-      </div>
-    </div> -->
+    <div class="tab-pane fade show active" id="bidder-div" role="tabpanel" ></div>
     <!-- gig tab -->
-    <div class="tab-pane fade" id="gig" role="tabpanel">
-      <!-- completed -->
-      <div class="bid-card mt-3">
-        <p>Web developer needed</p>
-        <i class="fas fa-check-circle  " style="color: #14E2CA;" ></i>
-      </div>
-      <!-- selected/ongoing -->
-      <div class="bid-card mt-3">
-        <p>Web developer needed</p>
-        <i class="fas fa-envelope " style="color: #0069F0;" ></i>
-        <i class="fas fa-dot-circle " style="color: #D0BC0A;" ></i>
-      </div>
-      <!-- disputed -->
-      <div class="bid-card mt-3">
-        <p>Web developer needed</p>
-        <i class="fas fa-question-circle  " style="color: #C4C4C4;" ></i>
-      </div>
-      <!-- cancelled -->
-      <div class="bid-card mt-3">
-        <p>Web developer needed</p>
-        <i class="fas fa-times-circle  " style="color: #C91B30;" ></i>
-      </div>
-    </div>
+    <div class="tab-pane fade" id="gigger-div" role="tabpanel"></div>
   </div>
   <!-- tab section end -->
   
@@ -106,7 +66,251 @@
     </a>
     <a href="">
         <i class="fab fa-gitter fa-2x active-icon"></i>
+        
         <!-- <p>Signout</p> -->
     </a>
 </footer>
+
+<!-- Bidder modal -->  
+  <!-- Modal -->
+  <div class="modal fade" id="bidderModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-body">
+          <input id="bid_bid" hidden/>
+          <p>Hi! kindly be patient. This order's bidding process is still active.</p>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+<!-- Pending order awaiting Aritisan acceptance or decline modal -->  
+  <!-- Modal -->
+  <div class="modal fade" id="pendingOrder" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document" style="margin:0;">
+      <div class="modal-content">
+        <div class="modal-body">
+          <section class="secondary-background">
+            <!-- secondary nav starts -->
+        <div class="secondary-nav">
+            <i class="fas fa-times-circle" style="color: #fff;" class="close" data-dismiss="modal" aria-label="Close" ></i>
+            <p class="sec-nav-title">Bid Details</p>
+            <i class="fas fa-times-circle  text-right" style="color: #005FD8;"  ></i>
+          </div>
+        
+          <!-- seconday nav ends -->
+          <!-- top section -->
+            <div class="job-form-container">
+              
+              <form class="onboarding_form mt-2" action="#" id="job_details_form" method="POST" autocomplete="off">
+                {% csrf_token %}
+                <label class="job-label">Title</label>
+                <input type="text" id="bid_title"   class="job-input form-control mb-3" readonly>
+                <label class="job-label">Brief Description</label>
+                <textarea id="bid_description"   class="job-input form-control mb-3" readonly></textarea>
+                <div class="job-flex">
+                    <!-- <div style="width:45%">
+                        <label class="job-label">Duration</label>
+                        <input type="text" id="bid_duration"   class="job-input form-control mb-3"  readonly>
+                    </div> -->
+                    <div style="width:100%">
+                        <label class="job-label">Budget</label>
+                        <input type="text" id="bid_budget"   class="job-input form-control mb-3" readonly>
+                    </div>
+                </div>
+                <div class="job-flex">
+                    <div style="width:45%">
+                        <label class="job-label">Location</label>
+                        <input type="text" id="bid_location"   class="job-input form-control mb-3" readonly>
+                    </div>
+                    <div style="width:45%">
+                        <label class="job-label">State</label>
+                        <input type="text" id="bid_state"   class="job-input form-control mb-3" readonly>
+                    </div>
+                </div>
+                <input id="bid_id2" hidden/>
+                <label class="job-label-blue">Service/Bidding Fee</label>
+                <input type="text" id="bid_fee"   class="job-input-blue form-control mb-3" readonly>
+                <p class="text-center text-success">Congrats! you got the job</p>
+       
+                <input type="button" value="Accept" class="form-control gig-form-accept mt-3" id="job_accept_submit_initial" >
+                <input type="button" value="Decline" class="form-control gig-form-decline mt-3" id="job_decline_submit_initial" data-toggle="modal" data-target="#declineModal">
+            </form>
+        
+            </div>
+          </div>
+        </section>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+<!-- Acceptance modal -->  
+  <!-- Modal -->
+  <div class="modal fade" id="acceptModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-body">
+          <p id="accept_message" style="display: block; padding:3%;"></p>
+          <div id="cover">
+            <h4 class="text-center">ACCEPT BID</h4>
+            <input id="accept_order_id" hidden/>
+            <p>Kindly confirm you accept this Bid and you will diligent do the Job to the best of your abilities. If however, you are found wanting, FIDA is authorised to take neccessary action.</p>
+            <div class="modal_button-div">
+              <input type="button" value="Confirm" class="form-control gig-form-accept mt-3" id="accept_order_submit" style="width: 35%;">
+              <input type="button" value="Cancel" class="form-control gig-form-decline mt-3" id="cancel_details_submit" style="width: 35%;"  data-dismiss="modal">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<!-- Decline Modal -->
+  <!-- Modal -->
+  <div class="modal fade" id="declineModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-body">
+          <p id="decline_message" style="display: none; padding:3%;"></p>
+          <div id="cover2">
+            <h4 class="text-center">DECLINE BID</h4>
+            <input id="decline_order_id" hidden/>
+            <p>Kindly confirm you are no longer interested in the job and consistent decline of jobs might affect your ratings. </p>
+            <div class="modal_button-div">
+              <input type="button" value="Confirm" class="form-control gig-form-accept mt-3" id="order_decline_submit" style="width: 35%;">
+              <input type="button" value="Cancel" class="form-control gig-form-decline mt-3" id="job_details_submit" style="width: 35%;" data-dismiss="modal">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ongoing Gig modal  -->
+  <!-- Modal -->
+  <div class="modal fade" id="ongoingGig" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document" style="margin:0;">
+      <div class="modal-content">
+        <div class="modal-body">
+          <section class="secondary-background">
+            <!-- secondary nav starts -->
+        <div class="secondary-nav">
+            <i class="fas fa-times-circle" style="color: #fff;" class="close" data-dismiss="modal" aria-label="Close" ></i>
+            <p class="sec-nav-title">Gig Details</p>
+            <i class="fas fa-times-circle  text-right" style="color: #005FD8;"  ></i>
+          </div>
+        
+          <!-- seconday nav ends -->
+          <!-- top section -->
+            <div class="job-form-container">
+              
+              <form class="onboarding_form mt-2" action="#" id="job_details_form" method="POST" autocomplete="off">
+                {% csrf_token %}
+                <label class="job-label">Title</label>
+                <input type="text" id="gigs_title"   class="job-input form-control mb-3" readonly>
+                <label class="job-label">Brief Description</label>
+                <textarea id="gigs_description"   class="job-input form-control mb-3" readonly></textarea>
+                <div class="job-flex">
+                    <div style="width:45%">
+                        <label class="job-label">Location</label>
+                        <input type="text" id="gigs_location"   class="job-input form-control mb-3" readonly>
+                    </div>
+                    <div style="width:45%">
+                        <label class="job-label">State</label>
+                        <input type="text" id="gigs_state"   class="job-input form-control mb-3" readonly>
+                    </div>
+                </div>
+                <input id="gigs_id2" hidden/><input id="gigs_order_id2" hidden/>
+                <label class="job-label-blue">Agreed Fee</label>
+                <input type="text" id="gigs_fee"   class="job-input-blue form-control mb-3" readonly>
+       
+                <input type="button" value="End Gig" class="form-control gig-form-accept mt-3" id="job_complete_submit_initial" >
+                <a href="{% url 'chat'%}"><input type="button" value="Proceed to chat with Client" class="form-control btn-primary mt-3" id="chat_submit" ></a>
+            </form>
+        
+            </div>
+          </div>
+        </section>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- End Gig Modal -->
+  <!-- Modal -->
+  <div class="modal fade" id="endGigModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-body">
+          <div id="final_gig" style="display:none;" class="pt-4"> 
+            <img src="{% static 'img/fans.svg' %}" >
+            <p style="font-size: 0.85rem; font-weight: 700; text-align: center; color:#00f;">Congrats! and thank you for completing this Job. More awaits you<br> you will be redirected within seconds</p>
+          </div>
+          <div id="final_error_gig" style="display:none;" class="pt-4"> 
+            <img src="{% static 'img/bored.svg' %}" >
+            <p style="font-size: 0.85rem; font-weight: 700; text-align: center; color:#00f;" id="final_error_message_gig"></p>
+          </div>
+          <div id="initial_gig">
+              <h4 class="text-center">END GIG</h4>
+              <form>{% csrf_token %}
+                <p id="checkbox_error2" class="text-danger text-center"></p>
+                <input id="gig_order_id" hidden/><input id="gig_gigs_id" hidden/>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <div class="input-group-text">
+                        <input type="checkbox" name="check" onclick="onlyOneCheckbox(this)" value="completed">
+                      </div>
+                    </div>
+                    <p class="ml-2" style="font-size: 0.9rem; padding-top:2px;">I have completed the work</p>
+                </div>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <div class="input-group-text">
+                        <input type="checkbox" name="check" onclick="onlyOneCheckbox(this)" value="disputed">
+                      </div>
+                    </div>
+                    <p class="ml-2" style="font-size: 0.9rem; padding-top:2px;">Sorry, the fees was not just enough</p>
+                </div>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <div class="input-group-text">
+                        <input type="checkbox" name="check" onclick="onlyOneCheckbox(this)" value="cancelled">
+                      </div>
+                    </div>
+                    <p class="ml-2" style="font-size: 0.9rem; padding-top:2px;">Sorry, I could not finish the work</p>
+                </div>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <div class="input-group-text">
+                        <input type="checkbox" name="check" onclick="onlyOneCheckbox(this)" value="cancelled">
+                      </div>
+                    </div>
+                    <p class="ml-2" style="font-size: 0.9rem; padding-top:2px;">Other reasons</p>
+                </div>
+              
+              <div class="modal_button-div">
+                <input type="button" value="Confirm" class="form-control gig-form-accept mt-3" id="end_gig_submitting" style="width: 35%;">
+                <input type="button" value="Cancel" class="form-control gig-form-decline mt-3" id="job_details_submit" style="width: 35%;" data-dismiss="modal">
+              </div>
+            </form>
+         </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Wait modal -->  
+  <!-- Modal -->
+  <div class="modal fade" id="artisanWaitModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-body">
+          <input id="order_order" hidden/>
+          <p>Hi! kindly be patient. The client is yet to confirm the completion of your work.</p>
+        </div>
+      </div>
+    </div>
+  </div>
 {% endblock %}
