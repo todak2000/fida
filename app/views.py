@@ -520,7 +520,7 @@ def client_chat_page(request):
             else:
                 return_data = {
                     "error": False,
-                    "message": "no chat data yet!",
+                    "message": "",
                 }
         except Exception as e:
             return_data = {
@@ -575,7 +575,7 @@ def client_account_page(request):
         return render(request,"client/account/account.html", return_data)
     else:
         return redirect('/login')
-        
+
 # def client_edit_bio_page(request):
 #     return render(request,"client/account/edit_bio.html")
 
