@@ -7,7 +7,7 @@
     <!-- hamburger starts -->
 <div style="width: 100%; display: flex; justify-content: space-between;">
     <p class="text-left">Welcome {{user_name}}!</p>
-    <i class="fas fa-ellipsis-v  text-right" style="color: #005FD870;" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" ></i>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" ><i class="fas fa-ellipsis-v  text-right" style="color: #005FD870;" ></i></button>
   </div>
 <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto" id="list-item-nav">
@@ -42,7 +42,7 @@
     <div class="form-group mt-3">
       <form>{% csrf_token %}
         <div style="display: flex; justify-content: left;">
-          <input type="search" class="form-control search" name="search" id="search_order" placeholder="Search by key job words or state" onkeydown="search_orders(this)"/>
+          <input type="search" class="form-control search" name="search" id="search_order" placeholder="Search by key words" onkeydown="search_orders(this)"/>
           <i class="fas fa-search"  style="margin-left:-13%;margin-top: 4%; color: #ccc;"></i>
         </div>
       </form>

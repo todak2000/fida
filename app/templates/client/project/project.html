@@ -7,7 +7,7 @@
     <!-- hamburger starts -->
 <div style="width: 100%; display: flex; justify-content: space-between;">
     <p class="text-left" style="color:#005FD8; font-size: 1.3rem; font-weight: 600; font-family: Poppins;">Projects</p>
-    <i class="fas fa-ellipsis-v  text-right" style="color: #005FD870;" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" ></i>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" ><i class="fas fa-ellipsis-v  text-right" style="color: #005FD870;" ></i></button>
   </div>
 <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto" id="list-item-nav">
@@ -24,7 +24,7 @@
       </li>
       
       <li class="nav-item item-others">
-        <a class="nav-link" href="{% url 'login' %}">Sign Out <i class="fas fa-sign-out-alt fa-2x ml-3"></i></a>
+        <a class="nav-link" href="{% url 'logout' %}">Sign Out <i class="fas fa-sign-out-alt fa-2x ml-3"></i></a>
       </li>
     </ul>
   </div>
@@ -143,26 +143,6 @@
       </div>
     </div>
   </div>
-<!-- Decline Modal -->
-  <!-- Modal -->
-  <!-- <div class="modal fade" id="declineCLientModal" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-      <div class="modal-content">
-        <div class="modal-body">
-          <p id="decline_message" style="display: none; padding:3%;"></p>
-          <div id="cover2">
-            <h4 class="text-center">DECLINE BID</h4>
-            <input id="decline_order_id" hidden/>
-            <p>Kindly confirm you are no longer interested in the job and consistent decline of jobs might affect your ratings. </p>
-            <div class="modal_button-div">
-              <input type="button" value="Confirm" class="form-control gig-form-accept mt-3" id="order_decline_submit" style="width: 35%;">
-              <input type="button" value="Cancel" class="form-control gig-form-decline mt-3" id="job_details_submit" style="width: 35%;" data-dismiss="modal">
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div> -->
 
  <!-- ongoing project modal  -->
   <!-- Modal -->

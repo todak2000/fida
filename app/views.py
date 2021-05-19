@@ -1,21 +1,13 @@
 from django.shortcuts import render, redirect
-import datetime
-import json
-import requests
-import jwt
+
 from django.db.models import Sum, Q
 from app.models import (User,Verification, Ads, Orders, Bids, Escrow, Project_Gig, Transaction, Chat)
-from CustomCode import (autentication,  password_functions,
-                        string_generator, validator)
+from CustomCode import (password_functions, string_generator, validator)
 
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
-from project_fida import settings
-
-from django.contrib.sites.shortcuts import get_current_site
-from django.template.loader import render_to_string
-from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
+from django.http import JsonResponse
 
 from pysendpulse.pysendpulse import PySendPulse
 from decouple import config
@@ -29,6 +21,36 @@ SPApiProxy = PySendPulse(REST_API_ID, REST_API_SECRET, TOKEN_STORAGE, memcached_
 # Create your views here.
 
 def index(request):
+    try:
+        if 'user_id' in request.session:
+            user_id = request.session['user_id']
+            user_data = User.objects.get(user_id=user_id)
+            if user_data.role == "artisan":
+
+                return_data = {
+                    "error": False,
+                    "profileComplete": user_data.profile_complete,
+                    "user_name": f"{user_data.firstname}"
+                }
+                return render(request,"artisan/home/home.html", return_data) 
+            elif user_data.role == "client":
+                return_data = {
+                    "error": False,
+                    "profileComplete": user_data.profile_complete,
+                    "user_name": f"{user_data.firstname}"
+                }
+                return render(request,"client/home/home.html", return_data) 
+            else:
+                return render(request,"onboarding/splashscreen.html") 
+    except Exception as e:
+        return_data = {
+            "error": True,
+            "profileComplete": user_data.profile_complete,
+            "user_name": f"{user_data.firstname}",
+            "message": "Something went wrong!"
+        }
+        return render(request,"onboarding/splashscreen.html") 
+    
     return render(request,"onboarding/splashscreen.html") 
 
 def register_page(request):
@@ -77,409 +99,483 @@ def artisan_home_page(request):
     except Exception as e:
         return_data = {
             "error": True,
-            "profileComplete": user_data.profile_complete,
-            "user_name": f"{user_data.firstname}",
             "message": "Something went wrong!"
         }
     return render(request,"artisan/home/home.html", return_data) 
 
 def job_details_page(request):
-    return render(request,"artisan/home/job_details.html") 
+    if 'user_id' in request.session:
+        return render(request,"artisan/home/job_details.html") 
+    else:
+        return redirect('/login')
 
 def gig_page(request):
-    return render(request,"artisan/gig/gig.html") 
+    if 'user_id' in request.session:
+        return render(request,"artisan/gig/gig.html") 
+    else:
+        return redirect('/login')
+    
 
-def pending_bid_page(request):
-    return render(request,"artisan/gig/pending_bid.html") 
+# def pending_bid_page(request):
+#     if 'user_id' in request.session:
+#         return render(request,"artisan/gig/pending_bid.html") 
+#     else:
+#         return redirect('/login')
+    
 
-def winning_bid_page(request):
-    return render(request,"artisan/gig/winning_bid.html")
+# def winning_bid_page(request):
+#     if 'user_id' in request.session:
+#         return render(request,"artisan/gig/winning_bid.html")
+#     else:
+#         return redirect('/login')
+    
 
-def pending_gig_page(request):
-    return render(request,"artisan/gig/pending_gig.html") 
+# def pending_gig_page(request):
+#     return render(request,"artisan/gig/pending_gig.html") 
 
-def ongoing_gig_page(request):
-    return render(request,"artisan/gig/ongoing_gig.html")
+# def ongoing_gig_page(request):
+#     return render(request,"artisan/gig/ongoing_gig.html")
 
-def awaiting_gig_page(request):
-    return render(request,"artisan/gig/awaiting_gig.html")
+# def awaiting_gig_page(request):
+#     return render(request,"artisan/gig/awaiting_gig.html")
 
-def approved_gig_page(request):
-    return render(request,"artisan/gig/approved_gig.html")
+# def approved_gig_page(request):
+#     return render(request,"artisan/gig/approved_gig.html")
 
-def disputed_gig_page(request):
-    return render(request,"artisan/gig/disputed_gig.html") 
+# def disputed_gig_page(request):
+#     return render(request,"artisan/gig/disputed_gig.html") 
 
 def wallet_page(request):
-    user_id = request.session['user_id']
-    try:
-        user_data = User.objects.get(user_id=user_id)
-        userTransactions=Transaction.objects.filter(Q(from_id__icontains=user_id) | Q(to_id__icontains=user_id)).order_by('-date_added')[:20]
-        num = len(userTransactions)
-        userTransactionsList = []
-        for i in range(0,num):
-            sender = userTransactions[i].from_id
-            to = userTransactions[i].to_id
-            date_added = userTransactions[i].date_added
-            transaction_type  = userTransactions[i].transaction_type
-            amount  = userTransactions[i].amount 
-            transaction_message = userTransactions[i].transaction_message
-            to_json = {
-                "sender": sender,
-                "transaction_type": transaction_type,
-                "to": to,
-                "transaction_message": transaction_message,
-                "amount": amount,
-                "date_added": date_added,
+    if 'user_id' in request.session:
+        user_id = request.session['user_id']
+        try:
+            user_data = User.objects.get(user_id=user_id)
+            userTransactions=Transaction.objects.filter(Q(from_id__icontains=user_id) | Q(to_id__icontains=user_id)).order_by('-date_added')[:20]
+            num = len(userTransactions)
+            userTransactionsList = []
+            for i in range(0,num):
+                sender = userTransactions[i].from_id
+                to = userTransactions[i].to_id
+                date_added = userTransactions[i].date_added
+                transaction_type  = userTransactions[i].transaction_type
+                amount  = userTransactions[i].amount 
+                transaction_message = userTransactions[i].transaction_message
+                to_json = {
+                    "sender": sender,
+                    "transaction_type": transaction_type,
+                    "to": to,
+                    "transaction_message": transaction_message,
+                    "amount": amount,
+                    "date_added": date_added,
+                }
+                userTransactionsList.append(to_json)
+            return_data = {
+                "error": False,
+                "walletBalance": user_data.walletBalance,
+                "transaction": userTransactionsList
             }
-            userTransactionsList.append(to_json)
-        return_data = {
-            "error": False,
-            "walletBalance": user_data.walletBalance,
-            "transaction": userTransactionsList
-        }
-    except Exception as e:
-        return_data = {
-            "error": True,
-            "message": "Something went wrong!"
-        }
-    return render(request,"artisan/wallet/wallet.html", return_data)
+        except Exception as e:
+            return_data = {
+                "error": True,
+                "message": "Something went wrong!"
+            }
+        return render(request,"artisan/wallet/wallet.html", return_data)
+    else:
+        return redirect('/login')
 
 def top_up_page(request):
-    return render(request,"artisan/wallet/top_up.html")
+    if 'user_id' in request.session:
+        return render(request,"artisan/wallet/top_up.html")
+    else:
+        return redirect('/login')
+    
 
 def withdraw_page(request):
-    return render(request,"artisan/wallet/withdraw.html")
+    if 'user_id' in request.session:
+        return render(request,"artisan/wallet/withdraw.html")
+    else:
+        return redirect('/login')
+    
 
 def new_ads_page(request):
-    user_id = request.session['user_id']
-    try:
-        user_data = User.objects.get(user_id=user_id)
-        return_data = {
-            "error": False,
-            "profileComplete": user_data.profile_complete,
-            "user_name": f"{user_data.firstname}"
-        }
-    except Exception as e:
-        return_data = {
-            "error": True,
-            "profileComplete": user_data.profile_complete,
-            "user_name": f"{user_data.firstname}",
-            "message": "Something went wrong!"
-        }
-    return render(request,"artisan/home/new_ads.html", return_data)
+    if 'user_id' in request.session:
+        user_id = request.session['user_id']
+        try:
+            user_data = User.objects.get(user_id=user_id)
+            return_data = {
+                "error": False,
+                "profileComplete": user_data.profile_complete,
+                "user_name": f"{user_data.firstname}"
+            }
+        except Exception as e:
+            return_data = {
+                "error": True,
+                "profileComplete": user_data.profile_complete,
+                "user_name": f"{user_data.firstname}",
+                "message": "Something went wrong!"
+            }
+        return render(request,"artisan/home/new_ads.html", return_data)
+    else:
+        return redirect('/login')
 
 def chat_page(request):
-    user_id = request.session["user_id"]
-    try:
-        project = Project_Gig.objects.filter(artisan_id=user_id)
-        if project:
+    if 'user_id' in request.session:
+        user_id = request.session["user_id"]
+        try:
+            project = Project_Gig.objects.filter(artisan_id=user_id)
+            if project:
+                return_data = {
+                    "error": False,
+                    "projects": project,
+                    "user": user_id,
+                }
+            else:
+                return_data = {
+                    "error": False,
+                    "message": "no chat data yet!",
+                }
+        except Exception as e:
             return_data = {
-                "error": False,
-                "projects": project,
-                "user": user_id,
+                "error": True,
+                "message": str(e)
             }
-        else:
-            return_data = {
-                "error": False,
-                "message": "no chat data yet!",
-            }
-    except Exception as e:
-        return_data = {
-            "error": True,
-            "message": str(e)
-        }
-    # return JsonResponse({ 'result':return_data})
-    return render(request,"artisan/chat/chat.html", return_data)
+        # return JsonResponse({ 'result':return_data})
+        return render(request,"artisan/chat/chat.html", return_data)
+    else:
+        return redirect('/login')
 
 def individual_chat_page(request, id):
-    user_id = request.session["user_id"]
-    project = Project_Gig.objects.get(id=id)
-    chat = Chat.objects.filter(project_id=project.id)
-    if project and chat:
-        return_data = {
-            "project_details": project,
-            "chat_details":chat,
-            "you": user_id,
-            "client":project.client_id
-        }
-    elif project:
-        newChat = Chat(from_id=user_id,to_id=project.client_id, message= "Hi!", project_id=project.id, clientRead=False)
-        newChat.save()
+    if 'user_id' in request.session:
+        user_id = request.session["user_id"]
+        project = Project_Gig.objects.get(id=id)
         chat = Chat.objects.filter(project_id=project.id)
-        return_data = {
-            "project_details": project,
-            "chat_details":chat,
-            "you": user_id,
-            "client":project.client_id
-        }
-    return render(request,"artisan/chat/individual_chat.html", return_data)
+        if project and chat:
+            return_data = {
+                "project_details": project,
+                "chat_details":chat,
+                "you": user_id,
+                "client":project.client_id
+            }
+        elif project:
+            newChat = Chat(from_id=user_id,to_id=project.client_id, message= "Hi!", project_id=project.id, clientRead=False)
+            newChat.save()
+            chat = Chat.objects.filter(project_id=project.id)
+            return_data = {
+                "project_details": project,
+                "chat_details":chat,
+                "you": user_id,
+                "client":project.client_id
+            }
+        return render(request,"artisan/chat/individual_chat.html", return_data)
+    else:
+        return redirect('/login')
 
 def account_page(request):
-    user_id = request.session['user_id']
-    try:
-        userData = User.objects.get(user_id=user_id)
-        return_data = {
-            "error": False,
-            "user": userData
-        }
-    except Exception as e:
-        return_data = {
-            "error": True,
-            "message": "Something went wrong!"
-        }
-    return render(request,"artisan/account/account.html", return_data)
+    if 'user_id' in request.session:
+        user_id = request.session['user_id']
+        try:
+            userData = User.objects.get(user_id=user_id)
+            return_data = {
+                "error": False,
+                "user": userData
+            }
+        except Exception as e:
+            return_data = {
+                "error": True,
+                "message": "Something went wrong!"
+            }
+        return render(request,"artisan/account/account.html", return_data)
+    else:
+        return redirect('/login')
 
 def edit_bio_page(request):
-    user_id = request.session['user_id']
-    try:
-        userData = User.objects.get(user_id=user_id)
-        return_data = {
-            "error": False,
-            "user": userData
-        }
-    except Exception as e:
-        return_data = {
-            "error": True,
-            "message": "Something went wrong!"
-        }
-    return render(request,"artisan/account/edit_bio.html", return_data)
+    if 'user_id' in request.session:
+        user_id = request.session['user_id']
+        try:
+            userData = User.objects.get(user_id=user_id)
+            return_data = {
+                "error": False,
+                "user": userData
+            }
+        except Exception as e:
+            return_data = {
+                "error": True,
+                "message": "Something went wrong!"
+            }
+        return render(request,"artisan/account/edit_bio.html", return_data)
+    else:
+        return redirect('/login')
 
 def edit_account_page(request):
-    user_id = request.session['user_id']
-    try:
-        userData = User.objects.get(user_id=user_id)
-        return_data = {
-            "error": False,
-            "user": userData
-        }
-    except Exception as e:
-        return_data = {
-            "error": True,
-            "message": "Something went wrong!"
-        }
-    return render(request,"artisan/account/edit_account.html", return_data)
+    if 'user_id' in request.session:
+        user_id = request.session['user_id']
+        try:
+            userData = User.objects.get(user_id=user_id)
+            return_data = {
+                "error": False,
+                "user": userData
+            }
+        except Exception as e:
+            return_data = {
+                "error": True,
+                "message": "Something went wrong!"
+            }
+        return render(request,"artisan/account/edit_account.html", return_data)
+    else:
+        return redirect('/login')
 
 def edit_password_page(request):
-    return render(request,"artisan/account/edit_password.html")
+    if 'user_id' in request.session:
+        return render(request,"artisan/account/edit_password.html")
+    else:
+        return redirect('/login')
+    
 
 def view_ads_page(request):
-    user_id = request.session['user_id']
-    try:
-        userAds = Ads.objects.get(artisan_id=user_id)
-        return_data = {
-            "error": False,
-            "userAds": userAds
-        }
-    except Exception as e:
-        return_data = {
-            "error": True,
-            "message": "Something went wrong!"
-        }
-    return render(request,"artisan/account/view_ads.html" , return_data)
+    if 'user_id' in request.session:
+        user_id = request.session['user_id']
+        try:
+            userAds = Ads.objects.get(artisan_id=user_id)
+            return_data = {
+                "error": False,
+                "userAds": userAds
+            }
+        except Exception as e:
+            return_data = {
+                "error": True,
+                "message": "Something went wrong!"
+            }
+        return render(request,"artisan/account/view_ads.html" , return_data)
+    else:
+        return redirect('/login')
 
 def edit_ads_page(request):
-    user_id = request.session['user_id']
-    try:
-        userData = User.objects.get(user_id=user_id)
-        return_data = {
-            "error": False,
-            "user": userData
-        }
-    except Exception as e:
-        return_data = {
-            "error": True,
-            "message": "Something went wrong!"
-        }
-    return render(request,"artisan/account/edit_ads.html" , return_data)
+    if 'user_id' in request.session:
+        user_id = request.session['user_id']
+        try:
+            userData = User.objects.get(user_id=user_id)
+            return_data = {
+                "error": False,
+                "user": userData
+            }
+        except Exception as e:
+            return_data = {
+                "error": True,
+                "message": "Something went wrong!"
+            }
+        return render(request,"artisan/account/edit_ads.html" , return_data)
+    else:
+        return redirect('/login')
 
 # client pages api
 def client_home_page(request):
-    user_id = request.session['user_id']
-    user_data = User.objects.get(user_id=user_id)
-    try:
-        
-        return_data = {
-            "error": False,
-            "profileComplete": user_data.profile_complete,
-            "user_name": f"{user_data.firstname}"
-        }
-    except Exception as e:
-        return_data = {
-            "error": True,
-            "profileComplete": user_data.profile_complete,
-            "user_name": f"{user_data.firstname}",
-            "message": "Something went wrong!"
-        }
-    return render(request,"client/home/home.html", return_data) 
+    if 'user_id' in request.session:
+        user_id = request.session['user_id']
+        user_data = User.objects.get(user_id=user_id)
+        try:
+            
+            return_data = {
+                "error": False,
+                "profileComplete": user_data.profile_complete,
+                "user_name": f"{user_data.firstname}"
+            }
+        except Exception as e:
+            return_data = {
+                "error": True,
+                "profileComplete": user_data.profile_complete,
+                "user_name": f"{user_data.firstname}",
+                "message": "Something went wrong!"
+            }
+        return render(request,"client/home/home.html", return_data) 
+    else:
+        return redirect('/login')
 
 def ads_details_page(request):
-    return render(request,"client/home/ads_details.html") 
+    if 'user_id' in request.session:
+        return render(request,"client/home/ads_details.html") 
+    else:
+        return redirect('/login')
+    
 
-def create_order_page(request):
-    return render(request,"client/home/create_order.html")
+# def create_order_page(request):
+#     return render(request,"client/home/create_order.html")
 
 def new_order_page(request):
-    user_id = request.session['user_id']
-    try:
-        user_data = User.objects.get(user_id=user_id)
-        return_data = {
-            "error": False,
-            "profileComplete": user_data.profile_complete,
-            "user_name": f"{user_data.firstname}"
-        }
-    except Exception as e:
-        return_data = {
-            "error": True,
-            "profileComplete": user_data.profile_complete,
-            "user_name": f"{user_data.firstname}",
-            "message": "Something went wrong!"
-        }
-    return render(request,"client/home/new_order.html", return_data)
+    if 'user_id' in request.session:
+        user_id = request.session['user_id']
+        try:
+            user_data = User.objects.get(user_id=user_id)
+            return_data = {
+                "error": False,
+                "profileComplete": user_data.profile_complete,
+                "user_name": f"{user_data.firstname}"
+            }
+        except Exception as e:
+            return_data = {
+                "error": True,
+                "profileComplete": user_data.profile_complete,
+                "user_name": f"{user_data.firstname}",
+                "message": "Something went wrong!"
+            }
+        return render(request,"client/home/new_order.html", return_data)
+    else:
+        return redirect('/login')
 
 def project_page(request):
-    # user_id = request.session["user_id"]
-    # try:
-    #     user_data = User.objects.get(user_id=user_id)
-    #     user_data.notification = False
-    #     user_data.save()
-    #     return_data = {
-    #         "error": False,
-    #         "notification": user_data.notification,
-    #         "user_name": f"{user_data.firstname}"
-    #     }
-    # except Exception as e:
-    #     return_data = {
-    #         "error": True,
-    #         "profileComplete": user_data.profile_complete,
-    #         "user_name": f"{user_data.firstname}",
-    #         "message": "Something went wrong!"
-    #     }
-    return render(request,"client/project/project.html") 
+    if 'user_id' in request.session:
+        return render(request,"client/project/project.html") 
+    else:
+        return redirect('/login')
+    
 
-def pending_order_page(request):
-    return render(request,"client/project/pending_order.html") 
+# def pending_order_page(request):
+#     if 'user_id' in request.session:
+#         return render(request,"client/project/pending_order.html") 
+#     else:
+#         return redirect('/login')
+    
 
-def declined_order_page(request):
-    return render(request,"client/project/declined_order.html")
+# def declined_order_page(request):
+#     return render(request,"client/project/declined_order.html")
 
-def ongoing_project_page(request):
-    return render(request,"client/project/ongoing_project.html")
+# def ongoing_project_page(request):
+#     return render(request,"client/project/ongoing_project.html")
 
-def ongoing_order_page(request):
-    return render(request,"client/project/ongoing_order.html")
+# def ongoing_order_page(request):
+#     return render(request,"client/project/ongoing_order.html")
 
-def pending_project_page(request):
-    return render(request,"client/project/pending_project.html")
+# def pending_project_page(request):
+#     return render(request,"client/project/pending_project.html")
 
-def approved_project_page(request):
-    return render(request,"client/project/approved_project.html")
+# def approved_project_page(request):
+#     return render(request,"client/project/approved_project.html")
 
-def disputed_project_page(request):
-    return render(request,"client/project/disputed_project.html") 
+# def disputed_project_page(request):
+#     return render(request,"client/project/disputed_project.html") 
 
 def client_wallet_page(request):
-    user_id = request.session['user_id']
-    try:
-        user_data = User.objects.get(user_id=user_id)
-        userTransactions=Transaction.objects.filter(Q(from_id__icontains=user_id) | Q(to_id__icontains=user_id)).order_by('-date_added')[:20]
-        num = len(userTransactions)
-        userTransactionsList = []
-        for i in range(0,num):
-            sender = userTransactions[i].from_id
-            to = userTransactions[i].to_id
-            date_added = userTransactions[i].date_added
-            transaction_type  = userTransactions[i].transaction_type
-            amount  = userTransactions[i].amount 
-            transaction_message = userTransactions[i].transaction_message
-            to_json = {
-                "sender": sender,
-                "transaction_type": transaction_type,
-                "to": to,
-                "transaction_message": transaction_message,
-                "amount": amount,
-                "date_added": date_added,
+    if 'user_id' in request.session:
+        user_id = request.session['user_id']
+        try:
+            user_data = User.objects.get(user_id=user_id)
+            userTransactions=Transaction.objects.filter(Q(from_id__icontains=user_id) | Q(to_id__icontains=user_id)).order_by('-date_added')[:20]
+            num = len(userTransactions)
+            userTransactionsList = []
+            for i in range(0,num):
+                sender = userTransactions[i].from_id
+                to = userTransactions[i].to_id
+                date_added = userTransactions[i].date_added
+                transaction_type  = userTransactions[i].transaction_type
+                amount  = userTransactions[i].amount 
+                transaction_message = userTransactions[i].transaction_message
+                to_json = {
+                    "sender": sender,
+                    "transaction_type": transaction_type,
+                    "to": to,
+                    "transaction_message": transaction_message,
+                    "amount": amount,
+                    "date_added": date_added,
+                }
+                userTransactionsList.append(to_json)
+            return_data = {
+                "error": False,
+                "walletBalance": user_data.walletBalance,
+                "transaction": userTransactionsList
             }
-            userTransactionsList.append(to_json)
-        return_data = {
-            "error": False,
-            "walletBalance": user_data.walletBalance,
-            "transaction": userTransactionsList
-        }
-    except Exception as e:
-        return_data = {
-            "error": True,
-            "message": "Something went wrong!"
-        }
-    return render(request,"client/wallet/wallet.html", return_data)
+        except Exception as e:
+            return_data = {
+                "error": True,
+                "message": "Something went wrong!"
+            }
+        return render(request,"client/wallet/wallet.html", return_data)
+    else:
+        return redirect('/login')
 
 def client_top_up_page(request):
-    return render(request,"client/wallet/top_up.html")
+    if 'user_id' in request.session:
+        return render(request,"client/wallet/top_up.html")
+    else:
+        return redirect('/login')
+    
 
 def client_withdraw_page(request):
-    return render(request,"client/wallet/withdraw.html")
+    if 'user_id' in request.session:
+        return render(request,"client/wallet/withdraw.html")
+    else:
+        return redirect('/login')
+    
 
 def client_chat_page(request):
-    user_id = request.session["user_id"]
-    try:
-        project = Project_Gig.objects.filter(client_id=user_id)
-        
-        if project:
+    if 'user_id' in request.session:
+        user_id = request.session["user_id"]
+        try:
+            project = Project_Gig.objects.filter(client_id=user_id)
+            
+            if project:
+                return_data = {
+                    "error": False,
+                    "projects": project,
+                    "user": user_id,
+                }
+            else:
+                return_data = {
+                    "error": False,
+                    "message": "no chat data yet!",
+                }
+        except Exception as e:
             return_data = {
-                "error": False,
-                "projects": project,
-                "user": user_id,
+                "error": True,
+                "message": str(e)
             }
-        else:
-            return_data = {
-                "error": False,
-                "message": "no chat data yet!",
-            }
-    except Exception as e:
-        return_data = {
-            "error": True,
-            "message": str(e)
-        }
-    return render(request,"client/chat/chat.html", return_data)
+        return render(request,"client/chat/chat.html", return_data)
+    else:
+        return redirect('/login')
+
 
 def client_individual_chat_page(request, id):
-    user_id = request.session["user_id"]
-    project = Project_Gig.objects.get(id=id)
-    chat = Chat.objects.filter(project_id=project.id)
-    if project and chat:
-        return_data = {
-            "project_details": project,
-            "chat_details":chat,
-            "you": user_id,
-            "artisan":project.artisan_id
-        }
-    elif project:
-        newChat = Chat(from_id=user_id,to_id=project.artisan_id, message= "Hi!", project_id=project.id)
-        newChat.save()
+    if 'user_id' in request.session:
+        user_id = request.session["user_id"]
+        project = Project_Gig.objects.get(id=id)
         chat = Chat.objects.filter(project_id=project.id)
-        return_data = {
-            "project_details": project,
-            "chat_details":chat,
-            "you": user_id,
-            "artisan":project.artisan_id
-        }
-    return render(request,"client/chat/individual_chat.html", return_data)
+        if project and chat:
+            return_data = {
+                "project_details": project,
+                "chat_details":chat,
+                "you": user_id,
+                "artisan":project.artisan_id
+            }
+        elif project:
+            newChat = Chat(from_id=user_id,to_id=project.artisan_id, message= "Hi!", project_id=project.id)
+            newChat.save()
+            chat = Chat.objects.filter(project_id=project.id)
+            return_data = {
+                "project_details": project,
+                "chat_details":chat,
+                "you": user_id,
+                "artisan":project.artisan_id
+            }
+        return render(request,"client/chat/individual_chat.html", return_data)
+    else:
+        return redirect('/login')
 
 def client_account_page(request):
-    user_id = request.session['user_id']
-    try:
-        userData = User.objects.get(user_id=user_id)
-        return_data = {
-            "error": False,
-            "user": userData
-        }
-    except Exception as e:
-        return_data = {
-            "error": True,
-            "message": "Something went wrong!"
-        }
-    return render(request,"client/account/account.html", return_data)
-
+    if 'user_id' in request.session:
+        user_id = request.session['user_id']
+        try:
+            userData = User.objects.get(user_id=user_id)
+            return_data = {
+                "error": False,
+                "user": userData
+            }
+        except Exception as e:
+            return_data = {
+                "error": True,
+                "message": "Something went wrong!"
+            }
+        return render(request,"client/account/account.html", return_data)
+    else:
+        return redirect('/login')
+        
 # def client_edit_bio_page(request):
 #     return render(request,"client/account/edit_bio.html")
 
@@ -1258,8 +1354,8 @@ def submit_order_specific_artisan(request):
                     'text': 'Hello, '+ads.artisan_id.firstname+'!\nYou just won a bid from your ads. Kindly check via the Fida App to accept or decline the offer',
                     'from': {'name': 'Fida Synergy', 'email': 'donotreply@wastecoin.co'},
                     'to': [
-                        # {'name': ads.artisan_id.firstname, 'email': order.client_id.email}
-                        {'name': ads.artisan_id.firstname, 'email': "todak2000@gmail.com"}
+                        {'name': ads.artisan_id.firstname, 'email': ads.artisan_id.email}
+                        # {'name': ads.artisan_id.firstname, 'email': "todak2000@gmail.com"}
                     ]
                 }
                 sentMail4 = SPApiProxy.smtp_send_mail(email4)
@@ -1343,8 +1439,8 @@ def submit_bid(request):
                 'text': 'Hello, '+order.client_id.firstname+'!\nYou have a new bidder for your Job offer. Kindly check via the Fida App',
                 'from': {'name': 'Fida Synergy', 'email': 'donotreply@wastecoin.co'},
                 'to': [
-                    # {'name': order.client_id.firstname, 'email': order.client_id.email}
-                    {'name': order.client_id.firstname, 'email': "todak2000@gmail.com"}
+                    {'name': order.client_id.firstname, 'email': order.client_id.email}
+                    # {'name': order.client_id.firstname, 'email': "todak2000@gmail.com"}
                 ]
             }
             sentMail = SPApiProxy.smtp_send_mail(email)
@@ -1495,8 +1591,8 @@ def artisan_accept_bid_api(request):
             'text': 'Hello, '+client_data.firstname+'!\nKindly be informed the Artisan has accepted your Job Offer. Kindly reach out via the chat to keep tab on the job completion. Be also informed, NGN '+acceptedOrder.service_fee+' has been deducted from your wallet into Fida Escrow account. Upon confirmation of job completion, the Artisan would be paid. Thank you ',
             'from': {'name': 'Fida Synergy', 'email': 'donotreply@wastecoin.co'},
             'to': [
-                # {'name': client_data.firstname, 'email': client_data.email}
-                {'name': client_data.firstname, 'email': "todak2000@gmail.com"}
+                {'name': client_data.firstname, 'email': client_data.email}
+                # {'name': client_data.firstname, 'email': "todak2000@gmail.com"}
             ]
         }
         sentMail3 = SPApiProxy.smtp_send_mail(email3)
@@ -1524,8 +1620,8 @@ def artisan_decline_bid_api(request):
                 'text': 'Hello, '+freeOrder.client_id.firstname+'!\nWe regret to inform you, the Artisan rejected your offer for the Ads you created Order - '+order_id+' from. However, you could rather create a fresh order and accept bids to proceed with the Job.',
                 'from': {'name': 'Fida Synergy', 'email': 'donotreply@wastecoin.co'},
                 'to': [
-                    # {'name': freeOrder.client_id.firstname, 'email': order.client_id.email}
-                    {'name': freeOrder.client_id.firstname, 'email': "todak2000@gmail.com"}
+                    {'name': freeOrder.client_id.firstname, 'email': freeOrder.client_id.email}
+                    # {'name': freeOrder.client_id.firstname, 'email': "todak2000@gmail.com"}
                 ]
             }
             sentMail7 = SPApiProxy.smtp_send_mail(email7)
@@ -1553,8 +1649,8 @@ def artisan_decline_bid_api(request):
                 'text': 'Hello, '+freeOrder.client_id.firstname+'!\nWe regret to inform you, the Artisan rejected your offer for the Ads you created Order - '+order_id+' from. However, you could select another Bid from the list of bids available for the Order to proceed with the Job.',
                 'from': {'name': 'Fida Synergy', 'email': 'donotreply@wastecoin.co'},
                 'to': [
-                    # {'name': freeOrder.client_id.firstname, 'email': order.client_id.email}
-                    {'name': freeOrder.client_id.firstname, 'email': "todak2000@gmail.com"}
+                    {'name': freeOrder.client_id.firstname, 'email': freeOrder.client_id.email}
+                    # {'name': freeOrder.client_id.firstname, 'email': "todak2000@gmail.com"}
                 ]
             }
             sentMail7 = SPApiProxy.smtp_send_mail(email7)
@@ -1602,7 +1698,7 @@ def client_accept_bid_api(request):
         acceptedOrder.winner_id  = bidder_id
         acceptedOrder.service_fee = bid.service_fee
         acceptedOrder.save()
-        # bidder_data = User.objects.get(user_id=bidder_id)
+        bidder_data = User.objects.get(user_id=bidder_id)
 
         # Send mail using SMTP
         mail_subject = bidder_name+'! You won the bid for Order-'+order_id
@@ -1612,8 +1708,8 @@ def client_accept_bid_api(request):
             'text': 'Hello, '+bidder_name+'!\nYou have won the bid for your Job offer with Order No '+order_id+'. Kindly check via the Fida App to accept or decline the offer immediately. Congrats once again!',
             'from': {'name': 'Fida Synergy', 'email': 'donotreply@wastecoin.co'},
             'to': [
-                # {'name': bidder_name, 'email': bidder_data.email}
-                {'name': bidder_name, 'email': "todak2000@gmail.com"}
+                {'name': bidder_name, 'email': bidder_data.email}
+                # {'name': bidder_name, 'email': "todak2000@gmail.com"}
             ]
         }
         sentMail2 = SPApiProxy.smtp_send_mail(email)
@@ -1762,8 +1858,8 @@ def end_project_api(request):
                 'text': 'Hello, '+artisan.firstname+'!\nYou have a new bidder for your Job offer. Kindly check via the Fida App',
                 'from': {'name': 'Fida Synergy', 'email': 'donotreply@wastecoin.co'},
                 'to': [
-                    # {'name': artisan.firstname, 'email': order.client_id.email}
-                    {'name': artisan.firstname, 'email': "todak2000@gmail.com"}
+                    {'name': artisan.firstname, 'email': artisan.email}
+                    # {'name': artisan.firstname, 'email': "todak2000@gmail.com"}
                 ]
             }
             sentMail6 = SPApiProxy.smtp_send_mail(email6)
@@ -1788,8 +1884,8 @@ def end_project_api(request):
                 'text': 'Hello, '+artisan.firstname+'!\nWe regret to inform you that payment for your work would be processed yet. This is because the client did not confirm completion of your work in positive light. The Project with project id - '+project_id+' was tagged '+project_status+'. Kindly reach out the client via the chat or the Fida admin to resolve the issue immediately or call 09088776666666.',
                 'from': {'name': 'Fida Synergy', 'email': 'donotreply@wastecoin.co'},
                 'to': [
-                    # {'name': artisan.firstname, 'email': order.client_id.email}
-                    {'name': artisan.firstname, 'email': "todak2000@gmail.com"}
+                    {'name': artisan.firstname, 'email': artisan.email}
+                    # {'name': artisan.firstname, 'email': "todak2000@gmail.com"}
                 ]
             }
             sentMail6 = SPApiProxy.smtp_send_mail(email6)
@@ -1833,7 +1929,8 @@ def end_gig_api(request):
                 'from': {'name': 'Fida Synergy', 'email': 'donotreply@wastecoin.co'},
                 'to': [
                     # {'name': client.firstname, 'email': order.client_id.email}
-                    {'name': client.firstname, 'email': "todak2000@gmail.com"}
+                    {'name': client.firstname, 'email': client.email}
+                    # {'name': client.firstname, 'email': "todak2000@gmail.com"}
                 ]
             }
             sentMail9 = SPApiProxy.smtp_send_mail(email9)
@@ -1860,8 +1957,8 @@ def end_gig_api(request):
                 'text': 'Hello, '+client.firstname+'!\nYou job order with (Order - '+order_id+') has been certified completed by the Artisan. Kindly confirm you are satisfied or otherwise with the work via the Fida App by clicking on end project. This is to enable the Artisan get paid immediately from the Escrow account if you confirm or allow Fida representative to attend to the issues you might concerning the job.',
                 'from': {'name': 'Fida Synergy', 'email': 'donotreply@wastecoin.co'},
                 'to': [
-                    # {'name': client.firstname, 'email': order.client_id.email}
-                    {'name': client.firstname, 'email': "todak2000@gmail.com"}
+                    {'name': client.firstname, 'email': client.email}
+                    # {'name': client.firstname, 'email': "todak2000@gmail.com"}
                 ]
             }
             sentMail9 = SPApiProxy.smtp_send_mail(email9)
@@ -1930,8 +2027,8 @@ def artisan_send_message(request):
                 'text': 'Hello, '+client.firstname+'!\n'+artisan.firstname+' send you a message for the Project: '+project.project_title+'. Kindly check via the Fida App to reply immmediately',
                 'from': {'name': 'Fida Synergy', 'email': 'donotreply@wastecoin.co'},
                 'to': [
-                    # {'name': client.firstname, 'email': client.email}
-                    {'name': client.firstname, 'email': "todak2000@gmail.com"}
+                    {'name': client.firstname, 'email': client.email}
+                    # {'name': client.firstname, 'email': "todak2000@gmail.com"}
                 ]
             }
             sentMail = SPApiProxy.smtp_send_mail(email)
@@ -1983,8 +2080,8 @@ def client_send_message(request):
                 'text': 'Hello, '+artisan.firstname+'!\n'+client.firstname+' send you a message for the Project: '+project.project_title+'. Kindly check via the Fida App to reply immmediately',
                 'from': {'name': 'Fida Synergy', 'email': 'donotreply@wastecoin.co'},
                 'to': [
-                    # {'name': artisan.firstname, 'email': artisan.email}
-                    {'name': artisan.firstname, 'email': "todak2000@gmail.com"}
+                    {'name': artisan.firstname, 'email': artisan.email}
+                    # {'name': artisan.firstname, 'email': "todak2000@gmail.com"}
                 ]
             }
             sentMail = SPApiProxy.smtp_send_mail(email)

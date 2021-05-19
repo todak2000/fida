@@ -711,7 +711,6 @@ $.ajax({
 // ARTISAN ORDER SEARCH API
 function search_orders(e) {
     // console.log(e.value);
-    clearInterval(getNewOrdersForArtisans) 
     document.getElementById('artisan_screen').innerHTML = "";
     let $crf_token = $('[name="csrfmiddlewaretoken"]').attr('value');
     $.ajax({
@@ -755,7 +754,6 @@ function search_orders(e) {
 // CLIENT ADS SEARCH API
 function search_ads(e) {
     // console.log(e.value);
-    clearInterval(getNewAdsForClients) 
     document.getElementById('client_screen').innerHTML = "";
     let $crf_token = $('[name="csrfmiddlewaretoken"]').attr('value');
     $.ajax({
@@ -926,6 +924,8 @@ $(function(){
                     }, 4000);
                 }
                 else{
+                    button.innerText = "Submit";
+                    button.disabled = false;
                     document.getElementById("bio_message").classList.add("alert-danger");
                     document.getElementById('bio_message').innerHTML = response.message;
                     document.getElementById("bio_message").style.display = "block";

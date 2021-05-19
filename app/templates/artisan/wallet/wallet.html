@@ -7,7 +7,7 @@
     <!-- hamburger starts -->
 <div style="width: 100%; display: flex; justify-content: space-between;">
     <p class="text-left" style="color:#005FD8; font-size: 1.3rem; font-weight: 600; font-family: Poppins;">Wallet Balance</p>
-    <i class="fas fa-ellipsis-v  text-right" style="color: #005FD870;" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" ></i>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" ><i class="fas fa-ellipsis-v  text-right" style="color: #005FD870;" ></i></button>
   </div>
 <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto" id="list-item-nav">
@@ -24,7 +24,7 @@
       </li>
       
       <li class="nav-item item-others">
-        <a class="nav-link" href="{% url 'login' %}">Sign Out <i class="fas fa-sign-out-alt fa-2x ml-3"></i></a>
+        <a class="nav-link" href="{% url 'logout' %}">Sign Out <i class="fas fa-sign-out-alt fa-2x ml-3"></i></a>
       </li>
     </ul>
   </div>
@@ -34,8 +34,8 @@
         <h1>&#8358;{{walletBalance|floatformat:2|intcomma}}</h1>
       </div>
       <div class="option-div">
-        <input type="button" value="Confirm" class="form-control withdraw mt-3" id="job_details_submit" style="width: 35%;">
-            <input type="button" value="Cancel" class="form-control topup mt-3" id="job_details_submit" style="width: 35%;">
+        <input type="button" value="Withdraw" class="form-control withdraw mt-3" id="job_details_submit" style="width: 35%;">
+            <input type="button" value="Top-up" class="form-control topup mt-3" id="job_details_submit" style="width: 35%;">
       </div>
     </div>
     <div class="wallet-bottom mt-3">

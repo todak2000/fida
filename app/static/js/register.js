@@ -23,6 +23,8 @@ document.getElementById("complete").style.display = "none";
             }
             else{
             $("#form-part-one").hide();
+            document.getElementById("message_one").style.display = "none";
+            document.getElementById("message").style.display = "none";
             document.getElementById("back_img").style.display = "block";
             document.getElementById("form-part-two").style.display = "block";
             document.getElementById("complete").style.display = "block";
