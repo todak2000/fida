@@ -3,8 +3,9 @@ $(function(){
     $('#signup_submit').on('click', function (e) {
         e.preventDefault();
         const button = document.getElementById("signup_submit");
-        button.innerText = "Signing up...";
-        button.disabled = true;
+        // button.innerText = "Signing up...";
+        // $("#loader").show();
+        // button.disabled = true;
         let firstname = document.getElementById("firstname").value;
         let lastname = document.getElementById("lastname").value;
         let email = document.getElementById("email").value;
@@ -17,6 +18,7 @@ $(function(){
         let $crf_token = $('[name="csrfmiddlewaretoken"]').attr('value');
         document.getElementById("spinner").style.display = "block";
         if (terms_conditions.checked == false){
+            $("#loader").hide();
             console.log(terms_conditions.value)
             document.getElementById("spinner").style.display = "none";
             document.getElementById('server_message_error').classList.add("alert-danger");
@@ -43,6 +45,7 @@ $(function(){
                     state: state,
                 },
                 success:function(response){
+                    // $("#loader").hide();
                     document.getElementById("spinner").style.display = "none";
                     if(response.error == true){
                         document.getElementById('server_message_error').classList.add("alert-danger");
@@ -67,6 +70,7 @@ $(function(){
                 },
                 error:function(e){
                     console.log(e);
+                    $("#spinner").hide();
                 },
             });
         }
@@ -77,9 +81,10 @@ $(function(){
 $(function(){
     $('#verify_submit').on('click', function (e) {
         e.preventDefault();
+        // $("#loader").show();
         const button = document.getElementById("verify_submit");
-        button.innerText = "Verifying...";
-        button.disabled = true;
+        // button.innerText = "Verifying...";
+        // button.disabled = true;
         // let code = document.getElementById("code").value;
         let codeOne = document.getElementById("codeOne").value;
         let codeTwo = document.getElementById("codeTwo").value;
@@ -96,6 +101,7 @@ $(function(){
                 code: code,
             },
             success:function(response){
+                // $("#loader").hide();
                 document.getElementById("spinner").style.display = "none";
                 if(response.error == true){
                     document.getElementById('server_message_error').classList.add("alert-danger");
@@ -123,6 +129,7 @@ $(function(){
             },
             error:function(e){
                 console.log(e);
+                $("#spinner").hide();
             },
         });
         
@@ -134,9 +141,10 @@ $(function(){
 $(function(){
     $('#resend_submit').on('click', function (e) {
         e.preventDefault();
-        const button = document.getElementById("resend_submit");
-        button.innerText = "Resending...";
-        button.disabled = true;
+        // $("#loader").show();
+        // const button = document.getElementById("resend_submit");
+        // button.innerText = "Resending...";
+        // button.disabled = true;
         let email = document.getElementById("email").value;
         let $crf_token = $('[name="csrfmiddlewaretoken"]').attr('value');
         document.getElementById("spinner").style.display = "block";
@@ -148,6 +156,7 @@ $(function(){
                 email: email,
             },
             success:function(response){
+                $("#loader").hide();
                 document.getElementById("spinner").style.display = "none";
                 if(response.error == true){
                     document.getElementById('server_message_error').classList.add("alert-danger");
@@ -170,6 +179,7 @@ $(function(){
                 console.log(response);
             },
             error:function(e){
+                $("#spinner").hide();
                 console.log(e);
             },
         });
@@ -180,9 +190,10 @@ $(function(){
 $(function(){
     $('#forgot_submit').on('click', function (e) {
         e.preventDefault();
-        const button = document.getElementById("forgot_submit");
-        button.innerText = "Sending Code...";
-        button.disabled = true;
+        // $("#loader").show();
+        // const button = document.getElementById("forgot_submit");
+        // button.innerText = "Sending Code...";
+        // button.disabled = true;
         let email = document.getElementById("email").value;
         let $crf_token = $('[name="csrfmiddlewaretoken"]').attr('value');
         document.getElementById("spinner").style.display = "block";
@@ -194,6 +205,7 @@ $(function(){
                 email: email,
             },
             success:function(response){
+                // $("#loader").hide();
                 document.getElementById("spinner").style.display = "none";
                 if(response.error == true){
                     document.getElementById('server_message_error').classList.add("alert-danger");
@@ -217,6 +229,7 @@ $(function(){
             },
             error:function(e){
                 console.log(e);
+                $("#loader").hide();
             },
         });
         
@@ -228,9 +241,10 @@ $(function(){
 $(function(){
     $('#verify_password_submit').on('click', function (e) {
         e.preventDefault();
-        const button = document.getElementById("signup_submit");
-        button.innerText = "Verifying code...";
-        button.disabled = true;
+        // $("#loader").show();
+        // const button = document.getElementById("signup_submit");
+        // button.innerText = "Verifying code...";
+        // button.disabled = true;
         // let code = document.getElementById("code").value;
         let codeOne = document.getElementById("codeOne").value;
         let codeTwo = document.getElementById("codeTwo").value;
@@ -247,6 +261,7 @@ $(function(){
                 code: code,
             },
             success:function(response){
+                $("#loader").hide();
                 document.getElementById("spinner").style.display = "none";
                 if(response.error == true){
                     document.getElementById('server_message_error').classList.add("alert-danger");
@@ -269,6 +284,7 @@ $(function(){
                 console.log(response);
             },
             error:function(e){
+                $("#spinner").hide();
                 console.log(e);
             },
         });
@@ -281,9 +297,10 @@ $(function(){
 $(function(){
     $('#change_password_submit').on('click', function (e) {
         e.preventDefault();
-        const button = document.getElementById("change_password_submit");
-        button.innerText = "Changing Password...";
-        button.disabled = true;
+        // $("#loader").show();
+        // const button = document.getElementById("change_password_submit");
+        // button.innerText = "Changing Password...";
+        // button.disabled = true;
         let password = document.getElementById("password").value;
         let confirm_password = document.getElementById("confirm_password").value;
         let $crf_token = $('[name="csrfmiddlewaretoken"]').attr('value');
@@ -297,6 +314,7 @@ $(function(){
                 confirm_password: confirm_password,
             },
             success:function(response){
+                // $("#loader").hide();
                 document.getElementById("spinner").style.display = "none";
                 if(response.error == true){
                     document.getElementById('server_message_error').classList.add("alert-danger");
@@ -319,6 +337,7 @@ $(function(){
                 console.log(response);
             },
             error:function(e){
+                $("#spinner").hide();
                 console.log(e);
             },
         });

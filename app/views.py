@@ -857,11 +857,13 @@ def login_api(request):
                     }
                 else: 
                     user_data = User.objects.get(email=email)
+                    request.session['user_id'] = user_data.user_id
+                    request.session['email'] = user_data.email
                     is_valid_password = password_functions.check_password_match(password,user_data.user_password)
                     isVerified= Verification.objects.get(user_id__user_id=user_data.user_id).isVerified
                     if is_valid_password and isVerified:
-                        request.session['user_id'] = user_data.user_id
-                        request.session['email'] = user_data.email
+                        # request.session['user_id'] = user_data.user_id
+                        # request.session['email'] = user_data.email
                         if user_data.role == "artisan":
                             return_data = {
                             "error": False,
