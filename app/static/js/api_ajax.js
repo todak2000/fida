@@ -1101,8 +1101,8 @@ $.ajax({
                         '<div class="bid-card mt-3" id="'+element.bid_id+'" onClick="pending_order(this.id)">'+ 
                             '<p style="width: 70%;">'+element.title+'</p>'+
                             '<i class="fas fa-dot-circle  " style="color: #D0BC0A;" ></i>'+
-                    );
                             '</div>'
+                    );
                 }
                 if (element.orderStatus == "pending" && element.fromAds == true) {  // awaiting artisan's acceptance
                     $('#bidder-div').append(
