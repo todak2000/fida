@@ -222,7 +222,7 @@ def chat_page(request):
     if 'user_id' in request.session:
         user_id = request.session["user_id"]
         try:
-            project = Project_Gig.objects.filter(artisan_id=user_id)
+            project = Project_Gig.objects.filter(artisan_id=user_id).order_by('-date_added')
             if project:
                 return_data = {
                     "error": False,
@@ -509,7 +509,7 @@ def client_chat_page(request):
     if 'user_id' in request.session:
         user_id = request.session["user_id"]
         try:
-            project = Project_Gig.objects.filter(client_id=user_id)
+            project = Project_Gig.objects.filter(client_id=user_id).order_by('-date_added')
             
             if project:
                 return_data = {

@@ -350,9 +350,10 @@ $(function(){
 $(function(){
     $('#bio_submit').on('click', function (e) {
         e.preventDefault();
-        const button = document.getElementById("bio_submit");
-        button.innerText = "Updating...";
-        button.disabled = true;
+        // const button = document.getElementById("bio_submit");
+        // button.innerText = "Updating...";
+        // button.disabled = true;
+        document.getElementById("spinner").style.display = "block";
         let edit_address = document.getElementById("edit_address").value;
         let edit_state = document.getElementById("edit_state").value;
         let edit_phone = document.getElementById("edit_phone").value;
@@ -368,6 +369,7 @@ $(function(){
             },
             success:function(response){
                 console.log(response);
+                document.getElementById("spinner").style.display = "none";
                 if(response.error == false){
                     document.getElementById("bio_message_success").style.display = "block";
                     document.getElementById("bio_message_success").classList.add("alert-primary");
@@ -395,6 +397,7 @@ $(function(){
                 }
             },
             error:function(e){
+                document.getElementById("spinner").style.display = "none";
                 console.log(e);
             },
         });
@@ -405,9 +408,10 @@ $(function(){
 $(function(){
     $('#edit_account_submit').on('click', function (e) {
         e.preventDefault();
-        const button = document.getElementById("edit_account_submit");
-        button.innerText = "Updating...";
-        button.disabled = true;
+        // const button = document.getElementById("edit_account_submit");
+        // button.innerText = "Updating...";
+        // button.disabled = true;
+        document.getElementById("spinner").style.display = "block";
         let edit_name = document.getElementById("edit_name").value;
         let edit_bank = document.getElementById("edit_bank").value;
         let edit_number = document.getElementById("edit_number").value;
@@ -423,6 +427,7 @@ $(function(){
             },
             success:function(response){
                 console.log(response);
+                document.getElementById("spinner").style.display = "none";
                 if(response.error == false){
                     document.getElementById("bio_message_success").classList.add("alert-primary");
                     document.getElementById('bio_message_success').innerHTML = response.message;
@@ -448,6 +453,7 @@ $(function(){
                 }
             },
             error:function(e){
+                document.getElementById("spinner").style.display = "none";
                 console.log(e);
             },
         });
@@ -458,13 +464,15 @@ $(function(){
 $(function(){
     $('#password_submit').on('click', function (e) {
         e.preventDefault();
-        const button = document.getElementById("password_submit");
-        button.innerText = "Updating..";
-        button.disabled = true;
+        // const button = document.getElementById("password_submit");
+        // button.innerText = "Updating..";
+        // button.disabled = true;
+        document.getElementById("spinner").style.display = "block";
         let old_password = document.getElementById("old_password").value;
         let new_password = document.getElementById("new_password").value;
         let confirm_new_password = document.getElementById("confirm_new_password").value;
        if (new_password != confirm_new_password){
+        document.getElementById("spinner").style.display = "none";
             document.getElementById("bio_message_fail").classList.add("alert-danger");
             document.getElementById('bio_message_fail').innerHTML = "Sorry! New Password do not match";
             document.getElementById("bio_message_fail").style.display = "block";
@@ -484,6 +492,7 @@ $(function(){
                 },
                 success:function(response){
                     // console.log(response);
+                    document.getElementById("spinner").style.display = "none";
                     if(response.error == false){
                         document.getElementById("bio_message_success").classList.add("alert-primary");
                         document.getElementById('bio_message_success').innerHTML = response.message;
@@ -509,6 +518,7 @@ $(function(){
                     }
                 },
                 error:function(e){
+                    document.getElementById("spinner").style.display = "none";
                     console.log(e);
                 },
             });
@@ -521,9 +531,10 @@ $(function(){
 $(function(){
     $('#job_order_submit').on('click', function (e) {
         e.preventDefault();
-        const button = document.getElementById("job_order_submit");
-        button.innerText = "Submitting...";
-        button.disabled = true;
+        // const button = document.getElementById("job_order_submit");
+        // button.innerText = "Submitting...";
+        // button.disabled = true;
+        document.getElementById("spinner").style.display = "block";
         let title = document.getElementById("title").value;
         let description = document.getElementById("description").value;
         // let duration = document.getElementById("duration").value;
@@ -547,6 +558,7 @@ $(function(){
             },
             success:function(response){
                 // console.log(response);
+                document.getElementById("spinner").style.display = "none";
                 if(response.error == false){
                     document.getElementById("server_message").style.display = "block";  
                 }
@@ -561,6 +573,7 @@ $(function(){
                 }
             },
             error:function(e){
+                document.getElementById("spinner").style.display = "none";
                 console.log(e);
             },
         });
@@ -571,10 +584,11 @@ $(function(){
 //new Ads REUEST API
 $(function(){
     $('#new_ads_submit').on('click', function (e) {
-        e.preventDefault();
-        const button = document.getElementById("new_ads_submit");
-        button.innerHTML = "Submitting...";
-        button.disabled = true;
+        // e.preventDefault();
+        // const button = document.getElementById("new_ads_submit");
+        // button.innerHTML = "Submitting...";
+        // button.disabled = true;
+        document.getElementById("spinner").style.display = "block";
         let title = document.getElementById("title").value;
         let description = document.getElementById("description").value;
         let min_budget = document.getElementById("min_budget").value;
@@ -597,6 +611,7 @@ $(function(){
                 max_budget: max_budget,
             },
             success:function(response){
+                document.getElementById("spinner").style.display = "none";
                 // console.log(response);
                 if(response.error == false){
                     document.getElementById("server_message").style.display = "block"; 
@@ -614,6 +629,7 @@ $(function(){
                 }
             },
             error:function(e){
+                document.getElementById("spinner").style.display = "none";
                 console.log(e);
             },
         });
@@ -903,9 +919,10 @@ function ads_view(id) {
 $(function(){
     $('#client_orders_submit').on('click', function (e) {
         e.preventDefault();
-        const button = document.getElementById("client_orders_submit");
-        button.innerText = "Submitting...";
-        button.disabled = true;
+        document.getElementById("spinner").style.display = "block";
+        // const button = document.getElementById("client_orders_submit");
+        // button.innerText = "Submitting...";
+        // button.disabled = true;
         let ads_title = document.getElementById("ads_title").value;
         let ads_description = document.getElementById("ads_description").value;
         let ads_min_budget = document.getElementById("ads_min_budget").value;
@@ -933,18 +950,20 @@ $(function(){
             },
             success:function(response){
                 console.log(response);
+                document.getElementById("spinner").style.display = "none";
                 if(response.error == false){
                     document.getElementById("bio_message").classList.add("alert-primary");
                     document.getElementById("bio_message").innerHTML= response.message; 
                     document.getElementById("bio_message").style.display = "block";
                     setTimeout(function(){ 
+                        document.getElementById("bio_message").classList.remove("alert-primary");
                         document.getElementById('bio_message').innerHTML = "";
                         window.location.href = '/client_home';
                     }, 4000);
                 }
                 else{
-                    button.innerText = "Submit";
-                    button.disabled = false;
+                    // button.innerText = "Submit";
+                    // button.disabled = false;
                     document.getElementById("bio_message").classList.add("alert-danger");
                     document.getElementById('bio_message').innerHTML = response.message;
                     document.getElementById("bio_message").style.display = "block";
@@ -1022,9 +1041,10 @@ $.ajax({
 $(function(){
     $('#bidder_submit').on('click', function (e) {
         e.preventDefault();
-        const button = document.getElementById("bidder_submit");
-        button.innerText = "Submitting...";
-        button.disabled = true;
+        // const button = document.getElementById("bidder_submit");
+        // button.innerText = "Submitting...";
+        // button.disabled = true;
+        document.getElementById("spinner").style.display = "block";
         let job_pitch = document.getElementById("job_pitch").value;
         let job_fee = document.getElementById("bidding_fee").value;
         let job_id = document.getElementById("job_id").value;
@@ -1040,11 +1060,13 @@ $(function(){
             },
             success:function(response){
                 console.log(response);
+                document.getElementById("spinner").style.display = "none";
                 if(response.error == false){
                     document.getElementById("bio_message").classList.add("alert-primary");
                     document.getElementById("bio_message").innerHTML= response.message; 
                     document.getElementById("bio_message").style.display = "block";
                     setTimeout(function(){ 
+                        document.getElementById("bio_message").classList.remove("alert-primary");
                         document.getElementById('bio_message').innerHTML = "";
                         window.location.href = '/artisan_home';
                     }, 2000);
@@ -1058,6 +1080,7 @@ $(function(){
                 
             },
             error:function(e){
+                document.getElementById("spinner").style.display = "none";
                 console.log(e);
             },
         });
@@ -1328,9 +1351,10 @@ $(function(){
 $(function(){
     $('#accept_order_submit').on('click', function (e) {
         e.preventDefault();
-        const button = document.getElementById("accept_order_submit");
-        button.innerText = "Confirming...";
-        button.disabled = true;
+        // const button = document.getElementById("accept_order_submit");
+        // button.innerText = "Confirming...";
+        // button.disabled = true;
+        document.getElementById("spinner").style.display = "block";
         let job_order_id = document.getElementById("accept_order_id").value;
         let $crf_token = $('[name="csrfmiddlewaretoken"]').attr('value');
         $.ajax({
@@ -1342,6 +1366,7 @@ $(function(){
             },
             success:function(response){
                 console.log(response);
+                document.getElementById("spinner").style.display = "none";
                 if(response.error == false){
                     document.getElementById("cover").style.display = "none";
                     document.getElementById("accept_message").classList.add("text-primary");
@@ -1357,12 +1382,15 @@ $(function(){
                     
                 }
                 setTimeout(function(){ 
+                    document.getElementById("accept_message").classList.remove("text-primary");
+                    document.getElementById("accept_message").classList.remove("text-danger");
                     document.getElementById('accept_message').innerHTML = "";
                     window.location.href = '/gig';
                     document.getElementById("accept_message").style.display = "none";
                 }, 3000);
             },
             error:function(e){
+                document.getElementById("spinner").style.display = "none";
                 console.log(e);
             },
         });
@@ -1372,9 +1400,10 @@ $(function(){
 $(function(){
     $('#order_decline_submit').on('click', function (e) {
         e.preventDefault();
-        const button = document.getElementById("order_decline_submit");
-        button.innerText = "Confirming...";
-        button.disabled = true;
+        // const button = document.getElementById("order_decline_submit");
+        // button.innerText = "Confirming...";
+        // button.disabled = true;
+        document.getElementById("spinner").style.display = "block";
         let job_order_id = document.getElementById("decline_order_id").value;
         let $crf_token = $('[name="csrfmiddlewaretoken"]').attr('value');
         $.ajax({
@@ -1386,6 +1415,7 @@ $(function(){
             },
             success:function(response){
                 console.log(response);
+                document.getElementById("spinner").style.display = "none";
                 if(response.error == false){
                     document.getElementById("decline_message").classList.add("alert-primary");
                     document.getElementById("decline_message").innerHTML= response.message; 
@@ -1399,12 +1429,15 @@ $(function(){
                     
                 }
                 setTimeout(function(){ 
+                    document.getElementById("decline_message").classList.remove("alert-primary");
                     document.getElementById('decline_message').innerHTML = "";
+                    document.getElementById("decline_message").classList.remove("alert-danger");
                     window.location.href = '/gig';
                     document.getElementById("decline_message").style.display = "none";
                 }, 5000);
             },
             error:function(e){
+                document.getElementById("spinner").style.display = "none";
                 console.log(e);
             },
         });
@@ -1414,10 +1447,11 @@ $(function(){
 
 $(function(){
     $('#confirm_acceptance_submit').on('click', function (e) {
-        e.preventDefault();
-        const button = document.getElementById("confirm_acceptance_submit");
-        button.innerText = "Confirming...";
-        button.disabled = true;
+        // e.preventDefault();
+        // const button = document.getElementById("confirm_acceptance_submit");
+        // button.innerText = "Confirming...";
+        // button.disabled = true;
+        document.getElementById("spinner").style.display = "block";
         let client_bidder_name = document.getElementById("client_bidder_name").innerHTML;
         let client_accept_order_id = document.getElementById("client_accept_order_id").value;
         let client_bidder_id = document.getElementById("client_bidder_id").value;
@@ -1433,6 +1467,7 @@ $(function(){
             },
             success:function(response){
                 console.log(response);
+                document.getElementById("spinner").style.display = "none";
                 if(response.error == false){
                     document.getElementById("cover").style.display = "none";
                     document.getElementById("accept_message").classList.add("text-primary");
@@ -1454,6 +1489,7 @@ $(function(){
                 }, 2000);
             },
             error:function(e){
+                document.getElementById("spinner").style.display = "none";
                 console.log(e);
             },
         });
