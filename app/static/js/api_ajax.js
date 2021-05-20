@@ -1096,14 +1096,14 @@ $.ajax({
         let artisanBidsList = response.artisanBidsList;
         if(artisanBidsList.length > 0){
             artisanBidsList.forEach((element) => {
-                // if (element.orderStatus == "pending" && element.winner_id == "") {  // awaiting artisan's acceptance
-                //     $('#bidder-div').append(
-                //         '<div class="bid-card mt-3" id="'+element.bid_id+'" onClick="pending_order(this.id)">'+ 
-                //             '<p style="width: 70%;">'+element.title+'</p>'+
-                //             '<i class="fas fa-dot-circle  " style="color: #D0BC0A;" ></i>'+
-                //     );
-                //             '</div>'
-                // }
+                if (element.orderStatus == "pending" && element.fromAds == false ) {  // awaiting artisan's acceptance
+                    $('#bidder-div').append(
+                        '<div class="bid-card mt-3" id="'+element.bid_id+'" onClick="pending_order(this.id)">'+ 
+                            '<p style="width: 70%;">'+element.title+'</p>'+
+                            '<i class="fas fa-dot-circle  " style="color: #D0BC0A;" ></i>'+
+                    );
+                            '</div>'
+                }
                 if (element.orderStatus == "pending" && element.fromAds == true) {  // awaiting artisan's acceptance
                     $('#bidder-div').append(
                         '<div class="bid-card mt-3" id="'+element.bid_id+'" onClick="pending_order(this.id)">'+ 
@@ -1112,7 +1112,7 @@ $.ajax({
                             '</div>'
                     );
                 }
-                if (element.orderStatus == "bidding" && element.winner_id =="") {  // oder still accepting bids
+                if (element.orderStatus == "bidding" && element.winner_id =="" || element.winner_id == null) {  // oder still accepting bids
                     $('#bidder-div').append(
                         '<div class="bid-card mt-3" id="'+element.bid_id+'" onClick="bidding_ongoing(this.id)">'+ 
                         '<p style="width: 70%;">'+element.title+'</p>'+
