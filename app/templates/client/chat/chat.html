@@ -30,23 +30,25 @@
   </div>
   <!-- hamburger ends -->
     
-    {% if projects %}
-    {% for p in projects %}
-    {% if p.canChat == True %}
-    <a href="{% url 'client_individual_chat' p.id %}"><div class="chat-div mt-3">
-        <i class="fas fa-user-circle fa-alt" style="color: #0069F0;"  ></i>
-        <div style="width: 70%;">
-          <p class="mb-3">{{p.project_title}}</p>
-          <p class="text-right">{{p.date_added}}</p>
-        </div>
-      </div></a>
+    <div class="chat-scroll">
+      {% if projects %}
+      {% for p in projects %}
+      {% if p.canChat == True %}
+      <a href="{% url 'client_individual_chat' p.id %}"><div class="chat-div mt-3">
+          <i class="fas fa-user-circle fa-alt" style="color: #0069F0;"  ></i>
+          <div style="width: 70%;">
+            <p class="mb-3">{{p.project_title}}</p>
+            <p class="text-right">{{p.date_added}}</p>
+          </div>
+        </div></a>
+        {% else %}
+      
+      {% endif %}
+      {% endfor %}
       {% else %}
-    
-    {% endif %}
-    {% endfor %}
-    {% else %}
-    <div class='text-center text-primary' style="margin-top:50px;">There is no chat history yet</div>
-    {% endif %}
+      <div class='text-center text-primary' style="margin-top:50px;">There is no chat history yet</div>
+      {% endif %}
+    </div>
 
 </section>
 <footer class="footer">

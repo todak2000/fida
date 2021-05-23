@@ -687,8 +687,8 @@ def activate(request):
     except Exception as e:
         return_data = {
             "error": True,
-            # "message": str(e)
-            "message": "Sorry, Verification Code is invalid!"
+            "message": str(e)
+            # "message": "Sorry, Verification Code is invalid!"
         }
     return Response(return_data)
 

@@ -17,9 +17,9 @@ body{
     background-color: #fff;
     width: 100%;
     position: fixed;
-    bottom: 0;
-    line-height: 90px;
+    bottom: 4vh;
     display: flex;
+    line-height: 90px;
     justify-content: space-evenly;
 }
 
@@ -69,6 +69,8 @@ body{
     /* background-color: #86EBBB; */
     height:50px;
     padding:5% 15%;
+    color: #fff!important;
+    background-color: #267DED!important;
 }
 .item-others> .nav-link{
     color:#fff;
@@ -76,16 +78,19 @@ body{
 .item-others{
     height:50px;
     padding:1% 5%;
-    color:#fff;
+    color: #fff!important;
+    background-color: #267DED!important;
 }
 .item-second{
     height:10px;
+    color: #fff!important;
+    background-color: #267DED!important;
 }
 
 .job-card{
     height: 130px;
     width: 46%;
-    background-color: #14A0C620;
+    background-color: #EFF2FA;
     border-radius: 20px;
     text-align: center;
     margin:0.5% 0.5% 7% 0.5%;
@@ -127,12 +132,12 @@ textarea:focus, input:focus{
 }
 .job-button{
     border-radius: 0 0 25px 25px;
-    background-color: #097685;
-    border:1px solid #097685;
+    background-color: #267DED;
+    border:1px solid #267DED;
     color:#fff;
     height: 30px;
-    margin-top: 10px;
     line-height: 10px;
+    margin-top: 10px;
 }
 .job-amount{
     font-weight: bold;
@@ -203,5 +208,6 @@ textarea:focus, input:focus{
     height:70vh;
     font-family: Poppins;
     color: #fff;
-    background-color: #097685;
+    background-color: #0062cc;
+
 }

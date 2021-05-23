@@ -2,10 +2,6 @@
 $(function(){
     $('#signup_submit').on('click', function (e) {
         e.preventDefault();
-        const button = document.getElementById("signup_submit");
-        // button.innerText = "Signing up...";
-        // $("#loader").show();
-        // button.disabled = true;
         let firstname = document.getElementById("firstname").value;
         let lastname = document.getElementById("lastname").value;
         let email = document.getElementById("email").value;
@@ -18,7 +14,6 @@ $(function(){
         let $crf_token = $('[name="csrfmiddlewaretoken"]').attr('value');
         document.getElementById("spinner").style.display = "block";
         if (terms_conditions.checked == false){
-            $("#loader").hide();
             console.log(terms_conditions.value)
             document.getElementById("spinner").style.display = "none";
             document.getElementById('server_message_error').classList.add("alert-danger");
@@ -27,7 +22,7 @@ $(function(){
             setTimeout(function(){ 
                 document.getElementById("server_message_error").style.display = "none"; 
                 
-            }, 6000);
+            }, 2000);
         }
         else{
             $.ajax({
@@ -45,7 +40,6 @@ $(function(){
                     state: state,
                 },
                 success:function(response){
-                    // $("#loader").hide();
                     document.getElementById("spinner").style.display = "none";
                     if(response.error == true){
                         document.getElementById('server_message_error').classList.add("alert-danger");
@@ -54,7 +48,7 @@ $(function(){
                         setTimeout(function(){ 
                             document.getElementById("server_message_error").style.display = "none"; 
                             
-                        }, 6000);
+                        }, 2000);
                         
                     }
                     else{
@@ -62,9 +56,9 @@ $(function(){
                         document.getElementById('server_message_success').innerHTML = response.message;
                         document.getElementById("server_message_success").style.display = "block";
                         setTimeout(function(){ 
-                            document.getElementById("server_message_success").style.display = "none"; 
+                            // document.getElementById("server_message_success").style.display = "none"; 
                             window.location.href = '/verify';
-                        }, 3000);
+                        }, 1000);
                     }
                     console.log(response);
                 },
@@ -81,11 +75,6 @@ $(function(){
 $(function(){
     $('#verify_submit').on('click', function (e) {
         e.preventDefault();
-        // $("#loader").show();
-        const button = document.getElementById("verify_submit");
-        // button.innerText = "Verifying...";
-        // button.disabled = true;
-        // let code = document.getElementById("code").value;
         let codeOne = document.getElementById("codeOne").value;
         let codeTwo = document.getElementById("codeTwo").value;
         let codeThree = document.getElementById("codeThree").value;
@@ -101,17 +90,14 @@ $(function(){
                 code: code,
             },
             success:function(response){
-                // $("#loader").hide();
                 document.getElementById("spinner").style.display = "none";
                 if(response.error == true){
                     document.getElementById('server_message_error').classList.add("alert-danger");
                     document.getElementById('server_message_error').innerHTML = response.message;
                     document.getElementById("server_message_error").style.display = "block";
-                    // document.getElementById("email").value= response.email;
                     setTimeout(function(){ 
-                        document.getElementById("server_message_error").style.display = "none"; 
-                        
-                    }, 3000);
+                        document.getElementById("server_message_error").style.display = "none";    
+                    }, 2000);
                     
                 }
                 else{
@@ -121,9 +107,9 @@ $(function(){
                     // document.getElementById("email").value= response.email;
                     document.getElementById("verify_form").reset()
                     setTimeout(function(){ 
-                        document.getElementById("server_message_success").style.display = "none"; 
+                        // document.getElementById("server_message_success").style.display = "none"; 
                         window.location.href = '/login';
-                    }, 6000);
+                    }, 2000);
                 }
                 console.log(response);
             },
@@ -141,10 +127,6 @@ $(function(){
 $(function(){
     $('#resend_submit').on('click', function (e) {
         e.preventDefault();
-        // $("#loader").show();
-        // const button = document.getElementById("resend_submit");
-        // button.innerText = "Resending...";
-        // button.disabled = true;
         let email = document.getElementById("email").value;
         let $crf_token = $('[name="csrfmiddlewaretoken"]').attr('value');
         document.getElementById("spinner").style.display = "block";
@@ -156,7 +138,6 @@ $(function(){
                 email: email,
             },
             success:function(response){
-                $("#loader").hide();
                 document.getElementById("spinner").style.display = "none";
                 if(response.error == true){
                     document.getElementById('server_message_error').classList.add("alert-danger");
@@ -190,10 +171,6 @@ $(function(){
 $(function(){
     $('#forgot_submit').on('click', function (e) {
         e.preventDefault();
-        // $("#loader").show();
-        // const button = document.getElementById("forgot_submit");
-        // button.innerText = "Sending Code...";
-        // button.disabled = true;
         let email = document.getElementById("email").value;
         let $crf_token = $('[name="csrfmiddlewaretoken"]').attr('value');
         document.getElementById("spinner").style.display = "block";
@@ -205,7 +182,6 @@ $(function(){
                 email: email,
             },
             success:function(response){
-                // $("#loader").hide();
                 document.getElementById("spinner").style.display = "none";
                 if(response.error == true){
                     document.getElementById('server_message_error').classList.add("alert-danger");
@@ -213,7 +189,7 @@ $(function(){
                     document.getElementById("server_message_error").style.display = "block";
                     setTimeout(function(){ 
                         document.getElementById("server_message_error").style.display = "none"; 
-                    }, 6000);
+                    }, 3000);
                     
                 }
                 else{
@@ -221,15 +197,14 @@ $(function(){
                     document.getElementById('server_message_success').innerHTML = response.message;
                     document.getElementById("server_message_success").style.display = "block";
                     setTimeout(function(){ 
-                        document.getElementById("server_message_success").style.display = "none"; 
+                        // document.getElementById("server_message_success").style.display = "none"; 
                         window.location.href = '/verify_password';
-                    }, 3000);
+                    }, 1000);
                 }
                 console.log(response);
             },
             error:function(e){
                 console.log(e);
-                $("#loader").hide();
             },
         });
         
@@ -241,11 +216,6 @@ $(function(){
 $(function(){
     $('#verify_password_submit').on('click', function (e) {
         e.preventDefault();
-        // $("#loader").show();
-        // const button = document.getElementById("signup_submit");
-        // button.innerText = "Verifying code...";
-        // button.disabled = true;
-        // let code = document.getElementById("code").value;
         let codeOne = document.getElementById("codeOne").value;
         let codeTwo = document.getElementById("codeTwo").value;
         let codeThree = document.getElementById("codeThree").value;
@@ -261,7 +231,6 @@ $(function(){
                 code: code,
             },
             success:function(response){
-                $("#loader").hide();
                 document.getElementById("spinner").style.display = "none";
                 if(response.error == true){
                     document.getElementById('server_message_error').classList.add("alert-danger");
@@ -271,15 +240,12 @@ $(function(){
                     setTimeout(function(){ 
                         document.getElementById("server_message_error").style.display = "none"; 
                         
-                    }, 6000);
+                    }, 2000);
                     
                 }
                 else{
                     document.getElementById("verify_form").reset()
-                    setTimeout(function(){ 
-                        document.getElementById("server_message_success").style.display = "none"; 
-                        window.location.href = '/reset_password';
-                    }, 2000);
+                    window.location.href = '/reset_password';
                 }
                 console.log(response);
             },
@@ -297,10 +263,6 @@ $(function(){
 $(function(){
     $('#change_password_submit').on('click', function (e) {
         e.preventDefault();
-        // $("#loader").show();
-        // const button = document.getElementById("change_password_submit");
-        // button.innerText = "Changing Password...";
-        // button.disabled = true;
         let password = document.getElementById("password").value;
         let confirm_password = document.getElementById("confirm_password").value;
         let $crf_token = $('[name="csrfmiddlewaretoken"]').attr('value');
@@ -314,7 +276,6 @@ $(function(){
                 confirm_password: confirm_password,
             },
             success:function(response){
-                // $("#loader").hide();
                 document.getElementById("spinner").style.display = "none";
                 if(response.error == true){
                     document.getElementById('server_message_error').classList.add("alert-danger");
@@ -322,7 +283,7 @@ $(function(){
                     document.getElementById("server_message_error").style.display = "block";
                     setTimeout(function(){ 
                         document.getElementById("server_message_error").style.display = "none"; 
-                    }, 6000);
+                    }, 3000);
                     
                 }
                 else{
@@ -330,7 +291,7 @@ $(function(){
                     document.getElementById('server_message_success').innerHTML = response.message;
                     document.getElementById("server_message_success").style.display = "block";
                     setTimeout(function(){ 
-                        document.getElementById("server_message_success").style.display = "none"; 
+                        // document.getElementById("server_message_success").style.display = "none"; 
                         window.location.href = '/login';
                     }, 3000);
                 }
@@ -350,9 +311,6 @@ $(function(){
 $(function(){
     $('#bio_submit').on('click', function (e) {
         e.preventDefault();
-        // const button = document.getElementById("bio_submit");
-        // button.innerText = "Updating...";
-        // button.disabled = true;
         document.getElementById("spinner").style.display = "block";
         let edit_address = document.getElementById("edit_address").value;
         let edit_state = document.getElementById("edit_state").value;
@@ -376,7 +334,7 @@ $(function(){
                     document.getElementById('bio_message_success').innerHTML = response.message;
                     
                     setTimeout(function(){ 
-                        document.getElementById("bio_message_success").style.display = "none";
+                        // document.getElementById("bio_message_success").style.display = "none";
                         if (response.role == "artisan"){
                             window.location.href = '/account'; 
                         }
@@ -384,8 +342,7 @@ $(function(){
                             window.location.href = '/client_account'; 
                         }
                         
-                    }, 2000);
-                    
+                    }, 1000); 
                 }
                 else{
                     document.getElementById("bio_message_fail").classList.add("alert-danger");
@@ -393,7 +350,7 @@ $(function(){
                     document.getElementById("bio_message_fail").style.display = "block";
                     setTimeout(function(){ 
                         document.getElementById("bio_message_fail").style.display = "none"; 
-                    }, 5000);
+                    }, 2000);
                 }
             },
             error:function(e){
@@ -408,9 +365,6 @@ $(function(){
 $(function(){
     $('#edit_account_submit').on('click', function (e) {
         e.preventDefault();
-        // const button = document.getElementById("edit_account_submit");
-        // button.innerText = "Updating...";
-        // button.disabled = true;
         document.getElementById("spinner").style.display = "block";
         let edit_name = document.getElementById("edit_name").value;
         let edit_bank = document.getElementById("edit_bank").value;
@@ -433,14 +387,14 @@ $(function(){
                     document.getElementById('bio_message_success').innerHTML = response.message;
                     document.getElementById("bio_message_success").style.display = "block";
                     setTimeout(function(){ 
-                        document.getElementById("bio_message_success").style.display = "none";
+                        // document.getElementById("bio_message_success").style.display = "none";
                         if (response.role == "artisan"){
                             window.location.href = '/account'; 
                         }
                         else{
                             window.location.href = '/client_account'; 
                         } 
-                    }, 2000);
+                    }, 1000);
                     
                 }
                 else{
@@ -449,7 +403,7 @@ $(function(){
                     document.getElementById("bio_message_fail").style.display = "block";
                     setTimeout(function(){ 
                         document.getElementById("bio_message_fail").style.display = "none"; 
-                    }, 5000);
+                    }, 2000);
                 }
             },
             error:function(e){
@@ -464,21 +418,18 @@ $(function(){
 $(function(){
     $('#password_submit').on('click', function (e) {
         e.preventDefault();
-        // const button = document.getElementById("password_submit");
-        // button.innerText = "Updating..";
-        // button.disabled = true;
         document.getElementById("spinner").style.display = "block";
         let old_password = document.getElementById("old_password").value;
         let new_password = document.getElementById("new_password").value;
         let confirm_new_password = document.getElementById("confirm_new_password").value;
        if (new_password != confirm_new_password){
-        document.getElementById("spinner").style.display = "none";
+            document.getElementById("spinner").style.display = "none";
             document.getElementById("bio_message_fail").classList.add("alert-danger");
             document.getElementById('bio_message_fail').innerHTML = "Sorry! New Password do not match";
             document.getElementById("bio_message_fail").style.display = "block";
             setTimeout(function(){ 
                 document.getElementById("bio_message_fail").style.display = "none"; 
-            }, 5000);
+            }, 2000);
        }
        else{
             let $crf_token = $('[name="csrfmiddlewaretoken"]').attr('value');
@@ -498,14 +449,14 @@ $(function(){
                         document.getElementById('bio_message_success').innerHTML = response.message;
                         document.getElementById("bio_message_success").style.display = "block";
                         setTimeout(function(){ 
-                            document.getElementById("bio_message_success").style.display = "none"; 
+                            // document.getElementById("bio_message_success").style.display = "none"; 
                             if (response.role == "artisan"){
                                 window.location.href = '/account'; 
                             }
                             else{
                                 window.location.href = '/client_account'; 
                             } 
-                        }, 2000);
+                        }, 1000);
                         
                     }
                     else{
@@ -514,7 +465,7 @@ $(function(){
                         document.getElementById("bio_message_fail").style.display = "block";
                         setTimeout(function(){ 
                             document.getElementById("bio_message_fail").style.display = "none"; 
-                        }, 5000);
+                        }, 2000);
                     }
                 },
                 error:function(e){
@@ -531,13 +482,9 @@ $(function(){
 $(function(){
     $('#job_order_submit').on('click', function (e) {
         e.preventDefault();
-        // const button = document.getElementById("job_order_submit");
-        // button.innerText = "Submitting...";
-        // button.disabled = true;
         document.getElementById("spinner").style.display = "block";
         let title = document.getElementById("title").value;
         let description = document.getElementById("description").value;
-        // let duration = document.getElementById("duration").value;
         let min_budget = document.getElementById("min_budget").value;
         let max_budget = document.getElementById("max_budget").value;
         let location = document.getElementById("location").value;
@@ -550,7 +497,6 @@ $(function(){
             data:{
                 title: title,
                 description: description,
-                // duration: duration,
                 state: state,
                 location: location,
                 min_budget: min_budget,
@@ -569,7 +515,7 @@ $(function(){
                     console.log(response)
                     setTimeout(function(){ 
                         document.getElementById("bio_message_fail").style.display = "none"; 
-                    }, 5000);
+                    }, 2000);
                 }
             },
             error:function(e){
@@ -584,10 +530,6 @@ $(function(){
 //new Ads REUEST API
 $(function(){
     $('#new_ads_submit').on('click', function (e) {
-        // e.preventDefault();
-        // const button = document.getElementById("new_ads_submit");
-        // button.innerHTML = "Submitting...";
-        // button.disabled = true;
         document.getElementById("spinner").style.display = "block";
         let title = document.getElementById("title").value;
         let description = document.getElementById("description").value;
@@ -625,7 +567,7 @@ $(function(){
                     button.disabled = false;
                     setTimeout(function(){ 
                         document.getElementById("bio_message_fail").style.display = "none"; 
-                    }, 5000);
+                    }, 2000);
                 }
             },
             error:function(e){
@@ -920,9 +862,6 @@ $(function(){
     $('#client_orders_submit').on('click', function (e) {
         e.preventDefault();
         document.getElementById("spinner").style.display = "block";
-        // const button = document.getElementById("client_orders_submit");
-        // button.innerText = "Submitting...";
-        // button.disabled = true;
         let ads_title = document.getElementById("ads_title").value;
         let ads_description = document.getElementById("ads_description").value;
         let ads_min_budget = document.getElementById("ads_min_budget").value;
@@ -956,14 +895,12 @@ $(function(){
                     document.getElementById("bio_message").innerHTML= response.message; 
                     document.getElementById("bio_message").style.display = "block";
                     setTimeout(function(){ 
-                        document.getElementById("bio_message").classList.remove("alert-primary");
-                        document.getElementById('bio_message').innerHTML = "";
+                        // document.getElementById("bio_message").classList.remove("alert-primary");
+                        // document.getElementById('bio_message').innerHTML = "";
                         window.location.href = '/client_home';
-                    }, 4000);
+                    }, 1000);
                 }
                 else{
-                    // button.innerText = "Submit";
-                    // button.disabled = false;
                     document.getElementById("bio_message").classList.add("alert-danger");
                     document.getElementById('bio_message').innerHTML = response.message;
                     document.getElementById("bio_message").style.display = "block";
@@ -971,7 +908,7 @@ $(function(){
                         document.getElementById('bio_message').innerHTML = "";
                         document.getElementById("bio_message").classList.remove("alert-danger");
                         document.getElementById("bio_message").style.display = "none";
-                    }, 4000);
+                    }, 2000);
                 }
                 
             },
@@ -1041,9 +978,6 @@ $.ajax({
 $(function(){
     $('#bidder_submit').on('click', function (e) {
         e.preventDefault();
-        // const button = document.getElementById("bidder_submit");
-        // button.innerText = "Submitting...";
-        // button.disabled = true;
         document.getElementById("spinner").style.display = "block";
         let job_pitch = document.getElementById("job_pitch").value;
         let job_fee = document.getElementById("bidding_fee").value;
@@ -1066,10 +1000,10 @@ $(function(){
                     document.getElementById("bio_message").innerHTML= response.message; 
                     document.getElementById("bio_message").style.display = "block";
                     setTimeout(function(){ 
-                        document.getElementById("bio_message").classList.remove("alert-primary");
-                        document.getElementById('bio_message').innerHTML = "";
+                        // document.getElementById("bio_message").classList.remove("alert-primary");
+                        // document.getElementById('bio_message').innerHTML = "";
                         window.location.href = '/artisan_home';
-                    }, 2000);
+                    }, 1000);
                 }
                 else{
                     document.getElementById("bio_message").classList.add("alert-danger");
@@ -1133,7 +1067,7 @@ $.ajax({
             $('#bidder-div').append('<div class="text-center" style="color: #448AC9; margin-top:50px;">An error occured. Try again!</div>');
         }
         if(artisanBidsList.length <= 0){
-            $('#bidder-div').append('<div class="text-center" style="color: #448AC9; margin-top:50px;">Sorry there are no Orders yet!</div>');
+            $('#bidder-div').append('<div class="text-center" style="color: #448AC9; margin-top:50px;">Sorry there are no Bids for you yet!</div>');
         }
     },
     error:function(e){
@@ -1351,9 +1285,6 @@ $(function(){
 $(function(){
     $('#accept_order_submit').on('click', function (e) {
         e.preventDefault();
-        // const button = document.getElementById("accept_order_submit");
-        // button.innerText = "Confirming...";
-        // button.disabled = true;
         document.getElementById("spinner").style.display = "block";
         let job_order_id = document.getElementById("accept_order_id").value;
         let $crf_token = $('[name="csrfmiddlewaretoken"]').attr('value');
@@ -1382,12 +1313,12 @@ $(function(){
                     
                 }
                 setTimeout(function(){ 
-                    document.getElementById("accept_message").classList.remove("text-primary");
-                    document.getElementById("accept_message").classList.remove("text-danger");
-                    document.getElementById('accept_message').innerHTML = "";
+                    // document.getElementById("accept_message").classList.remove("text-primary");
+                    // document.getElementById("accept_message").classList.remove("text-danger");
+                    // document.getElementById('accept_message').innerHTML = "";
                     window.location.href = '/gig';
-                    document.getElementById("accept_message").style.display = "none";
-                }, 3000);
+                    // document.getElementById("accept_message").style.display = "none";
+                }, 1000);
             },
             error:function(e){
                 document.getElementById("spinner").style.display = "none";
@@ -1400,9 +1331,6 @@ $(function(){
 $(function(){
     $('#order_decline_submit').on('click', function (e) {
         e.preventDefault();
-        // const button = document.getElementById("order_decline_submit");
-        // button.innerText = "Confirming...";
-        // button.disabled = true;
         document.getElementById("spinner").style.display = "block";
         let job_order_id = document.getElementById("decline_order_id").value;
         let $crf_token = $('[name="csrfmiddlewaretoken"]').attr('value');
@@ -1429,12 +1357,12 @@ $(function(){
                     
                 }
                 setTimeout(function(){ 
-                    document.getElementById("decline_message").classList.remove("alert-primary");
-                    document.getElementById('decline_message').innerHTML = "";
-                    document.getElementById("decline_message").classList.remove("alert-danger");
+                    // document.getElementById("decline_message").classList.remove("alert-primary");
+                    // document.getElementById('decline_message').innerHTML = "";
+                    // document.getElementById("decline_message").classList.remove("alert-danger");
                     window.location.href = '/gig';
-                    document.getElementById("decline_message").style.display = "none";
-                }, 5000);
+                    // document.getElementById("decline_message").style.display = "none";
+                }, 1000);
             },
             error:function(e){
                 document.getElementById("spinner").style.display = "none";
@@ -1447,10 +1375,7 @@ $(function(){
 
 $(function(){
     $('#confirm_acceptance_submit').on('click', function (e) {
-        // e.preventDefault();
-        // const button = document.getElementById("confirm_acceptance_submit");
-        // button.innerText = "Confirming...";
-        // button.disabled = true;
+        e.preventDefault();
         document.getElementById("spinner").style.display = "block";
         let client_bidder_name = document.getElementById("client_bidder_name").innerHTML;
         let client_accept_order_id = document.getElementById("client_accept_order_id").value;
@@ -1483,10 +1408,10 @@ $(function(){
                     
                 }
                 setTimeout(function(){ 
-                    document.getElementById('accept_message').innerHTML = "";
+                    // document.getElementById('accept_message').innerHTML = "";
                     window.location.href = '/project';
-                    document.getElementById("accept_message").style.display = "none";
-                }, 2000);
+                    // document.getElementById("accept_message").style.display = "none";
+                }, 1000);
             },
             error:function(e){
                 document.getElementById("spinner").style.display = "none";
@@ -1496,6 +1421,7 @@ $(function(){
         
     });
 });
+
 
 $.ajax({
     url:'/artisan_gig_main_ajax',
@@ -1554,7 +1480,7 @@ $.ajax({
             $('#gigger-div').append('<div class="text-center" style="color: #448AC9; margin-top:50px;">An error occured. Try again!</div>');
         }
         if(artisanGigsList.length <= 0){
-            $('#gigger-div').append('<div class="text-center" style="color: #448AC9; margin-top:50px;">Sorry there are no Projects yet!</div>');
+            $('#gigger-div').append('<div class="text-center" style="color: #448AC9; margin-top:50px;">Sorry there are no Gigs for you yet!</div>');
         }
     },
     error:function(e){
@@ -1818,7 +1744,7 @@ $(function(){
     $('#end_project_submitting').on('click', function (e) {
         e.preventDefault();
         const button = document.getElementById("end_project_submitting");
-        button.innerText = "ending Project...";
+        button.innerHTML = "ending Project...";
         button.disabled = true;
         // $('#endProjectModal').modal('hide');
         let project_id = document.getElementById("project_projects_id").value;
@@ -1833,14 +1759,14 @@ $(function(){
         if(!checked) {
             let checkbox_error = document.getElementById("checkbox_error")
             checkbox_error.innerHTML = "You must check at least one checkbox."
-            button.innerText = "Confirm";
+            button.innerHTML = "End Project";
             button.disabled = false; 
         }
         else if (project_rating == ""){
             let rating_error = document.getElementById("rating_error")
             rating_error.innerHTML = "Sorry! you are yet to rate the Artisan!"
             checkbox_error.innerHTML = ""
-            button.innerText = "Confirm";
+            button.innerText = "End Project";
             button.disabled = false; 
         }
 
@@ -1870,7 +1796,7 @@ $(function(){
                     }
                     setTimeout(function(){ 
                         window.location.href = '/project';
-                    }, 5000);
+                    }, 1000);
                 },
                 error:function(e){
                     console.log(e);
@@ -1886,7 +1812,7 @@ $(function(){
     $('#end_gig_submitting').on('click', function (e) {
         e.preventDefault();
         const button = document.getElementById("end_gig_submitting");
-        button.innerText = "ending Gig...";
+        button.innerHTML = "ending Gig...";
         button.disabled = true;
         // $('#endProjectModal').modal('hide');
         let gig_id = document.getElementById("gig_gigs_id").value;
@@ -1900,6 +1826,8 @@ $(function(){
         if(!checked) {
             let checkbox_error = document.getElementById("checkbox_error2")
             checkbox_error.innerHTML = "You must check at least one checkbox."
+            button.innerHTML = "End Gig";
+            button.disabled = false;
         }
         else{
             $.ajax({
@@ -1926,7 +1854,7 @@ $(function(){
                     }
                     setTimeout(function(){ 
                         window.location.href = '/gig';
-                    }, 3000);
+                    }, 1000);
                 },
                 error:function(e){
                     console.log(e);
@@ -2091,39 +2019,168 @@ $(function(){
     });
 });
 
-// var getNewArtisanChat = window.setInterval(function(){
-//     project_id = document.getElementById("project_id").value
+
+
+// const intervalArtisanGigs = setInterval(function() {
+//     document.getElementById("gigger-div").innerHTML = ""; 
 //     $.ajax({
-//         url:'/get_artisan_chat',
+//         url:'/artisan_gig_main_ajax',
 //         type:'GET',
-//         data:{
-//             project_id: project_id,
-//         },
 //         success:function(response){
-//             console.log(response);
+//             // console.log(response);
+//             let artisanGigsList = response.artisanGigsList;
+//             if(artisanGigsList.length > 0){
+//                 artisanGigsList.forEach((element) => {
+//                     if (element.projectStatus == "ongoing" && element.isCompleted == false) {  // ongoing project after artisan accept offer
+//                         $('#gigger-div').append(
+//                             '<div class="bid-card mt-3" id="'+element.project_id+'" onClick="ongoing_gig(this.id)">'+
+//                                 '<p>'+element.title+'</p>'+
+//                                 '<i class="fas fa-envelope " style="color: #0069F0;" ></i>'+
+//                                 '<i class="fas fa-dot-circle " style="color: #D0BC0A;" ></i>'+
+//                             '</div>'
+//                         );
+//                     }
+//                     if (element.projectStatus == "completed") {  // order completed
+//                         $('#gigger-div').append(
+//                             '<div class="bid-card mt-3" id="'+element.project_id+'">'+
+//                                 '<p>'+element.title+'</p>'+
+//                                 '<i class="fas fa-check-circle  " style="color: #14E2CA;" ></i>'+
+//                             '</div>'
+//                         );
+//                     }
+    
+//                     if (element.projectStatus == "disputed") {  // order disputed
+//                         $('#gigger-div').append(
+//                             '<div class="bid-card mt-3" id="'+element.project_id+'">'+
+//                                 '<p>'+element.title+'</p>'+
+//                                 '<i class="fas fa-question-circle  " style="color: #C4C4C4;" ></i>'+
+//                             '</div>'
+//                         );
+//                     }
+//                     if (element.projectStatus == "cancelled") {  // order cancelled
+//                         $('#gigger-div').append(
+//                             '<div class="bid-card mt-3" id="'+element.project_id+'">'+
+//                                 '<p>'+element.title+'</p>'+
+//                                 '<i class="fas fa-times-circle  " style="color: #C91B30;" ></i>'+
+//                             '</div>'
+//                         );
+//                     }
+//                     if (element.projectStatus == "ongoing" && element.isCompleted == true) {  // order completed by artisan awaiting client confirmation
+//                         $('#gigger-div').append(
+//                             '<div class="bid-card mt-3" id="'+element.project_id+'" data-toggle="modal" data-target="#artisanWaitModal">'+
+//                                 '<p>'+element.title+'</p>'+
+//                                 '<i class="fas fa-dot-circle " style="color: #14E2CA;" ></i>'+
+//                             '</div>'
+//                         );
+//                     }
+                    
+//                 });
+//             }
+//             if(response.error == true){
+//                 $('#gigger-div').append('<div class="text-center" style="color: #448AC9; margin-top:50px;">An error occured. Try again!</div>');
+//             }
+//             if(artisanGigsList.length <= 0){
+//                 $('#gigger-div').append('<div class="text-center" style="color: #448AC9; margin-top:50px;">Sorry there are no Gigs for you yet!</div>');
+//             }
 //         },
 //         error:function(e){
 //             console.log(e);
 //         },
 //     });
+    
 //   }, 5000);
-// var getNewNotifications = window.setInterval(function(){
+
+//   const intervalArtisanBids = setInterval(function() {
 //     $.ajax({
-//         url:'/get_notification',
+//         url:'/artisan_gig_ajax',
 //         type:'GET',
 //         success:function(response){
 //             // console.log(response);
-            
-//             let notify = response.notify;
-//             if(notify == true){
-//                 document.getElementById("notif").style.display = "inline-block";     
+//             let artisanBidsList = response.artisanBidsList;
+//             if(artisanBidsList.length > 0){
+//                 artisanBidsList.forEach((element) => {
+//                     if (element.orderStatus == "pending" && element.fromAds == false ) {  // awaiting artisan's acceptance
+//                         $('#bidder-div').append(
+//                             '<div class="bid-card mt-3" id="'+element.bid_id+'" onClick="pending_order(this.id)">'+ 
+//                                 '<p style="width: 70%;">'+element.title+'</p>'+
+//                                 '<i class="fas fa-dot-circle  " style="color: #D0BC0A;" ></i>'+
+//                                 '</div>'
+//                         );
+//                     }
+//                     if (element.orderStatus == "pending" && element.fromAds == true) {  // awaiting artisan's acceptance
+//                         $('#bidder-div').append(
+//                             '<div class="bid-card mt-3" id="'+element.bid_id+'" onClick="pending_order(this.id)">'+ 
+//                                 '<p style="width: 70%;">'+element.title+'</p>'+
+//                                 '<i class="fas fa-dot-circle  " style="color: #D0BC0A;" ></i>'+
+//                                 '</div>'
+//                         );
+//                     }
+//                     if (element.orderStatus == "bidding" && element.winner_id =="" || element.winner_id == null) {  // oder still accepting bids
+//                         $('#bidder-div').append(
+//                             '<div class="bid-card mt-3" id="'+element.bid_id+'" onClick="bidding_ongoing(this.id)">'+ 
+//                             '<p style="width: 70%;">'+element.title+'</p>'+
+//                               '<div class="text-center">'+
+//                                 '<i class="fas fa-user-plus " style="color: #40DA86;" ></i>'+
+//                               '<p style="font-size: 0.5rem; color:#0069F0;"> You and '+parseInt(element.noOfBidders - 1)+' bidder(s)</p>'+
+//                               '</div>'+
+//                           '</div>'
+//                         );
+//                     }
+//                     else {
+//                         // $('#bidder-div').append('<div class="text-center" style="color: #448AC9; margin-top:50px;">Sorry there are new Orders yet. However check the Gig section </div>');
+//                     }
+                    
+//                 });
 //             }
-//             if(notify == false){
-//                 document.getElementById("notif").style.display = "none"; 
+//             if(response.error == true){
+//                 $('#bidder-div').append('<div class="text-center" style="color: #448AC9; margin-top:50px;">An error occured. Try again!</div>');
+//             }
+//             if(artisanBidsList.length <= 0){
+//                 $('#bidder-div').append('<div class="text-center" style="color: #448AC9; margin-top:50px;">Sorry there are no Bids for you yet!</div>');
+//             }
+//         },
+//         error:function(e){
+//             console.log(e);
+//         },
+//     });
+    
+// }, 5000);
+// const intervalArtisanHome = setInterval(function() {
+//     $.ajax({
+//         url:'/artisan_home_ajax',
+//         type:'GET',
+//         success:function(response){
+//             // console.log(response);
+//             document.getElementById('artisan_screen').innerHTML = ""
+//             let orderList = response.orderList;
+//             if(orderList.length > 0){
+//                 orderList.forEach((element) => {
+//                     $('#artisan_screen').append(
+//                         '<div class="job-card">'+
+//                         '<div class="job-inner">'+
+//                             '<p>'+element.state+'</p>'+
+//                             '<i class="fas fa-laptop fa-2x" style="color: #267DED;"></i>'+
+//                             '<p>'+element.title+'</p>'+
+//                             '<p class="job-amount">&#8358;'+element.min_budget+' - &#8358;'+element.max_budget+'</p></div>'+
+//                         '<input type="button" value="Bid" class="form-control job-button" id="'+element.order_id+'" onClick="job_view(this.id)"></div>'
+//                     );
+//                 });
+//             }
+//             if(response.error == true){
+//                 $('#artisan_screen').append('<div class="text-center" style="color: #448AC9; margin-top:50px;">An error occured. Try again!</div>');
+//             }
+//             if(orderList.length <= 0){
+//                 $('#artisan_screen').append('<div class="text-center" style="color: #448AC9; margin-top:50px;">Sorry there are no Orders yet!</div>');
 //             }
 //         },
 //         error:function(e){
 //             // console.log(e);
 //         },
 //     });
-//   }, 5000);
+// }, 500);
+const intervalClientOrders = setInterval(function() {
+}, 5000);
+const intervalClientProjects = setInterval(function() {
+}, 5000);
+const intervalClientHome = setInterval(function() {
+}, 5000);

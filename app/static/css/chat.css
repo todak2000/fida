@@ -23,10 +23,14 @@
     height: 75vh;
     overflow-y: scroll;
 }
-.all-chat-container::-webkit-scrollbar{
+.chat-scroll{
+    height: 75vh;
+    overflow-y: scroll;
+}
+.all-chat-container::-webkit-scrollbar,.chat-scroll::-webkit-scrollbar{
     display: none;
 }
-.all-chat-container{
+.all-chat-container, .chat-scroll{
     -ms-overflow-style: none;  /* IE and Edge */
     scrollbar-width: none;  /* Firefox */
 }

@@ -17,7 +17,7 @@ body{
     background-color: #fff;
     width: 100%;
     position: fixed;
-    bottom: 0;
+    bottom: 4vh;
     display: flex;
     line-height: 90px;
     justify-content: space-evenly;
@@ -69,6 +69,8 @@ body{
     /* background-color: #86EBBB; */
     height:50px;
     padding:5% 15%;
+    color: #fff!important;
+    background-color: #267DED!important;
 }
 .item-others> .nav-link{
     color:#fff;
@@ -76,10 +78,13 @@ body{
 .item-others{
     height:50px;
     padding:1% 5%;
-    color:#fff;
+    color: #fff!important;
+    background-color: #267DED!important;
 }
 .item-second{
     height:10px;
+    color: #fff!important;
+    background-color: #267DED!important;
 }
 
 .job-card{
