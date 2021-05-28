@@ -68,8 +68,8 @@ function payWithPaystack(){
     }
     else{
         var handler = PaystackPop.setup({
-        // key: 'pk_live_c7b4bf81775dbb762984141e790e76160fe1138a', // fida live public
-        key: 'pk_test_9edc655cfb67bd1aedb9dc0ee0d30d37f5c56756', //(todak test public)
+        key: 'pk_live_c7b4bf81775dbb762984141e790e76160fe1138a', // fida live public
+        // key: 'pk_test_9edc655cfb67bd1aedb9dc0ee0d30d37f5c56756', //(todak test public)
         email: email,
         amount: amount * 100,
         ref: ''+Math.floor((Math.random() * 1000000000) + 1), // generates a pseudo-unique reference. Please replace with a reference you generated. Or remove the line entirely so our API will generate one for you
