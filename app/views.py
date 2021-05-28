@@ -183,18 +183,18 @@ def wallet_page(request):
     else:
         return redirect('/login')
 
-def top_up_page(request):
-    if 'user_id' in request.session:
-        return render(request,"artisan/wallet/top_up.html")
-    else:
-        return redirect('/login')
+# def top_up_page(request):
+#     if 'user_id' in request.session:
+#         return render(request,"artisan/wallet/top_up.html")
+#     else:
+#         return redirect('/login')
     
 
-def withdraw_page(request):
-    if 'user_id' in request.session:
-        return render(request,"artisan/wallet/withdraw.html")
-    else:
-        return redirect('/login')
+# def withdraw_page(request):
+#     if 'user_id' in request.session:
+#         return render(request,"artisan/wallet/withdraw.html")
+#     else:
+#         return redirect('/login')
     
 
 def new_ads_page(request):
@@ -491,16 +491,34 @@ def client_wallet_page(request):
     else:
         return redirect('/login')
 
-def client_top_up_page(request):
+def top_up_page(request):
     if 'user_id' in request.session:
-        return render(request,"client/wallet/top_up.html")
+        user_id = request.session['user_id']
+        user_data = User.objects.get(user_id=user_id)
+        return_data = {
+            "error": False,
+            "balance": user_data.walletBalance,
+            "email": user_data.email,
+            "phone": user_data.user_phone,
+            "user_id": user_id,
+        }
+        return render(request,"client/wallet/top_up.html", return_data)
     else:
         return redirect('/login')
     
 
-def client_withdraw_page(request):
+def withdraw_page(request):
     if 'user_id' in request.session:
-        return render(request,"client/wallet/withdraw.html")
+        user_id = request.session['user_id']
+        user_data = User.objects.get(user_id=user_id)
+        return_data = {
+            "error": False,
+            "balance": user_data.walletBalance,
+            "bank": user_data.bank_name,
+            "accountNo": user_data.account_number, 
+            "user_id": user_id,
+        }
+        return render(request,"client/wallet/withdraw.html", return_data)
     else:
         return redirect('/login')
     
@@ -2112,35 +2130,79 @@ def client_send_message(request):
     except Exception as e:
         return JsonResponse({ 'error': True, 'message': str(e)})
 
-# @api_view(["GET"])
-# def dashboard(request):
-#     try:
-#         user_id = request.session['user_id']
-#         if user_id != None and user_id != '':
-#             #get user info
-#             user_data = User.objects.get(user_id=user_id)
-#             footprint = user_data.minedCoins*0.03
-#             return_data = {
-#                 "error": False,
-#                 "message": "Sucessfull",
-#                 "user_details": 
-#                     {
-#                         "firstname": f"{user_data.firstname}",
-#                         "lastname": f"{user_data.lastname}",
-#                         "email": f"{user_data.email}",
-#                         "phonenumber": f"{user_data.user_phone}",
-#                         "address": f"{user_data.user_address}",
-#                         "carbon_footprint": footprint
-#                     }
-#             }
-#         else:
-#             return_data = {
-#                 "error": True,
-#                 "message": "Invalid Parameter"
-#             }
-#     except Exception as e:
-#         return_data = {
-#             "error": True,
-#             "message": str(e)
-#         }
-#     return render(request,"user/dashboard.html", return_data)
+@api_view(["POST"])
+def top_up_api(request):
+    user_id = request.POST["user_id"]
+    amount = request.POST["amount"]
+    try: 
+        user_data = User.objects.get(user_id=user_id)
+        newBalance = user_data.walletBalance + float(amount)
+        user_data.walletBalance = newBalance
+        user_data.save()
+
+        newTransaction = Transaction(from_id="Fida", to_id=user_id, transaction_type="Credit", transaction_message="Top-up - Paystack", amount=float(amount))
+        newTransaction.save()
+        if user_data and newTransaction:
+            # Send mail using SMTP
+            mail_subject = user_data.firstname+'! Fida Top-up Update'
+            email = {
+                'subject': mail_subject,
+                'html': '<h4>Hello, '+user_data.firstname+'!</h4><p> You payment of N'+amount+ ' to your Fida wallet was successful</p>',
+                'text': 'Hello, '+user_data.firstname+'!\n You payment of N'+amount+ ' to your Fida wallet was successful',
+                'from': {'name': 'Fida Synergy', 'email': 'donotreply@wastecoin.co'},
+                'to': [
+                    {'name': user_data.firstname, 'email': user_data.email}
+                    # {'name': user_data.firstname, 'email': "todak2000@gmail.com"}
+                ]
+            }
+            sentMail = SPApiProxy.smtp_send_mail(email)
+            return_data = {
+                "error": False,
+                "role": user_data.role,
+            }
+            return JsonResponse({ 'data':return_data, 'error': False})
+        else:
+            return JsonResponse({ 'message': "something went wrong!", 'error': True})
+
+
+    except Exception as e:
+        return JsonResponse({ 'error': True, 'message': str(e)})
+
+# widthrawal api
+@api_view(["POST"])
+def withdrawal_api(request):
+    user_id = request.session['user_id']
+    amount = request.POST["amount"]
+    try: 
+        user_data = User.objects.get(user_id=user_id)
+        newBalance = user_data.walletBalance - float(amount)
+        user_data.walletBalance = newBalance
+        user_data.save()
+
+        newTransaction = Transaction(from_id=user_id, to_id="Fida", transaction_type="Debit", transaction_message="Withdrawal - Cashout", amount=float(amount))
+        newTransaction.save()
+        if user_data and newTransaction:
+            # Send mail using SMTP
+            mail_subject = user_data.firstname+'! Fida Top-up Update'
+            email = {
+                'subject': mail_subject,
+                'html': '<h4>Hello, '+user_data.firstname+'!</h4><p> Your Withdrawal request for N'+amount+ ' is being processed and would be sent to your account within 24 hours. Thanks</p>',
+                'text': 'Hello, '+user_data.firstname+'!\n You payment of N'+amount+ ' to your Fida wallet was successful',
+                'from': {'name': 'Fida Synergy', 'email': 'donotreply@wastecoin.co'},
+                'to': [
+                    {'name': user_data.firstname, 'email': user_data.email}
+                    # {'name': user_data.firstname, 'email': "todak2000@gmail.com"}
+                ]
+            }
+            sentMail = SPApiProxy.smtp_send_mail(email)
+            return_data = {
+                "error": False,
+                "role": user_data.role,
+            }
+            return JsonResponse({ 'data':return_data, 'error': False})
+        else:
+            return JsonResponse({ 'message': "something went wrong!", 'error': True})
+
+
+    except Exception as e:
+        return JsonResponse({ 'error': True, 'message': str(e)})

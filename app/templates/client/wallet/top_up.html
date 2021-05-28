@@ -1,8 +1,9 @@
 {% extends "client/nav.html" %}
 
 {% load static %}
-
+{% load humanize %}
 {% block body%}
+
 <section class="secondary-background">
     <!-- secondary nav starts -->
 <div class="secondary-nav">
@@ -13,17 +14,78 @@
 
   <!-- seconday nav ends -->
   <!-- top section -->
+  <div id="verification_div" style="display:none; width:100%; height:80vh; background-color: #fff; position:fixed; top:10vh; left:0" class="pt-4">
+    <form style="padding:0 5vh;">{% csrf_token %}
+    <input id="tt_id" value="{{user_id}}" hidden/>
+    <input id="tt_amount" type="text" value="{{balance}}" hidden />
+    <input type="button" value="click to Verify your Payment" class="form-control job-form-button" id="verify_payment_button" style="margin-top: 30vh;">
+    </form>   
+    <div id="success_div" style="text-align: center; display:none; padding: 30% 10%;">
+      <i class="fas fa-check-circle  fa-5x" style="color: #007bff;" ></i>
+      <p style="font-size: 1.1rem;">Payment Verified. You will be redirected to your wallet within seconds</p>
+    </div>
+    <div id="failure_div" style="text-align: center; display:none; padding: 30% 10%;">
+      <i class="fas fa-times-circle  fa-5x" style="color: #C91B30;" ></i>
+      <p style="font-size: 1.1rem;">Payment Unsuccessful. Kindly check your Bank balance and try again!. You will be redirected to your wallet within seconds</p>
+    </div>
+  </div>
     <div class="job-form-container">
         <form class="onboarding_form mt-2" action="#" id="job_details_form" method="POST" autocomplete="off">
             {% csrf_token %}
             <label class="job-label">Amount</label>
-            <input type="text" id="amount"   class="job-input form-control mb-5" placeholder="N3,455.56">
+            <input id="t_email" value="{{email}}" hidden/>
+            <input id="t_balance" value="{{balance}}" hidden/>
+            <input id="t_id" value="{{user_id}}" hidden/>
+            <p style="color:red; font-size:1.2rem;" id="amount_error"></p>
+            <input type="text" id="t_amount" oninput="getAmount(this)"  class="job-input form-control mb-5" placeholder="N{{balance|floatformat:2|intcomma}}">
+            <script src="https://js.paystack.co/v1/inline.js"></script>
+            <input type="button" value="Fund" class="form-control job-form-button" onclick="payWithPaystack()">
             
-            <input type="button" value="Fund" class="form-control job-form-button" id="job_details_submit">
         </form>
 
     </div>
-  </div>
+  
 </section>
+<script>
+  function getAmount(input1) {
+    var input2 = document.getElementById('tt_amount');
+    input2.value = input1.value;
+    console.log(input2.value)
+  }
+  
+  // paystack function
+function payWithPaystack(){
+    let email = document.getElementById("t_email").value;
+    let amount = document.getElementById("t_amount").value;
+    let balance = document.getElementById("t_balance").value;
+    let user_id = document.getElementById("t_id").value;
+    if (amount == 0 || amount == ""){
+      document.getElementById("amount_error").innerHTML = "Sorry, kindly enter a real amount!";
+      setTimeout(function(){ 
+        document.getElementById("amount_error").innerHTML = "";
+      }, 2000);
 
+    }
+    else{
+        var handler = PaystackPop.setup({
+        // key: 'pk_live_c7b4bf81775dbb762984141e790e76160fe1138a', // fida live public
+        key: 'pk_test_9edc655cfb67bd1aedb9dc0ee0d30d37f5c56756', //(todak test public)
+        email: email,
+        amount: amount * 100,
+        ref: ''+Math.floor((Math.random() * 1000000000) + 1), // generates a pseudo-unique reference. Please replace with a reference you generated. Or remove the line entirely so our API will generate one for you
+
+        callback: function(response){
+          console.log(response);
+          document.getElementById("verification_div").style.display = "block";
+        },
+        onClose: function(){
+            console.log('window closed');
+        }
+        });
+        // handler.openIframe();
+    };
+    handler.openIframe();
+    
+  }
+</script>
 {% endblock %}

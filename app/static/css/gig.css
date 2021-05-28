@@ -55,8 +55,8 @@
 .bid-card{
     display: flex;
     justify-content: space-between;
-    color: #829CC580;
-    background-color: #0069F005;
+    color: #000000;
+    background-color: #0069F015;
     border-radius: 10px;
     padding:3%;
 }

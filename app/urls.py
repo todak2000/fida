@@ -24,8 +24,8 @@ urlpatterns = [
     # path("awaiting_gig", views.awaiting_gig_page, name="awaiting_gig"),
     # path("approved_gig", views.approved_gig_page, name="approved_gig"),
     # path("disputed_gig", views.disputed_gig_page, name="disputed_gig"),
-    path("top_up", views.top_up_page, name="top_up"),
-    path("withdraw", views.withdraw_page, name="withdraw"),
+    # path("top_up", views.top_up_page, name="top_up"),
+    # path("withdraw", views.withdraw_page, name="withdraw"),
     path("new_ads", views.new_ads_page, name="new_ads"),
     path("chat", views.chat_page, name="chat"),
     path("individual_chat/<int:id>", views.individual_chat_page, name="individual_chat"),
@@ -42,11 +42,15 @@ urlpatterns = [
     path("edit_account_ajax", views.edit_account_ajax, name="edit_account_ajax"),
     path("edit_password_ajax", views.edit_password_ajax, name="edit_password_ajax"),
     path("get_notification", views.get_notification, name="get_notification"),
+    path("top_up_api", views.top_up_api, name="top_up_api"),
+    path("withdrawal_api", views.withdrawal_api, name="withdrawal_api"),
     
     # SHARED PAGES
     path("edit_bio", views.edit_bio_page, name="edit_bio"),
     path("edit_account", views.edit_account_page, name="edit_account"),
     path("edit_password", views.edit_password_page, name="edit_password"),
+    path("top_up", views.top_up_page, name="top_up"),
+    path("withdraw", views.withdraw_page, name="withdraw"),
     # CLIENT PAGES
     path("client_home", views.client_home_page, name="client_home"),
     path("client_wallet", views.client_wallet_page, name="client_wallet"),
@@ -61,8 +65,7 @@ urlpatterns = [
     # path("ongoing_project", views.ongoing_project_page, name="ongoing_project"),
     # path("approved_project", views.approved_project_page, name="approved_project"),
     # path("disputed_project", views.disputed_project_page, name="disputed_project"),
-    path("client_top_up", views.client_top_up_page, name="client_top_up"),
-    path("client_withdraw", views.client_withdraw_page, name="client_withdraw"),
+    
     path("client_chat", views.client_chat_page, name="client_chat"),
     # path("client_individual_chat", views.client_individual_chat_page, name="client_individual_chat"),
     path("client_individual_chat/<int:id>", views.client_individual_chat_page, name="client_individual_chat"),

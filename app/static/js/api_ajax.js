@@ -1857,7 +1857,7 @@ $(function(){
                     }, 1000);
                 },
                 error:function(e){
-                    console.log(e);
+                    console.log(e); 
                 },
             });
         }
@@ -1951,8 +1951,8 @@ $(function(){
         e.preventDefault();
         let project_id = document.getElementById("client_project_id").value;
         let message = document.getElementById("client_message").value;
-        let sender = document.getElementById("client_sender").value;
         let reciever = document.getElementById("client_reciever").value;
+        let sender = document.getElementById("client_sender").value;
         let $crf_token = $('[name="csrfmiddlewaretoken"]').attr('value');
 
         $.ajax({
@@ -2184,3 +2184,113 @@ const intervalClientProjects = setInterval(function() {
 }, 5000);
 const intervalClientHome = setInterval(function() {
 }, 5000);
+
+// top-up api (paystack callback function)
+$(function(){
+    $('#verify_payment_button').on('click', function (e) {
+        e.preventDefault();
+        document.getElementById("spinner").style.display = "block";
+        document.getElementById("verify_payment_button").style.display = "none";
+        let amount = document.getElementById("tt_amount").value;
+        let user_id = document.getElementById("tt_id").value;
+        let $crf_token = $('[name="csrfmiddlewaretoken"]').attr('value');
+        // console.log(e);
+        $.ajax({
+            url:'/top_up_api',
+            type:'POST',
+            headers:{"X-CSRFToken": $crf_token},
+            data:{
+                user_id: user_id,
+                amount: amount,
+            },
+            success:function(response){
+                document.getElementById("spinner").style.display = "none";
+                console.log(response.data.role);
+                if(response.error == true){
+                    document.getElementById("failure_div").style.display = "block";
+                }
+                if(response.error == false){
+                  document.getElementById("success_div").style.display = "block";          
+                }
+                setTimeout(function(){ 
+                  if(response.data.role == "artisan"){
+                    window.location.href = '/wallet';
+                  }else{
+                    window.location.href = '/client_wallet';
+                  }
+                    
+                }, 2000);
+            },
+            error:function(e){
+                console.log(e);
+            },
+        });
+        
+    });
+});
+
+// withdrawal function
+$(function(){
+    $('#withdrawal_button').on('click', function (e) {
+        e.preventDefault();
+        document.getElementById("spinner").style.display = "block";
+        document.getElementById("withdrawal_button").style.display = "none";
+        let amount = document.getElementById("w_amount").value;
+        let balance = document.getElementById("w_balance").value;
+        let $crf_token = $('[name="csrfmiddlewaretoken"]').attr('value');
+        if ( parseFloat(amount) > parseFloat(balance)){
+            document.getElementById("spinner").style.display = "none";
+            document.getElementById("withdrawal_button").style.display = "block";
+            document.getElementById("error_p2").innerHTML = "Sorry! you have Insufficient Balance";
+            setTimeout(function(){ 
+                document.getElementById("error_p2").innerHTML = "";
+              }, 2000);
+        }
+        else if (parseFloat(amount) <= 0 || amount ==""){
+            document.getElementById("withdrawal_button").style.display = "block";
+            document.getElementById("spinner").style.display = "none";
+            document.getElementById("error_p2").innerHTML = "Sorry! Kindly enter a non-zero amount";
+            setTimeout(function(){ 
+                document.getElementById("error_p2").innerHTML = "";
+              }, 2000);
+        }
+        else{
+            $.ajax({
+                url:'/withdrawal_api',
+                type:'POST',
+                headers:{"X-CSRFToken": $crf_token},
+                data:{
+                    // user_id: user_id,
+                    amount: amount,
+                },
+                success:function(response){
+                    document.getElementById("spinner").style.display = "none";
+                    console.log(response);
+                    if(response.error == true){
+                        document.getElementById("verification_div2").style.display = "block";
+                        document.getElementById("failure_div2").style.display = "block";
+                        document.getElementById("error_p").innerHTML = response.message;
+                    }
+                    if(response.error == false){
+                        document.getElementById("verification_div2").style.display = "block";
+                      document.getElementById("success_div2").style.display = "block";          
+                    }
+                    setTimeout(function(){ 
+                      if(response.data.role == "artisan"){
+                        window.location.href = '/wallet';
+                      }else{
+                        window.location.href = '/client_wallet';
+                      }
+                        
+                    }, 2000);
+                },
+                error:function(e){
+                    console.log(e);
+                },
+            });
+            
+        }
+        // console.log(e);
+        
+    });
+});

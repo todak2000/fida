@@ -34,8 +34,8 @@
       <h1>&#8358;{{walletBalance|floatformat:2|intcomma}}</h1>
     </div>
     <div class="option-div">
-      <input type="button" value="Withdraw" class="form-control withdraw mt-3" id="job_details_submit" style="width: 35%;">
-          <input type="button" value="Top-up" class="form-control topup mt-3" id="job_details_submit" style="width: 35%;">
+      <a href="{% url 'withdraw' %}"><input type="button" value="Withdraw" class="form-control withdraw mt-3" ></a>
+      <a href="{% url 'top_up' %}"><input type="button" value="Top-up" class="form-control topup mt-3" ></a>
     </div>
   </div>
   <div class="wallet-bottom mt-3">
