@@ -75,11 +75,7 @@ $(function(){
 $(function(){
     $('#verify_submit').on('click', function (e) {
         e.preventDefault();
-        let codeOne = document.getElementById("codeOne").value;
-        let codeTwo = document.getElementById("codeTwo").value;
-        let codeThree = document.getElementById("codeThree").value;
-        let codeFour = document.getElementById("codeFour").value;
-        let code = codeOne+""+codeTwo+""+codeThree+""+codeFour;
+        let code = document.getElementById("code").value;
         let $crf_token = $('[name="csrfmiddlewaretoken"]').attr('value');
         document.getElementById("spinner").style.display = "block";
         $.ajax({

@@ -17,7 +17,7 @@ REST_API_SECRET = config("REST_API_SECRET")
 TOKEN_STORAGE = config("TOKEN_STORAGE")
 MEMCACHED_HOST = config("MEMCACHED_HOST")
 SPApiProxy = PySendPulse(REST_API_ID, REST_API_SECRET, TOKEN_STORAGE, memcached_host=MEMCACHED_HOST)
-
+sender_email = "do-not-reply@fida.com.ng"
 # Create your views here.
 
 def index(request):
@@ -652,17 +652,18 @@ def register_api(request):
                     'subject': mail_subject,
                     'html': '<h4>Hello, '+firstName+'!</h4><p>Kindly use the Verification Code below to activate your Fida Account</p> <h1>'+code+'</h1>',
                     'text': 'Hello, '+firstName+'!\nKindly use the Verification Code below to activate your Fida Account',
-                    'from': {'name': 'Fida Synergy', 'email': 'donotreply@wastecoin.co'},
+                    'from': {'name': 'Fida Synergy', 'email': sender_email},
                     'to': [
                         {'name': firstName, 'email': email}
                     ]
                 }
-                SPApiProxy.smtp_send_mail(email)
-                request.session['email'] = new_userData.email
-                return_data = {
-                    "error": False,
-                    "message": "Registrated successfully. Kind check your email to activate your account.",
-                    }
+                mail = SPApiProxy.smtp_send_mail(email)
+                if  mail:
+                    request.session['email'] = new_userData.email
+                    return_data = {
+                        "error": False,
+                        "message": "Registrated successfully. Kind check your email to activate your account.",
+                        }
         else:
             return_data = {
                 "error":True,
@@ -730,7 +731,7 @@ def resend_code_api(request):
                         'subject': mail_subject,
                         'html': '<h4>Hello, '+firstName+'!</h4><p>Kindly find the Verification Code below sent again to activate your Fida Account</p> <h1>'+code+'</h1>',
                         'text': 'Hello, '+firstName+'!\nKindly find the Verification Code below sent againto activate your Fida Account',
-                        'from': {'name': 'Fida Synergy', 'email': 'donotreply@wastecoin.co'},
+                        'from': {'name': 'Fida Synergy', 'email': sender_email},
                         'to': [
                             {'name': firstName, 'email': email}
                         ]
@@ -783,7 +784,7 @@ def forgot_code_api(request):
                         'subject': mail_subject,
                         'html': '<h4>Hi, '+firstName+'!</h4><p>Kindly find the Reset Code below to confirm that intend to change your Fida Account Password</p> <h1>'+code+'</h1>',
                         'text': 'Hello, '+firstName+'!\nKindly find the Reset Code below to confirm that intend to change your Fida Account Password',
-                        'from': {'name': 'Fida Synergy', 'email': 'donotreply@wastecoin.co'},
+                        'from': {'name': 'Fida Synergy', 'email': sender_email},
                         'to': [
                             {'name': firstName, 'email': email}
                         ]
@@ -1372,10 +1373,9 @@ def submit_order_specific_artisan(request):
                     'subject': mail_subject,
                     'html': '<h4>Hello, '+ads.artisan_id.firstname+'!</h4><p> You just won a bid from your ads. Kindly check via the Fida App to accept or decline the offer</p>',
                     'text': 'Hello, '+ads.artisan_id.firstname+'!\nYou just won a bid from your ads. Kindly check via the Fida App to accept or decline the offer',
-                    'from': {'name': 'Fida Synergy', 'email': 'donotreply@wastecoin.co'},
+                    'from': {'name': 'Fida Synergy', 'email': sender_email},
                     'to': [
                         {'name': ads.artisan_id.firstname, 'email': ads.artisan_id.email}
-                        # {'name': ads.artisan_id.firstname, 'email': "todak2000@gmail.com"}
                     ]
                 }
                 sentMail4 = SPApiProxy.smtp_send_mail(email4)
@@ -1457,10 +1457,9 @@ def submit_bid(request):
                 'subject': mail_subject,
                 'html': '<h4>Hello, '+order.client_id.firstname+'!</h4><p> You have a new bidder for your Job offer. Kindly check via the Fida App</p>',
                 'text': 'Hello, '+order.client_id.firstname+'!\nYou have a new bidder for your Job offer. Kindly check via the Fida App',
-                'from': {'name': 'Fida Synergy', 'email': 'donotreply@wastecoin.co'},
+                'from': {'name': 'Fida Synergy', 'email': sender_email},
                 'to': [
                     {'name': order.client_id.firstname, 'email': order.client_id.email}
-                    # {'name': order.client_id.firstname, 'email': "todak2000@gmail.com"}
                 ]
             }
             sentMail = SPApiProxy.smtp_send_mail(email)
@@ -1609,10 +1608,9 @@ def artisan_accept_bid_api(request):
             'subject': mail_subject,
             'html': '<h4>Hello, '+client_data.firstname+'!</h4><p> Kindly be informed the Artisan has accepted your Job Offer. Kindly reach out via the chat to keep tab on the job completion. Be also informed, NGN '+acceptedOrder.service_fee+' has been deducted from your wallet into Fida Escrow account. Upon confirmation of job completion, the Artisan would be paid. Thank you </p>',
             'text': 'Hello, '+client_data.firstname+'!\nKindly be informed the Artisan has accepted your Job Offer. Kindly reach out via the chat to keep tab on the job completion. Be also informed, NGN '+acceptedOrder.service_fee+' has been deducted from your wallet into Fida Escrow account. Upon confirmation of job completion, the Artisan would be paid. Thank you ',
-            'from': {'name': 'Fida Synergy', 'email': 'donotreply@wastecoin.co'},
+            'from': {'name': 'Fida Synergy', 'email': sender_email},
             'to': [
                 {'name': client_data.firstname, 'email': client_data.email}
-                # {'name': client_data.firstname, 'email': "todak2000@gmail.com"}
             ]
         }
         sentMail3 = SPApiProxy.smtp_send_mail(email3)
@@ -1638,10 +1636,9 @@ def artisan_decline_bid_api(request):
                 'subject': mail_subject,
                 'html': '<h4>Hello, '+freeOrder.client_id.firstname+'!</h4><p> We regret to inform you, the Artisan rejected your offer for the Ads you created Order - '+order_id+' from. However, you could rather create a fresh order and accept bids to proceed with the Job.</p>',
                 'text': 'Hello, '+freeOrder.client_id.firstname+'!\nWe regret to inform you, the Artisan rejected your offer for the Ads you created Order - '+order_id+' from. However, you could rather create a fresh order and accept bids to proceed with the Job.',
-                'from': {'name': 'Fida Synergy', 'email': 'donotreply@wastecoin.co'},
+                'from': {'name': 'Fida Synergy', 'email': sender_email},
                 'to': [
                     {'name': freeOrder.client_id.firstname, 'email': freeOrder.client_id.email}
-                    # {'name': freeOrder.client_id.firstname, 'email': "todak2000@gmail.com"}
                 ]
             }
             sentMail7 = SPApiProxy.smtp_send_mail(email7)
@@ -1667,10 +1664,9 @@ def artisan_decline_bid_api(request):
                 'subject': mail_subject,
                 'html': '<h4>Hello, '+freeOrder.client_id.firstname+'!</h4><p> We regret to inform you, the Artisan rejected your offer for the Ads you created Order - '+order_id+' from. However, you could select another Bid from the list of bids available for the Order to proceed with the Job.</p>',
                 'text': 'Hello, '+freeOrder.client_id.firstname+'!\nWe regret to inform you, the Artisan rejected your offer for the Ads you created Order - '+order_id+' from. However, you could select another Bid from the list of bids available for the Order to proceed with the Job.',
-                'from': {'name': 'Fida Synergy', 'email': 'donotreply@wastecoin.co'},
+                'from': {'name': 'Fida Synergy', 'email': sender_email},
                 'to': [
                     {'name': freeOrder.client_id.firstname, 'email': freeOrder.client_id.email}
-                    # {'name': freeOrder.client_id.firstname, 'email': "todak2000@gmail.com"}
                 ]
             }
             sentMail7 = SPApiProxy.smtp_send_mail(email7)
@@ -1726,10 +1722,9 @@ def client_accept_bid_api(request):
             'subject': mail_subject,
             'html': '<h4>Hello, '+bidder_name+'!</h4><p> You have won the bid for your Job offer with Order No '+order_id+'. Kindly check via the Fida App to accept or decline the offer immediately. Congrats once again!</p>',
             'text': 'Hello, '+bidder_name+'!\nYou have won the bid for your Job offer with Order No '+order_id+'. Kindly check via the Fida App to accept or decline the offer immediately. Congrats once again!',
-            'from': {'name': 'Fida Synergy', 'email': 'donotreply@wastecoin.co'},
+            'from': {'name': 'Fida Synergy', 'email': sender_email},
             'to': [
                 {'name': bidder_name, 'email': bidder_data.email}
-                # {'name': bidder_name, 'email': "todak2000@gmail.com"}
             ]
         }
         sentMail2 = SPApiProxy.smtp_send_mail(email)
@@ -1876,10 +1871,9 @@ def end_project_api(request):
                 'subject': mail_subject,
                 'html': '<h4>Hello, '+artisan.firstname+'!</h4><p> Congratulations, you just got paid for your diligent work (Order - '+order_id+'). Kindly check via the Fida App to confirm or withdraw whenever you are ready. More jobs! more money!</p>',
                 'text': 'Hello, '+artisan.firstname+'!\nYou have a new bidder for your Job offer. Kindly check via the Fida App',
-                'from': {'name': 'Fida Synergy', 'email': 'donotreply@wastecoin.co'},
+                'from': {'name': 'Fida Synergy', 'email': sender_email},
                 'to': [
                     {'name': artisan.firstname, 'email': artisan.email}
-                    # {'name': artisan.firstname, 'email': "todak2000@gmail.com"}
                 ]
             }
             sentMail6 = SPApiProxy.smtp_send_mail(email6)
@@ -1902,10 +1896,9 @@ def end_project_api(request):
                 'subject': mail_subject,
                 'html': '<h4>Hello, '+artisan.firstname+'!</h4><p> We regret to inform you that payment for your work would be processed yet. This is because the client did not confirm completion of your work in positive light. The Project with project id - '+project_id+' was tagged '+project_status+'. Kindly reach out the client via the chat or the Fida admin to resolve the issue immediately or call 09088776666666.</p>',
                 'text': 'Hello, '+artisan.firstname+'!\nWe regret to inform you that payment for your work would be processed yet. This is because the client did not confirm completion of your work in positive light. The Project with project id - '+project_id+' was tagged '+project_status+'. Kindly reach out the client via the chat or the Fida admin to resolve the issue immediately or call 09088776666666.',
-                'from': {'name': 'Fida Synergy', 'email': 'donotreply@wastecoin.co'},
+                'from': {'name': 'Fida Synergy', 'email': sender_email},
                 'to': [
                     {'name': artisan.firstname, 'email': artisan.email}
-                    # {'name': artisan.firstname, 'email': "todak2000@gmail.com"}
                 ]
             }
             sentMail6 = SPApiProxy.smtp_send_mail(email6)
@@ -1946,11 +1939,9 @@ def end_gig_api(request):
                 'subject': mail_subject,
                 'html': '<h4>Hello, '+client.firstname+'!</h4><p> You job order with (Order - '+order_id+') has been certified completed by the Artisan. Kindly confirm you are satisfied or otherwise with the work via the Fida App by clicking on end project. This is to enable the Artisan get paid immediately from the Escrow account if you confirm or allow Fida representative to attend to the issues you might concerning the job.</p>',
                 'text': 'Hello, '+client.firstname+'!\nYou job order with (Order - '+order_id+') has been certified completed by the Artisan. Kindly confirm you are satisfied or otherwise with the work via the Fida App by clicking on end project. This is to enable the Artisan get paid immediately from the Escrow account if you confirm or allow Fida representative to attend to the issues you might concerning the job.',
-                'from': {'name': 'Fida Synergy', 'email': 'donotreply@wastecoin.co'},
+                'from': {'name': 'Fida Synergy', 'email': sender_email},
                 'to': [
-                    # {'name': client.firstname, 'email': order.client_id.email}
                     {'name': client.firstname, 'email': client.email}
-                    # {'name': client.firstname, 'email': "todak2000@gmail.com"}
                 ]
             }
             sentMail9 = SPApiProxy.smtp_send_mail(email9)
@@ -1975,10 +1966,9 @@ def end_gig_api(request):
                 'subject': mail_subject,
                 'html': '<h4>Hello, '+client.firstname+'!</h4><p> We regret to inform you that the Artisan could not complete the job for (Order - '+order_id+'). We sincerely apologise and kindly ask that you create a new Job order to get the job done. However, be rest assured, your fund - &#8358;'+updateEscrow.fees_agreed+' has been returned to your wallet.</p>',
                 'text': 'Hello, '+client.firstname+'!\nYou job order with (Order - '+order_id+') has been certified completed by the Artisan. Kindly confirm you are satisfied or otherwise with the work via the Fida App by clicking on end project. This is to enable the Artisan get paid immediately from the Escrow account if you confirm or allow Fida representative to attend to the issues you might concerning the job.',
-                'from': {'name': 'Fida Synergy', 'email': 'donotreply@wastecoin.co'},
+                'from': {'name': 'Fida Synergy', 'email': sender_email},
                 'to': [
                     {'name': client.firstname, 'email': client.email}
-                    # {'name': client.firstname, 'email': "todak2000@gmail.com"}
                 ]
             }
             sentMail9 = SPApiProxy.smtp_send_mail(email9)
@@ -2045,10 +2035,9 @@ def artisan_send_message(request):
                 'subject': mail_subject,
                 'html': '<h4>Hello, '+client.firstname+'!</h4><p> '+artisan.firstname+' send you a message for the Project: '+project.project_title+'. Kindly check via the Fida App to reply immmediately</p>',
                 'text': 'Hello, '+client.firstname+'!\n'+artisan.firstname+' send you a message for the Project: '+project.project_title+'. Kindly check via the Fida App to reply immmediately',
-                'from': {'name': 'Fida Synergy', 'email': 'donotreply@wastecoin.co'},
+                'from': {'name': 'Fida Synergy', 'email': sender_email},
                 'to': [
                     {'name': client.firstname, 'email': client.email}
-                    # {'name': client.firstname, 'email': "todak2000@gmail.com"}
                 ]
             }
             sentMail = SPApiProxy.smtp_send_mail(email)
@@ -2098,10 +2087,9 @@ def client_send_message(request):
                 'subject': mail_subject,
                 'html': '<h4>Hello, '+artisan.firstname+'!</h4><p> '+client.firstname+' send you a message for the Project: '+project.project_title+'. Kindly check via the Fida App to reply immmediately</p>',
                 'text': 'Hello, '+artisan.firstname+'!\n'+client.firstname+' send you a message for the Project: '+project.project_title+'. Kindly check via the Fida App to reply immmediately',
-                'from': {'name': 'Fida Synergy', 'email': 'donotreply@wastecoin.co'},
+                'from': {'name': 'Fida Synergy', 'email': sender_email},
                 'to': [
                     {'name': artisan.firstname, 'email': artisan.email}
-                    # {'name': artisan.firstname, 'email': "todak2000@gmail.com"}
                 ]
             }
             sentMail = SPApiProxy.smtp_send_mail(email)
@@ -2149,10 +2137,9 @@ def top_up_api(request):
                 'subject': mail_subject,
                 'html': '<h4>Hello, '+user_data.firstname+'!</h4><p> You payment of N'+amount+ ' to your Fida wallet was successful</p>',
                 'text': 'Hello, '+user_data.firstname+'!\n You payment of N'+amount+ ' to your Fida wallet was successful',
-                'from': {'name': 'Fida Synergy', 'email': 'donotreply@wastecoin.co'},
+                'from': {'name': 'Fida Synergy', 'email': sender_email},
                 'to': [
                     {'name': user_data.firstname, 'email': user_data.email}
-                    # {'name': user_data.firstname, 'email': "todak2000@gmail.com"}
                 ]
             }
             sentMail = SPApiProxy.smtp_send_mail(email)
@@ -2188,10 +2175,9 @@ def withdrawal_api(request):
                 'subject': mail_subject,
                 'html': '<h4>Hello, '+user_data.firstname+'!</h4><p> Your Withdrawal request for N'+amount+ ' is being processed and would be sent to your account within 24 hours. Thanks</p>',
                 'text': 'Hello, '+user_data.firstname+'!\n You payment of N'+amount+ ' to your Fida wallet was successful',
-                'from': {'name': 'Fida Synergy', 'email': 'donotreply@wastecoin.co'},
+                'from': {'name': 'Fida Synergy', 'email': sender_email},
                 'to': [
                     {'name': user_data.firstname, 'email': user_data.email}
-                    # {'name': user_data.firstname, 'email': "todak2000@gmail.com"}
                 ]
             }
             sentMail = SPApiProxy.smtp_send_mail(email)

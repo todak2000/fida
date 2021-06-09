@@ -71,7 +71,7 @@ textarea:focus, input:focus{
     border: solid 1px #ccc;
     box-shadow: 0 0 5px #ccc inset;
     outline: none;
-    width: 20%;
+    width: 50%;
     transition: all .2s ease-in-out;
     border-radius: 3px;
   }

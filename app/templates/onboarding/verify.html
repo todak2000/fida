@@ -16,11 +16,7 @@
         <form class="onboarding_form mt-2" action="#" id="verify_form" method="POST" autocomplete="off">
             
             {% csrf_token %}
-            <input type="text" maxLength="1" size="1" min="0" max="9" pattern="[0-9]{1}" id="codeOne" class="code-item"/>
-            <input type="text" maxLength="1" size="1" min="0" max="9" pattern="[0-9]{1}" id="codeTwo" class="code-item"/>
-            <input type="text" maxLength="1" size="1" min="0" max="9" pattern="[0-9]{1}" id="codeThree" class="code-item"/>
-            <input type="text" maxLength="1" size="1" min="0" max="9" pattern="[0-9]{1}" id="codeFour" class="code-item"/>
-            
+            <input type="text" maxLength="4" size="4" min="0" max="9" pattern="[0-9]{4}" id="code" class="code-item"/>
             <input type="button" value="Verify Account" class="form-control button mt-5" id="verify_submit">
 
             
@@ -31,51 +27,4 @@
         </form>
     </div>
 </section>
-<script>
-    $(function() {
-
-    // var body = $('body');
-    let body = $('#verify_form');
-
-    function goToNextInput(e) {
-        var key = e.which,
-        t = $(e.target),
-        sib = t.next('input');
-
-        if (key != 9 && (key < 48 || key > 57)) {
-        e.preventDefault();
-        return false;
-        }
-
-        if (key === 9) {
-        return true;
-        }
-
-        if (!sib || !sib.length) {
-        sib = body.find('input').eq(0);
-        }
-        sib.select().focus();
-    }
-
-    function onKeyDown(e) {
-        var key = e.which;
-
-        if (key === 9 || (key >= 48 && key <= 57)) {
-        return true;
-        }
-
-        e.preventDefault();
-        return false;
-    }
-    
-    function onFocus(e) {
-        $(e.target).select();
-    }
-
-    body.on('keyup', 'input', goToNextInput);
-    body.on('keydown', 'input', onKeyDown);
-    body.on('click', 'input', onFocus);
-
-    })
-</script>
 {% endblock %}
