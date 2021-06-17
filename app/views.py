@@ -17,7 +17,8 @@ REST_API_SECRET = config("REST_API_SECRET")
 TOKEN_STORAGE = config("TOKEN_STORAGE")
 MEMCACHED_HOST = config("MEMCACHED_HOST")
 SPApiProxy = PySendPulse(REST_API_ID, REST_API_SECRET, TOKEN_STORAGE, memcached_host=MEMCACHED_HOST)
-sender_email = "do-not-reply@fida.com.ng"
+# sender_email = "do-not-reply@fida.com.ng"
+sender_email = "donotreply@wastecoin.co"
 # Create your views here.
 
 def index(request):
@@ -2135,8 +2136,8 @@ def top_up_api(request):
             mail_subject = user_data.firstname+'! Fida Top-up Update'
             email = {
                 'subject': mail_subject,
-                'html': '<h4>Hello, '+user_data.firstname+'!</h4><p> You payment of N'+amount+ ' to your Fida wallet was successful</p>',
-                'text': 'Hello, '+user_data.firstname+'!\n You payment of N'+amount+ ' to your Fida wallet was successful',
+                'html': '<h4>Hello, '+user_data.firstname+'!</h4><p> You payment of NGN'+amount+ ' to your Fida wallet was successful</p>',
+                'text': 'Hello, '+user_data.firstname+'!\n You payment of NGN'+amount+ ' to your Fida wallet was successful',
                 'from': {'name': 'Fida Synergy', 'email': sender_email},
                 'to': [
                     {'name': user_data.firstname, 'email': user_data.email}
@@ -2170,11 +2171,11 @@ def withdrawal_api(request):
         newTransaction.save()
         if user_data and newTransaction:
             # Send mail using SMTP
-            mail_subject = user_data.firstname+'! Fida Top-up Update'
+            mail_subject = user_data.firstname+'! Fida Withdrawal Update'
             email = {
                 'subject': mail_subject,
-                'html': '<h4>Hello, '+user_data.firstname+'!</h4><p> Your Withdrawal request for N'+amount+ ' is being processed and would be sent to your account within 24 hours. Thanks</p>',
-                'text': 'Hello, '+user_data.firstname+'!\n You payment of N'+amount+ ' to your Fida wallet was successful',
+                'html': '<h4>Hello, '+user_data.firstname+'!</h4><p> Your Withdrawal request for NGN'+amount+ ' is being processed and would be sent to your account within 24 hours. Thanks</p>',
+                'text': 'Hello, '+user_data.firstname+'!\n Your Withdrawal request for NGn'+amount+ ' is being processed and would be sent to your account within 24 hours. Thanks',
                 'from': {'name': 'Fida Synergy', 'email': sender_email},
                 'to': [
                     {'name': user_data.firstname, 'email': user_data.email}

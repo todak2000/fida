@@ -153,7 +153,7 @@ class Transaction(models.Model):
     date_added = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
-        return f"{self.from_id} - {self.to_id} - {self.project_id} - {self.transaction_type} - {self.amount} {self.projectCompleted}"
+        return f"{self.from_id} - {self.to_id} - {self.project_id} - {self.transaction_type} - {self.amount} - {self.projectCompleted}"
 
 class Chat(models.Model):
     class Meta:
