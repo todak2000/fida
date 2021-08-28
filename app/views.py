@@ -18,7 +18,7 @@ TOKEN_STORAGE = config("TOKEN_STORAGE")
 MEMCACHED_HOST = config("MEMCACHED_HOST")
 SPApiProxy = PySendPulse(REST_API_ID, REST_API_SECRET, TOKEN_STORAGE, memcached_host=MEMCACHED_HOST)
 # sender_email = "do-not-reply@fida.com.ng"
-sender_email = "donotreply@wastecoin.co"
+sender_email = "info@fida.com.ng"
 # Create your views here.
 
 def index(request):
